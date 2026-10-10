@@ -85,9 +85,13 @@ Vercel publica solo en un minuto aprox.
 ## Cambiar tus datos, foto y colores
 
 - Textos, contacto y redes: `data/site.json`. Las redes con `"url": ""` no se muestran.
+- Sección "Así trabajo" del inicio: bloque `proceso` en `data/site.json` (pasos, plazo, texto del botón y mensaje de WhatsApp). Si lo borras, la sección desaparece. Cada paso puede llevar una animación con `"grafico"`: `celular`, `timeline` o `dias`.
+- Habilidades técnicas (bloque naranja en Sobre mí): lista `habilidades` en `data/site.json`. Íconos disponibles: `pluma`, `motion`, `video`, `redes`, `marca`.
+- Programas que usas: lista `herramientas` en `data/site.json` (sigla, nombre y `nivel` de 0 a 100, que define cuánto se llena el anillo). Si la dejas vacía (`[]`), la sección desaparece. Para mostrar un logo en vez de la sigla, agrega `"icono"` con la ruta a una silueta en WebP/PNG con fondo transparente (ver CapCut como ejemplo); se pinta sola con el color de acento.
 - Foto: reemplaza `media/site/nacho.webp` (vertical, ~1200×1500).
 - Imagen al compartir el inicio: `media/site/og.jpg` (1200×630).
-- Colores y tipografías: variables al inicio de `assets/css/styles.css`.
+- Colores y degradados: variables al inicio de `assets/css/styles.css`. `--grad-fondo` es el fondo del sitio (Noche en oscuro; crema con un resplandor suave en claro), `--grad-hero` el del inicio (Atardecer, solo en oscuro) y `--grad-fuego` el de las formas naranjas.
+- Tipografías: Clash Display (títulos) y Satoshi (textos), cargadas desde [Fontshare](https://www.fontshare.com/). Para cambiarlas, edita el enlace de Fontshare en `build.js` y los nombres en `--titulos` y `--sans`.
 
 ## Publicar en Vercel (una sola vez)
 

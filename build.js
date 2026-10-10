@@ -103,9 +103,9 @@ function layout(site, { title, description, urlPath, image, body, active, jsonld
   const canonical = site.url + urlPath;
   const ogImage = site.url + (image || '/media/site/og.jpg');
   const nav = [
+    ['/', 'Inicio', 'inicio'],
     ['/trabajos/', 'Trabajos', 'trabajos'],
     ['/sobre-mi/', 'Sobre mí', 'sobre-mi'],
-    ['/contacto/', 'Contacto', 'contacto'],
   ]
     .map(([href, label, key]) => `<a href="${href}"${active === key ? ' aria-current="page"' : ''}>${label}</a>`)
     .join('');
@@ -132,12 +132,12 @@ function layout(site, { title, description, urlPath, image, body, active, jsonld
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0f0f0e">
+<meta name="theme-color" content="#18212e">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap">
 <link rel="stylesheet" href="/assets/css/styles.css?v=${VERSION}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>` : ''}
 </head>
@@ -147,8 +147,11 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(
   <a class="logo" href="/">${esc(site.nombre)}</a>
   <nav class="nav" aria-label="Principal">
     ${nav}
-    <button class="tema" type="button" aria-label="Cambiar entre tema claro y oscuro"><span aria-hidden="true"></span></button>
   </nav>
+  <div class="header__acciones">
+    <a class="boton header__cta" href="/contacto/"${active === 'contacto' ? ' aria-current="page"' : ''}>Contacto</a>
+    <button class="tema" type="button" aria-label="Cambiar entre tema claro y oscuro"><span aria-hidden="true"></span></button>
+  </div>
 </header>
 <main id="contenido">
 ${body}
@@ -168,19 +171,21 @@ ${body}
 `;
 }
 
-function card(p, { eager = false } = {}) {
+function card(p, { eager = false, num = 0 } = {}) {
   const base = `/media/${p.slug}/`;
   const video = p.portadaVideo
     ? `<video muted loop playsinline preload="none" data-autoplay aria-hidden="true"><source src="${base}${esc(p.portadaVideo)}" type="video/mp4"></video>`
     : '';
   return `<a class="card" href="/proyectos/${p.slug}/" data-cat="${p.categoria}">
   <div class="card__media">
+    ${num ? `<span class="card__num">${String(num).padStart(2, '0')}</span>` : ''}
     <img src="${base}${esc(p.portada)}" alt="${esc(p.titulo)}"${sizeAttrs(`media/${p.slug}/${p.portada}`)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">
     ${video}
   </div>
   <div class="card__info">
     <h3>${esc(p.titulo)}</h3>
     <p>${CATEGORIAS[p.categoria]}${p.anio ? ` · ${esc(p.anio)}` : ''}</p>
+    <span class="card__ver" aria-hidden="true">Ver proyecto ↗</span>
   </div>
 </a>`;
 }
@@ -201,6 +206,101 @@ function galeriaItem(p, archivo, i) {
 </figure>`;
 }
 
+function herramientas(site, titulo) {
+  const lista = site.herramientas || [];
+  if (!lista.length) return '';
+  return `<div class="herramientas">
+    ${titulo ? `<p class="herramientas__titulo">${titulo}</p>` : ''}
+    <ul>${lista
+      .map((h) => {
+        // Con "icono" (silueta con fondo transparente) se dibuja el logo en el color de acento; si no, la sigla.
+        const icono = h.icono && exists(h.icono) ? `<i style="--icono:url('/${esc(h.icono)}')"></i>` : esc(h.sigla);
+        // "nivel" (0 a 100) define cuánto se llena el anillo; sin nivel, el anillo va completo.
+        const nivel = Math.max(0, Math.min(100, Number(h.nivel)));
+        const conNivel = h.nivel != null && !Number.isNaN(nivel);
+        return `<li><b aria-hidden="true" style="--nivel:${conNivel ? nivel : 100}">${icono}</b>${esc(h.nombre)}</li>`;
+      })
+      .join('')}</ul>
+  </div>`;
+}
+
+// Íconos disponibles para "habilidades" en site.json (campo "icono").
+const ICONOS = {
+  pluma:
+    '<path fill-rule="evenodd" d="M2 3h3v1.2h4.6V3h4.8v1.2H19V3h3v3.6h-3V5.6h-4.6v1h-4.8v-1H5v1H2zM12 8.4l5.6 6.2L15 22H9l-2.6-7.4zm-.6 2.2v3.2a1.9 1.9 0 1 0 1.2 0v-3.2z"/>',
+  motion: '<path d="M5.5 2.5h13c0 5.6-4 6.6-4 9.5s4 3.9 4 9.5h-13c0-5.6 4-6.6 4-9.5s-4-3.9-4-9.5z"/>',
+  video:
+    '<path fill-rule="evenodd" d="M2 4.5h20v15H2zM4 6.5v2h2v-2zm0 4.5v2h2v-2zm0 4.5v2h2v-2zM18 6.5v2h2v-2zm0 4.5v2h2v-2zm0 4.5v2h2v-2zM10 8.8v6.4l5.2-3.2z"/>',
+  redes:
+    '<path fill-rule="evenodd" d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5zm5 5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.2a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6zM17 5.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/>',
+  marca: '<path d="M12 2l2.900 6.3 6.900.8-5.100 4.700 1.4 6.8L12 17.2l-6.100 3.4 1.4-6.8L2.2 9.100l6.900-.8z"/>',
+};
+
+function habilidades(site) {
+  const lista = site.habilidades || [];
+  if (!lista.length) return '';
+  return `<ul class="habilidades">${lista
+    .map(
+      (h) =>
+        `<li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ICONOS[h.icono] || ICONOS.marca}</svg>${esc(h.nombre)}</li>`
+    )
+    .join('')}</ul>`;
+}
+
+// Animaciones de la sección "Así trabajo" (campo "grafico" de cada paso). Son solo HTML + CSS.
+const GRAFICOS = {
+  celular: `<div class="grafico" aria-hidden="true">
+        <div class="g-escena">
+          <div class="g-cel"><span></span></div>
+          <i class="g-clip g-clip--1"></i><i class="g-clip g-clip--2"></i><i class="g-clip g-clip--3"></i><i class="g-clip g-clip--4"></i>
+          <div class="g-carpeta"></div>
+          <small class="g-cuenta"><span><em><b>0</b><b>1</b><b>2</b><b>3</b><b>4</b></em></span>/4 clips recibidos</small>
+        </div>
+      </div>`,
+  timeline: `<div class="grafico grafico--timeline" aria-hidden="true">
+        <div class="g-fila"><small>Gancho</small><i class="g-gancho f1"></i></div>
+        <div class="g-fila"><small>Video</small><i class="g-video f2"></i></div>
+        <div class="g-fila"><small>Subs</small><i class="g-subs f3"></i></div>
+        <div class="g-fila"><small>Sonido</small><i class="g-sonido f4"></i></div>
+        <span class="g-cursor"></span>
+      </div>`,
+  dias: `<div class="grafico grafico--dias" aria-hidden="true">
+        ${[1, 2, 3]
+          .map((n) => `<div class="g-dia"><small>Día ${n}</small><b>${n}</b><i class="f${n}"><small>Día ${n}</small><b>${n}</b></i></div>`)
+          .join('')}
+        <span class="g-listo f4">Listo para publicar</span>
+      </div>`,
+};
+
+function proceso(site) {
+  const pr = site.proceso;
+  if (!pr || !(pr.pasos || []).length) return '';
+  const wa = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(pr.mensaje || site.whatsappMensaje || '')}`;
+  const pasos = pr.pasos
+    .map(
+      (paso, i) => `<li>
+      ${GRAFICOS[paso.grafico] || ''}
+      <span class="proceso__num">${String(i + 1).padStart(2, '0')}</span>
+      <h3>${esc(paso.titulo)}</h3>
+      <p>${esc(paso.texto)}</p>
+      ${(paso.detalles || []).length ? `<ul class="proceso__detalles">${paso.detalles.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+    </li>`
+    )
+    .join('');
+  return `
+<section class="seccion" id="proceso">
+  <div class="seccion__cabecera">
+    <div>
+      <h2>${esc(pr.titulo)}</h2>
+      ${pr.bajada ? `<p class="seccion__bajada">${esc(pr.bajada)}</p>` : ''}
+    </div>
+    ${pr.etiqueta ? `<div class="seccion__lado"><p class="etiqueta">${esc(pr.etiqueta)}</p></div>` : ''}
+  </div>
+  <ol class="proceso">${pasos}</ol>
+  ${pr.boton ? `<div class="seccion__pie"><a class="boton" href="${esc(wa)}" target="_blank" rel="noopener">${esc(pr.boton)}</a></div>` : ''}
+</section>`;
+}
+
 // ---------- páginas ----------
 
 function paginaInicio(site, projects) {
@@ -208,32 +308,64 @@ function paginaInicio(site, projects) {
   const servicios = (site.servicios || [])
     .map((s) => `<li><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p></li>`)
     .join('');
+  const foto = site.sobreMi && site.sobreMi.foto;
   const body = `
 <section class="hero">
-  <p class="hero__frase">${esc(site.frase)}</p>
-  <h1 class="hero__nombre">${esc(site.nombre)}</h1>
-  <p class="hero__intro">${esc(site.intro)}</p>
+  <div class="hero__texto">
+    ${site.etiqueta ? `<p class="etiqueta">${esc(site.etiqueta)}</p>` : ''}
+    <div class="hero__marco">
+      <h1 class="hero__nombre">${esc(site.nombre)}</h1>
+      <p class="hero__frase">${esc(site.frase)}</p>
+      <i></i><i></i><i></i><i></i>
+      <svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
+        <defs><linearGradient id="pluma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--acento)"/><stop offset="1" stop-color="var(--acento-2)"/></linearGradient></defs>
+        <path fill="url(#pluma)" fill-rule="evenodd" d="M32 15l12 20-4.5 15h-15L20 35zm-1 5v11.2a3.6 3.6 0 1 0 2 0V20zM24.5 53h15v5h-15z"/>
+      </svg>
+    </div>
+    <p class="hero__intro">${esc(site.intro)}</p>
+    <div class="hero__botones">
+      <a class="boton" href="/trabajos/">Ver trabajos</a>
+      <a class="boton boton--linea" href="/contacto/">Hablemos</a>
+    </div>
+    ${herramientas(site, 'Herramientas con las que trabajo')}
+  </div>
+  <div class="hero__visual">
+    ${foto && exists(foto) ? `<img src="/${esc(foto)}" alt="Retrato de ${esc(site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
+    ${Object.values(CATEGORIAS).map((c) => `<span class="hero__chip">${c}</span>`).join('')}
+  </div>
 </section>
 
 <section class="seccion">
   <div class="seccion__cabecera">
-    <h2>Trabajos destacados</h2>
-    <a class="enlace" href="/trabajos/">Ver todos</a>
+    <div><h2>Algunos trabajos recientes</h2></div>
+    <div class="seccion__lado">
+      <p class="etiqueta">Destacados</p>
+      <div class="seccion__nav">
+        <a class="seccion__ver" href="/trabajos/">Ver todos los trabajos</a>
+        <button class="flecha" type="button" data-carrusel="-1" aria-label="Trabajos anteriores">←</button>
+        <button class="flecha" type="button" data-carrusel="1" aria-label="Trabajos siguientes">→</button>
+      </div>
+    </div>
   </div>
-  <div class="grid grid--2">
-    ${destacados.map((p, i) => card(p, { eager: i < 2 })).join('\n')}
+  <div class="carrusel" id="destacados" tabindex="0" aria-label="Trabajos destacados">
+    ${destacados.map((p, i) => card(p, { eager: i < 2, num: i + 1 })).join('')}
   </div>
 </section>
 
 <section class="seccion">
-  <div class="seccion__cabecera"><h2>Qué hago</h2></div>
+  <div class="seccion__cabecera">
+    <div><h2>Qué hago</h2></div>
+    <div class="seccion__lado"><p class="etiqueta">Servicios</p></div>
+  </div>
   <ul class="servicios">${servicios}</ul>
-</section>`;
+</section>
+${proceso(site)}`;
 
   return layout(site, {
     title: `${site.nombre} — ${site.frase.replace(/^Soy\s+/i, '').replace(/^./, (c) => c.toUpperCase())}`,
     description: site.descripcion,
     urlPath: '/',
+    active: 'inicio',
     body,
     jsonld: {
       '@context': 'https://schema.org',
@@ -261,6 +393,7 @@ function paginaTrabajos(site, projects) {
   ].join('');
   const body = `
 <section class="cabecera">
+  <p class="etiqueta">Portafolio</p>
   <h1>Trabajos</h1>
   <div class="filtros" role="group" aria-label="Filtrar por categoría">${filtros}</div>
 </section>
@@ -304,7 +437,7 @@ function paginaProyecto(site, projects, p, i) {
   const body = `
 <article class="proyecto">
   <header class="cabecera">
-    <p class="proyecto__cat"><a href="/trabajos/#${p.categoria}">${CATEGORIAS[p.categoria]}</a></p>
+    <a class="etiqueta" href="/trabajos/#${p.categoria}">${CATEGORIAS[p.categoria]}</a>
     <h1>${esc(p.titulo)}</h1>
     <dl class="proyecto__ficha">
       ${p.cliente ? `<div><dt>Cliente</dt><dd>${esc(p.cliente)}</dd></div>` : ''}
@@ -346,7 +479,7 @@ function paginaProyecto(site, projects, p, i) {
 function paginaSobreMi(site) {
   const s = site.sobreMi || {};
   const body = `
-<section class="cabecera"><h1>Sobre mí</h1></section>
+<section class="cabecera"><p class="etiqueta">Perfil</p><h1>Sobre mí</h1></section>
 <section class="sobre">
   ${
     s.foto && exists(s.foto)
@@ -355,8 +488,10 @@ function paginaSobreMi(site) {
   }
   <div class="sobre__texto">
     ${(s.bio || []).map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${(site.habilidades || []).length ? `<h2>Habilidades técnicas</h2>${habilidades(site)}` : ''}
     <h2>Con quién trabajo</h2>
     <ul class="lista">${(s.clientes || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+    ${(site.herramientas || []).length ? `<h2>Herramientas</h2>${herramientas(site)}` : ''}
     <a class="boton" href="/contacto/">Hablemos</a>
   </div>
 </section>`;
@@ -379,6 +514,7 @@ function paginaContacto(site) {
     .join('');
   const body = `
 <section class="cabecera">
+  <p class="etiqueta">Hablemos</p>
   <h1>Contacto</h1>
   <p class="cabecera__bajada">Cuéntame qué necesitas y te respondo con una propuesta.</p>
 </section>
@@ -470,10 +606,10 @@ function serve() {
         ruta += 'index.html';
         // Regenera al pedir una página, así los cambios se ven al recargar.
         try {
-          build();
+          require('child_process').execFileSync(process.execPath, [__filename], { stdio: 'pipe' });
         } catch (e) {
           res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
-          return res.end(e.message);
+          return res.end(String(e.stderr || e.message));
         }
       }
       let file = path.join(OUT, ruta);

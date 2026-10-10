@@ -40,7 +40,10 @@ const ahorro = navigator.connection && navigator.connection.saveData;
 const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (videos.length) {
   if (ahorro || sinMovimiento || !('IntersectionObserver' in window)) {
-    videos.forEach((v) => (v.controls = true));
+    videos.forEach((v) => {
+      if (v.closest('.card')) v.remove();
+      else v.controls = true;
+    });
   } else {
     const obs = new IntersectionObserver(
       (entradas) =>
@@ -50,8 +53,31 @@ if (videos.length) {
         }),
       { rootMargin: '100px', threshold: 0.2 }
     );
-    videos.forEach((v) => obs.observe(v));
+    videos.forEach((v) => {
+      v.addEventListener('playing', () => v.classList.add('activo'), { once: true });
+      obs.observe(v);
+    });
   }
+}
+
+// Carrusel de destacados: las flechas avanzan de a una tarjeta
+const carrusel = document.getElementById('destacados');
+const flechas = document.querySelectorAll('[data-carrusel]');
+if (carrusel && flechas.length) {
+  const paso = () => {
+    const tarjeta = carrusel.querySelector('.card');
+    return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap || 0);
+  };
+  const actualizar = () => {
+    const fin = carrusel.scrollWidth - carrusel.clientWidth - 2;
+    flechas.forEach((f) => (f.disabled = f.dataset.carrusel < 0 ? carrusel.scrollLeft <= 2 : carrusel.scrollLeft >= fin));
+  };
+  flechas.forEach((f) =>
+    f.addEventListener('click', () => carrusel.scrollBy({ left: paso() * f.dataset.carrusel, behavior: 'smooth' }))
+  );
+  carrusel.addEventListener('scroll', actualizar, { passive: true });
+  window.addEventListener('resize', actualizar);
+  actualizar();
 }
 
 // YouTube: el reproductor se carga recién al hacer clic (página más rápida y sin cookies)

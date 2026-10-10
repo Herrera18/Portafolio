@@ -1,6 +1,7 @@
 {
   "nombre": "Nacho",
   "frase": "Soy diseñador gráfico",
+  "etiqueta": "Marketing digital · Contenido",
   "descripcion": "Diseñador gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad visual.",
   "intro": "Trabajo en marketing digital y producción de contenido. Hago videos para clientes, diseño para redes sociales y creo marcas desde cero.",
   "url": "",
@@ -9,9 +10,18 @@
   "whatsappVisible": "0412 174 9963",
   "whatsappMensaje": "Hola Nacho, vi tu portafolio y quiero conversar sobre un proyecto.",
   "redes": [
-    { "nombre": "Instagram", "url": "" },
-    { "nombre": "Behance", "url": "" },
-    { "nombre": "LinkedIn", "url": "" }
+    {
+      "nombre": "Instagram",
+      "url": ""
+    },
+    {
+      "nombre": "Behance",
+      "url": ""
+    },
+    {
+      "nombre": "LinkedIn",
+      "url": ""
+    }
   ],
   "servicios": [
     {
@@ -25,6 +35,72 @@
     {
       "titulo": "Identidad visual",
       "texto": "Creación de marca: logotipo, paleta, tipografía y manual de uso para aplicarla sin perder coherencia."
+    }
+  ],
+  "proceso": {
+    "etiqueta": "Edición de video",
+    "titulo": "Así trabajo",
+    "bajada": "Tú te ocupas de grabar. De todo lo demás me encargo yo.",
+    "pasos": [
+      {
+        "grafico": "celular",
+        "titulo": "Tú grabas",
+        "texto": "Con tu celular, sin equipo especial. Me envías los clips tal como salieron."
+      },
+      {
+        "grafico": "timeline",
+        "titulo": "Yo edito",
+        "texto": "Gancho inicial, cortes, subtítulos y sonido: armo el video completo, listo para publicar."
+      },
+      {
+        "grafico": "dias",
+        "titulo": "Recibes tu video",
+        "texto": "En 2 a 3 días lo tienes terminado, en el formato de la red donde lo vas a subir."
+      }
+    ],
+    "boton": "Cotizar edición de video",
+    "mensaje": "Hola Nacho, quiero cotizar edición de video."
+  },
+  "habilidades": [
+    {
+      "icono": "pluma",
+      "nombre": "Diseño gráfico"
+    },
+    {
+      "icono": "motion",
+      "nombre": "Motion graphics"
+    },
+    {
+      "icono": "video",
+      "nombre": "Edición de video"
+    }
+  ],
+  "herramientas": [
+    {
+      "sigla": "Ai",
+      "nombre": "Illustrator",
+      "nivel": 80
+    },
+    {
+      "sigla": "Ps",
+      "nombre": "Photoshop",
+      "nivel": 95
+    },
+    {
+      "sigla": "Ae",
+      "nombre": "After Effects",
+      "nivel": 50
+    },
+    {
+      "sigla": "Pr",
+      "nombre": "Premiere Pro",
+      "nivel": 65
+    },
+    {
+      "sigla": "Cc",
+      "nombre": "CapCut",
+      "icono": "media/site/herramientas/capcut.webp",
+      "nivel": 96
     }
   ],
   "sobreMi": {
