@@ -154,6 +154,11 @@ h3 {
   outline-offset: 3px;
 }
 
+/* Al saltar a un ancla (ej. /#proceso) el panel fijo no tapa el título */
+[id] {
+  scroll-margin-top: 7rem;
+}
+
 .skip {
   position: absolute;
   left: -999px;
@@ -862,6 +867,34 @@ main,
 .carrusel .card {
   flex: 0 0 min(78%, 26rem);
   scroll-snap-align: start;
+}
+
+/* Puntos de posición bajo el carrusel: el activo se alarga */
+.puntos {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+}
+
+.puntos button {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--texto) 28%, transparent);
+  cursor: pointer;
+  transition: width 0.3s, background 0.3s;
+}
+
+.puntos button:hover {
+  background: color-mix(in srgb, var(--texto) 55%, transparent);
+}
+
+.puntos button.activo {
+  width: 1.6rem;
+  background: var(--acento-texto);
 }
 
 .seccion__nav {

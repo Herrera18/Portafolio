@@ -60,23 +60,44 @@ if (videos.length) {
   }
 }
 
-// Carrusel de destacados: las flechas avanzan de a una tarjeta
+// Carrusel de destacados: las flechas avanzan de a una tarjeta y los puntos marcan la posición
 const carrusel = document.getElementById('destacados');
-const flechas = document.querySelectorAll('[data-carrusel]');
-if (carrusel && flechas.length) {
+if (carrusel) {
+  const flechas = document.querySelectorAll('[data-carrusel]');
+  const puntos = document.getElementById('destacados-puntos');
   const paso = () => {
     const tarjeta = carrusel.querySelector('.card');
     return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap || 0);
   };
+  const fin = () => carrusel.scrollWidth - carrusel.clientWidth;
+  // Un punto por cada posición a la que se puede deslizar (no por tarjeta: varias caben a la vez)
+  const crearPuntos = () => {
+    const total = fin() > 2 ? Math.ceil((fin() - 2) / paso()) + 1 : 0;
+    puntos.replaceChildren(
+      ...Array.from({ length: total }, (_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.tabIndex = -1;
+        b.addEventListener('click', () => carrusel.scrollTo({ left: i * paso(), behavior: 'smooth' }));
+        return b;
+      })
+    );
+  };
   const actualizar = () => {
-    const fin = carrusel.scrollWidth - carrusel.clientWidth - 2;
-    flechas.forEach((f) => (f.disabled = f.dataset.carrusel < 0 ? carrusel.scrollLeft <= 2 : carrusel.scrollLeft >= fin));
+    const x = carrusel.scrollLeft;
+    flechas.forEach((f) => (f.disabled = f.dataset.carrusel < 0 ? x <= 2 : x >= fin() - 2));
+    const activo = x >= fin() - 2 ? puntos.children.length - 1 : Math.round(x / paso());
+    [...puntos.children].forEach((b, i) => b.classList.toggle('activo', i === activo));
   };
   flechas.forEach((f) =>
     f.addEventListener('click', () => carrusel.scrollBy({ left: paso() * f.dataset.carrusel, behavior: 'smooth' }))
   );
   carrusel.addEventListener('scroll', actualizar, { passive: true });
-  window.addEventListener('resize', actualizar);
+  window.addEventListener('resize', () => {
+    crearPuntos();
+    actualizar();
+  });
+  crearPuntos();
   actualizar();
 }
 

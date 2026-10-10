@@ -350,6 +350,7 @@ function paginaInicio(site, projects) {
   <div class="carrusel" id="destacados" tabindex="0" aria-label="Trabajos destacados">
     ${destacados.map((p, i) => card(p, { eager: i < 2, num: i + 1 })).join('')}
   </div>
+  <div class="puntos" id="destacados-puntos" aria-hidden="true"></div>
 </section>
 
 <section class="seccion">
