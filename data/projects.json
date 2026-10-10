@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "cafe-origen",
+    "titulo": "Café Origen",
+    "cliente": "Café Origen",
+    "categoria": "identidad",
+    "anio": 2026,
+    "destacado": true,
+    "resumen": "Identidad visual completa para una cafetería de especialidad.",
+    "contexto": "Proyecto de ejemplo. Café Origen abría su primer local y necesitaba una marca que se distinguiera de las cafeterías de cadena y transmitiera el trabajo artesanal detrás de cada taza.",
+    "queHice": [
+      "Logotipo y versiones secundarias",
+      "Paleta de color y sistema tipográfico",
+      "Empaques, menú y papelería",
+      "Manual de marca"
+    ],
+    "resultado": "Una identidad lista para aplicarse en local, empaques y redes, con un manual que permite al equipo producir piezas nuevas sin perder coherencia.",
+    "portada": "cover.webp",
+    "galeria": ["01.webp", "02.webp", "03.webp"]
+  },
+  {
+    "slug": "fit-club-reels",
+    "titulo": "Fit Club — Reels mensuales",
+    "cliente": "Fit Club",
+    "categoria": "rrss",
+    "anio": 2026,
+    "destacado": true,
+    "resumen": "Producción mensual de reels y plantillas para un gimnasio.",
+    "contexto": "Proyecto de ejemplo. El gimnasio publicaba de forma irregular y sin una línea gráfica clara. Necesitaban contenido constante que mostrara las clases y motivara inscripciones.",
+    "queHice": [
+      "Grabación y edición de reels",
+      "Plantillas para historias y carruseles",
+      "Calendario de contenido mensual"
+    ],
+    "resultado": "Un flujo de publicación estable con piezas reconocibles a primera vista. Aquí van tus cifras: alcance, seguidores nuevos o consultas recibidas.",
+    "portada": "cover.webp",
+    "portadaVideo": "reel-01.mp4",
+    "galeria": ["reel-01.mp4", "reel-02.mp4", "01.webp", "02.webp"]
+  },
+  {
+    "slug": "manos-que-tejen",
+    "titulo": "Manos que tejen",
+    "cliente": "Fundación Telar",
+    "categoria": "video",
+    "anio": 2025,
+    "destacado": true,
+    "resumen": "Documental corto sobre un taller de tejedoras.",
+    "contexto": "Proyecto de ejemplo. La fundación quería mostrar el trabajo de las artesanas a posibles donantes con una pieza breve y emotiva. El video de abajo es un marcador: reemplaza el ID de YouTube por el tuyo.",
+    "queHice": [
+      "Guion y plan de rodaje",
+      "Edición y corrección de color",
+      "Títulos y gráfica animada"
+    ],
+    "resultado": "Una pieza de cuatro minutos usada en la campaña anual de recaudación y en presentaciones a aliados.",
+    "portada": "cover.webp",
+    "youtube": "aqz-KE-bpKQ",
+    "galeria": ["01.webp", "02.webp"]
+  },
+  {
+    "slug": "brisa-verano",
+    "titulo": "Brisa — Campaña de verano",
+    "cliente": "Brisa Swimwear",
+    "categoria": "rrss",
+    "anio": 2025,
+    "destacado": true,
+    "resumen": "Lanzamiento de colección en Instagram: carruseles, historias y reel.",
+    "contexto": "Proyecto de ejemplo. La marca lanzaba su colección de verano y quería una campaña con identidad propia, distinta al contenido del resto del año.",
+    "queHice": [
+      "Concepto y dirección de arte",
+      "Carruseles e historias de lanzamiento",
+      "Reel de anuncio"
+    ],
+    "resultado": "Una campaña de tres semanas con un sistema gráfico que el equipo siguió usando durante toda la temporada.",
+    "portada": "cover.webp",
+    "galeria": ["01.webp", "reel-01.mp4", "02.webp", "03.webp"]
+  },
+  {
+    "slug": "nomada-estudio",
+    "titulo": "Nómada Estudio",
+    "cliente": "Nómada Estudio",
+    "categoria": "identidad",
+    "anio": 2025,
+    "destacado": false,
+    "resumen": "Marca para un estudio de arquitectura e interiorismo.",
+    "contexto": "Proyecto de ejemplo. Un estudio joven necesitaba verse a la altura de los proyectos que quería ganar, con una marca sobria que no compitiera con su trabajo.",
+    "queHice": [
+      "Naming y logotipo",
+      "Sistema de retícula para presentaciones",
+      "Plantillas de propuesta y redes"
+    ],
+    "resultado": "Una identidad discreta y flexible, aplicada en sitio web, propuestas comerciales y redes.",
+    "portada": "cover.webp",
+    "galeria": ["01.webp", "02.webp", "03.webp"]
+  },
+  {
+    "slug": "spot-horizonte",
+    "titulo": "Spot Horizonte",
+    "cliente": "Inmobiliaria Horizonte",
+    "categoria": "video",
+    "anio": 2024,
+    "destacado": false,
+    "resumen": "Spot publicitario para el lanzamiento de un proyecto inmobiliario.",
+    "contexto": "Proyecto de ejemplo. La inmobiliaria necesitaba un spot para pauta digital que presentara el proyecto antes de la apertura de la sala de ventas. El video es un marcador: cambia el ID de YouTube por el tuyo.",
+    "queHice": [
+      "Edición y montaje",
+      "Motion graphics y textos",
+      "Versiones 16:9 y 9:16 para pauta"
+    ],
+    "resultado": "Un spot principal y sus adaptaciones para cada formato de anuncio.",
+    "portada": "cover.webp",
+    "youtube": "eRsGyueVLvQ",
+    "galeria": ["01.webp", "02.webp"]
+  }
+]
