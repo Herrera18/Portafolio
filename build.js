@@ -537,7 +537,21 @@ function paginaInicio(site, projects) {
   <ul class="servicios">${servicios}</ul>
 </section>`
     : '';
-  const foto = site.sobreMi && site.sobreMi.foto;
+  // "fotoInicio": encuadre propio para el círculo del inicio; si no hay, se usa la foto de Sobre mí
+  const foto = site.fotoInicio || (site.sobreMi && site.sobreMi.foto);
+  // "fotoInicioCirculo": la foto es un PNG/WebP transparente que ya trae su círculo con la cabeza saliendo por
+  // arriba. Se indica el centro y el radio de ese círculo (en píxeles de la imagen) y aquí se calcula el tamaño
+  // y la posición para que calce con el círculo iluminado del sitio (92 % del contenedor).
+  let estiloFoto = '';
+  const circ = site.fotoInicio && site.fotoInicioCirculo;
+  const dimFoto = circ && webpSize(site.fotoInicio);
+  if (dimFoto) {
+    const ancho = (92 * dimFoto.w) / (2 * circ.r);
+    const alto = (ancho * dimFoto.h) / dimFoto.w;
+    const izq = 50 - (circ.cx / dimFoto.w) * ancho;
+    const arriba = 50 - (circ.cy / dimFoto.h) * alto;
+    estiloFoto = ` class="sobresale" style="width:${ancho.toFixed(2)}%;left:${izq.toFixed(2)}%;top:${arriba.toFixed(2)}%"`;
+  }
   // "Soy diseñador gráfico" → ["Diseñador", "gráfico"] para la línea pequeña sobre el título
   const rol = site.frase.replace(/^soy\s+/i, '').replace(/^./, (c) => c.toUpperCase()).split(' ');
   const body = `
@@ -570,7 +584,7 @@ function paginaInicio(site, projects) {
     ${herramientas(site, 'Herramientas con las que trabajo')}
   </div>
   <div class="hero__visual">
-    ${foto && exists(foto) ? `<img src="/${esc(foto)}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
+    ${foto && exists(foto) ? `<img src="/${esc(foto)}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(foto)}${estiloFoto} decoding="async">` : ''}
     ${Object.values(CATEGORIAS).map((c) => `<span class="hero__chip">${c}</span>`).join('')}
   </div>
 </section>

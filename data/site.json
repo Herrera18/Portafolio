@@ -1,6 +1,12 @@
 {
   "nombre": "Ignis Studio",
   "frase": "Estudio de diseño gráfico",
+  "fotoInicio": "media/site/retrato-inicio.webp",
+  "fotoInicioCirculo": {
+    "cx": 547,
+    "cy": 743,
+    "r": 433
+  },
   "etiqueta": "",
   "descripcion": "Estudio de diseño gráfico y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
   "intro": "Hacemos diseño gráfico y producción de contenido: videos para clientes, diseño para redes sociales y marcas creadas desde cero.",

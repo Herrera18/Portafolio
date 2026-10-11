@@ -528,15 +528,24 @@ main,
   color: var(--texto);
 }
 
-/* En móvil la burbuja se ensancha para que el texto quepa en una línea */
+/* En móvil la palabra es chica y la burbuja la tapaba casi entera: baja a quedar justo debajo de las letras
+   (apenas las roza) y se ajusta al ancho de su texto; el año pasa a la línea siguiente. */
 @media (max-width: 600px) {
   .portada__burbuja {
-    left: -7%;
-    width: 92%;
+    top: 88%;
+    left: 0;
+    width: max-content;
+    max-width: 100%;
+    height: 1.9rem;
   }
 
   .portada__burbuja span {
+    padding-inline: 0.9em;
     letter-spacing: 0.06em;
+  }
+
+  .portada .hero__marco .hero__pastilla {
+    margin-top: 2.2rem;
   }
 }
 
@@ -823,6 +832,19 @@ main,
   height: 92%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Foto recortada que sobresale del círculo: sin máscara redonda; tamaño y posición vienen calculados */
+.hero__visual img.sobresale {
+  inset: auto;
+  max-width: none;
+  height: auto;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.hero__visual:has(.sobresale) {
+  margin-top: clamp(3rem, 8vw, 6rem);
 }
 
 .hero__chip {
