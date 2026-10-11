@@ -1259,8 +1259,8 @@ main,
   clip-path: inset(0 100% 0 0);
 }
 
-/* Cinta de diseños: tira a todo el ancho que se desliza sola, lenta y sin cortes. Se detiene al pasar el
-   cursor y también se puede arrastrar con el dedo o el trackpad. */
+/* Cinta de diseños: tira a todo el ancho que se desliza sola, lenta y sin cortes, sin detenerse.
+   También se puede arrastrar con el dedo o el trackpad. */
 .cinta {
   --hueco: clamp(0.6rem, 1.2vw, 1rem);
   margin-inline: calc(50% - 50vw);
@@ -1281,11 +1281,6 @@ main,
   width: max-content;
   /* unos 10 s por pieza: lento y parejo sin importar cuántas haya */
   animation: cinta-desliza calc(var(--piezas) * 10s) linear infinite;
-}
-
-.cinta:hover .cinta__pista,
-.cinta:focus-within .cinta__pista {
-  animation-play-state: paused;
 }
 
 @keyframes cinta-desliza {
@@ -2452,7 +2447,7 @@ main,
 }
 
 /* Mosaico del manual de marca: todas las páginas en filas inclinadas, a todo el ancho de la pantalla.
-   Las filas se deslizan muy despacio en sentidos alternados y se detienen al pasar el cursor. */
+   Las filas se deslizan muy despacio en sentidos alternados, sin detenerse. */
 .muro {
   --hueco: clamp(0.7rem, 1.5vw, 1.4rem);
   position: relative;
@@ -2484,10 +2479,6 @@ main,
 
 .muro__fila:nth-child(even) {
   animation-direction: reverse;
-}
-
-.muro:hover .muro__fila {
-  animation-play-state: paused;
 }
 
 /* Cada fila lleva sus páginas duplicadas: al llegar a la mitad vuelve al inicio sin que se note */
