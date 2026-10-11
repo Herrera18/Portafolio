@@ -2,8 +2,8 @@
   "nombre": "Ignis Studio",
   "frase": "Estudio de diseño gráfico",
   "etiqueta": "",
-  "descripcion": "Estudio de diseño gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
-  "intro": "Trabajamos en marketing digital y producción de contenido: videos para clientes, diseño para redes sociales y marcas creadas desde cero.",
+  "descripcion": "Estudio de diseño gráfico y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
+  "intro": "Hacemos diseño gráfico y producción de contenido: videos para clientes, diseño para redes sociales y marcas creadas desde cero.",
   "url": "",
   "email": "rogerignacio53@gmail.com",
   "whatsapp": "584121749963",
@@ -137,7 +137,7 @@
   "sobreMi": {
     "foto": "media/site/nacho.webp",
     "bio": [
-      "Soy Nacho, el diseñador gráfico detrás de Ignis Studio. Trabajo en marketing digital y producción de contenido, acompañando a marcas desde la idea hasta la pieza publicada.",
+      "Soy Nacho, el diseñador gráfico detrás de Ignis Studio. Trabajo en diseño y producción de contenido, acompañando a marcas desde la idea hasta la pieza publicada.",
       "Me muevo entre tres terrenos que se alimentan entre sí: el video, el diseño para redes sociales y la creación de identidad visual. Me interesa que cada pieza se vea bien, pero sobre todo que le sirva al negocio que la publica.",
       "(Texto de ejemplo: reemplázalo por tu bio en data/site.json.)"
     ],
@@ -145,7 +145,7 @@
       "Emprendimientos y marcas personales",
       "Pymes de comercio, gastronomía y servicios",
       "Agencias que necesitan apoyo en producción",
-      "Equipos de marketing internos"
+      "Equipos de comunicación internos"
     ]
   },
   "serviciosTitulo": "En qué te puedo ayudar"
