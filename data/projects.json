@@ -118,6 +118,139 @@
     ]
   },
   {
+    "slug": "venechi-videos",
+    "titulo": "Venechi — Anuncios",
+    "cliente": "Venechi",
+    "rubro": "Cocinas y remodelación",
+    "categoria": "video",
+    "anio": 2025,
+    "resumen": "Videos publicitarios verticales para una empresa que fabrica y remodela cocinas.",
+    "contexto": "Venechi diseña y remodela cocinas. Para sus campañas en redes necesitaba anuncios cortos que mostraran el antes y el después de sus trabajos y llevaran a pedir una cotización.",
+    "queHice": [
+      "Edición de anuncios verticales para redes",
+      "Textos animados y subtítulos",
+      "Música, ritmo y corrección de color",
+      "Versiones para distintas campañas del año"
+    ],
+    "resultado": "Una serie de anuncios de 20 a 35 segundos usados en las campañas de la marca durante 2025.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4",
+      "reel-02.mp4",
+      "reel-03.mp4",
+      "reel-04.mp4",
+      "reel-05.mp4"
+    ]
+  },
+  {
+    "slug": "rosangele-herrera-videos",
+    "titulo": "Rosangele Herrera — Odontología",
+    "cliente": "Rosangele Herrera",
+    "rubro": "Odontología",
+    "categoria": "video",
+    "anio": 2026,
+    "resumen": "Videos para redes de una odontóloga: explicaciones de tratamientos y presentación de su consulta.",
+    "contexto": "Rosangele Herrera es odontóloga y usa sus redes para explicar tratamientos con un tono cercano. Necesitaba videos claros y cuidados, grabados en su consulta, que generaran confianza en nuevos pacientes.",
+    "queHice": [
+      "Edición de videos verticales para redes",
+      "Subtítulos y títulos animados",
+      "Corrección de color y sonido"
+    ],
+    "resultado": "Videos de entre 15 segundos y un minuto que presentan a la profesional y resuelven dudas frecuentes de sus pacientes.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4",
+      "reel-02.mp4",
+      "reel-03.mp4"
+    ],
+    "videos": {
+      "reel-01.mp4": "7Z6LVwup5BA",
+      "reel-02.mp4": "VU8SMlj1VHY",
+      "reel-03.mp4": "mJriYZzSDBY"
+    }
+  },
+  {
+    "slug": "mim2-jardines-del-pacifico",
+    "titulo": "mim2.cl — Jardines del Pacífico V",
+    "cliente": "mim2.cl",
+    "rubro": "Inversión inmobiliaria",
+    "categoria": "video",
+    "anio": 2026,
+    "resumen": "Video promocional de un proyecto de departamentos para una plataforma de inversión inmobiliaria.",
+    "contexto": "mim2.cl asesora a personas que quieren invertir en propiedades. Para presentar el proyecto Jardines del Pacífico V necesitaba un video corto que mostrara el edificio y sus departamentos.",
+    "queHice": [
+      "Edición del video promocional",
+      "Textos animados con la identidad de la marca",
+      "Música y ritmo"
+    ],
+    "resultado": "Un video vertical de 25 segundos para promocionar el proyecto en redes.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4"
+    ]
+  },
+  {
+    "slug": "usa-tu-subsidio-videos",
+    "titulo": "Usa Tu Subsidio — Videos",
+    "cliente": "Usa Tu Subsidio",
+    "rubro": "Subsidios de vivienda",
+    "categoria": "video",
+    "anio": 2026,
+    "resumen": "Videos para Instagram sobre subsidios de vivienda y proyectos inmobiliarios en Chile.",
+    "contexto": "Usa Tu Subsidio orienta a quienes quieren postular a un subsidio habitacional. Además de los carruseles, su contenido incluye videos que explican fechas y trámites, y otros que presentan proyectos de departamentos.",
+    "queHice": [
+      "Edición de videos verticales para Instagram",
+      "Animación de textos con la línea gráfica de la marca",
+      "Videos de presentación de proyectos inmobiliarios",
+      "Música y subtítulos"
+    ],
+    "resultado": "Videos de 10 a 40 segundos publicados durante 2026, con el mismo estilo visual de los carruseles de la marca.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4",
+      "reel-02.mp4",
+      "reel-03.mp4",
+      "reel-04.mp4",
+      "reel-05.mp4"
+    ]
+  },
+  {
+    "slug": "websy-videos",
+    "titulo": "Websy — Campañas en video",
+    "cliente": "Websy",
+    "rubro": "Marketing y tecnología",
+    "categoria": "video",
+    "anio": 2025,
+    "resumen": "Anuncios en video para las campañas de una plataforma de marketing digital y CRM.",
+    "contexto": "Websy vende servicios de marketing digital, CRM y automatización para empresas. Sus campañas necesitaban anuncios en video que explicaran un problema del negocio y la solución en menos de un minuto.",
+    "queHice": [
+      "Edición de anuncios verticales para campañas",
+      "Textos animados y subtítulos",
+      "Música, efectos de sonido y ritmo",
+      "Versiones para distintos meses y servicios"
+    ],
+    "resultado": "Anuncios de 25 a 55 segundos usados en las campañas de Websy entre 2025 y comienzos de 2026.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4",
+      "reel-02.mp4",
+      "reel-03.mp4",
+      "reel-04.mp4",
+      "reel-05.mp4",
+      "reel-06.mp4",
+      "reel-07.mp4"
+    ],
+    "videos": {
+      "reel-01.mp4": "_mk_jcLwmU4",
+      "reel-02.mp4": "tvw4gRS2V9Q",
+      "reel-03.mp4": "jB1dNiPB4Xo",
+      "reel-04.mp4": "S0cHzuelhCM",
+      "reel-05.mp4": "DpOsa5OovWE",
+      "reel-06.mp4": "vLMCKF4Y0PY",
+      "reel-07.mp4": "Fyy5rtYJ1iA"
+    }
+  },
+  {
     "slug": "websy",
     "titulo": "Websy",
     "cliente": "Websy",
@@ -276,50 +409,6 @@
       "manual/20.webp"
     ],
     "manual": 21
-  },
-  {
-    "slug": "manos-que-tejen",
-    "titulo": "Manos que tejen",
-    "cliente": "Fundación Telar",
-    "categoria": "video",
-    "anio": 2025,
-    "destacado": false,
-    "resumen": "Documental corto sobre un taller de tejedoras.",
-    "contexto": "Proyecto de ejemplo. La fundación quería mostrar el trabajo de las artesanas a posibles donantes con una pieza breve y emotiva. El video de abajo es un marcador: reemplaza el ID de YouTube por el tuyo.",
-    "queHice": [
-      "Guion y plan de rodaje",
-      "Edición y corrección de color",
-      "Títulos y gráfica animada"
-    ],
-    "resultado": "Una pieza de cuatro minutos usada en la campaña anual de recaudación y en presentaciones a aliados.",
-    "portada": "cover.webp",
-    "youtube": "aqz-KE-bpKQ",
-    "galeria": [
-      "01.webp",
-      "02.webp"
-    ]
-  },
-  {
-    "slug": "spot-horizonte",
-    "titulo": "Spot Horizonte",
-    "cliente": "Inmobiliaria Horizonte",
-    "categoria": "video",
-    "anio": 2024,
-    "destacado": false,
-    "resumen": "Spot publicitario para el lanzamiento de un proyecto inmobiliario.",
-    "contexto": "Proyecto de ejemplo. La inmobiliaria necesitaba un spot para pauta digital que presentara el proyecto antes de la apertura de la sala de ventas. El video es un marcador: cambia el ID de YouTube por el tuyo.",
-    "queHice": [
-      "Edición y montaje",
-      "Motion graphics y textos",
-      "Versiones 16:9 y 9:16 para pauta"
-    ],
-    "resultado": "Un spot principal y sus adaptaciones para cada formato de anuncio.",
-    "portada": "cover.webp",
-    "youtube": "eRsGyueVLvQ",
-    "galeria": [
-      "01.webp",
-      "02.webp"
-    ]
   },
   {
     "slug": "logofolio",

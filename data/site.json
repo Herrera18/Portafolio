@@ -34,7 +34,10 @@
     {
       "categoria": "video",
       "titulo": "Videos",
-      "detalle": "Reels · Spots · Edición"
+      "detalle": "Reels · Spots · Edición",
+      "cinta": true,
+      "soloCinta": true,
+      "ritmo": 5.5
     },
     {
       "categoria": "identidad",

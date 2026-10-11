@@ -202,8 +202,18 @@ function galeriaItem(p, archivo, i) {
     const poster = archivo.replace(/\.mp4$/i, '.webp');
     const tienePoster = exists(`media/${p.slug}/${poster}`);
     const s = (tienePoster && webpSize(`media/${p.slug}/${poster}`)) || { w: 9, h: 16 };
+    const video = `<video muted loop playsinline preload="none" data-autoplay style="aspect-ratio:${s.w}/${s.h}"${
+      tienePoster ? ` poster="${base}${esc(poster)}"` : ''
+    } aria-label="${esc(p.titulo)}, reel ${i + 1}"><source src="${base}${esc(archivo)}" type="video/mp4"></video>`;
+    // "videos" (opcional): ID de YouTube por archivo. El adelanto mudo pasa a ser un botón que abre el video completo.
+    const yt = p.videos && p.videos[archivo];
+    if (yt) {
+      return `<figure class="galeria__item galeria__item--reel yt yt--vertical" data-yt="${esc(yt)}" style="aspect-ratio:${s.w}/${s.h}">
+  <button type="button" aria-label="Reproducir con sonido: ${esc(p.titulo)}, video ${i + 1}">${video}<span class="yt__play" aria-hidden="true"></span></button>
+</figure>`;
+    }
     return `<figure class="galeria__item galeria__item--reel">
-  <video muted loop playsinline preload="none" data-autoplay style="aspect-ratio:${s.w}/${s.h}"${tienePoster ? ` poster="${base}${esc(poster)}"` : ''} aria-label="${esc(p.titulo)}, reel ${i + 1}"><source src="${base}${esc(archivo)}" type="video/mp4"></video>
+  ${video}
 </figure>`;
   }
   const num = `${String(i + 1).padStart(2, '0')} / ${String(p.galeria.length).padStart(2, '0')}`;
@@ -333,20 +343,37 @@ function paginaInicio(site, projects) {
         const piezas = [];
         for (let k = 0; k < POR_PROYECTO; k++) {
           for (const p of sec.lista) {
-            const archivo = (p.galeria || []).filter((a) => /\.webp$/i.test(a))[k];
+            // Imágenes tal cual; de los reels se usa su póster (reel-01.mp4 → reel-01.webp)
+            const archivo = (p.galeria || [])
+              .map((a) => (/\.mp4$/i.test(a) ? a.replace(/\.mp4$/i, '.webp') : a))
+              .filter((a) => /\.webp$/i.test(a) && exists(`media/${p.slug}/${a}`))[k];
             if (!archivo) continue;
             const mini = archivo.replace(/([^/]+)$/, 'm$1');
-            piezas.push({ p, src: exists(`media/${p.slug}/${mini}`) ? mini : archivo });
+            // Si la pieza es el póster de un reel, se guarda también el video para reproducirlo en la cinta
+            const video = archivo.replace(/\.webp$/i, '.mp4');
+            piezas.push({
+              p,
+              src: exists(`media/${p.slug}/${mini}`) ? mini : archivo,
+              video: (p.galeria || []).includes(video) ? video : null,
+            });
           }
         }
-        const item = ({ p, src }, copia) =>
-          `<a class="cinta__item" href="/proyectos/${p.slug}/"${copia ? ' aria-hidden="true" tabindex="-1"' : ''}>
-        <img src="/media/${p.slug}/${esc(src)}" alt="${copia ? '' : `Diseño para ${esc(p.cliente || p.titulo)}`}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">
+        const item = ({ p, src, video }, copia) => {
+          const dim = webpSize(`media/${p.slug}/${src}`) || { w: 9, h: 16 };
+          // Los reels se reproducen mudos y en loop solo mientras pasan por la pantalla (lo maneja main.js)
+          const medio = video
+            ? `<video muted loop playsinline preload="none" data-autoplay poster="/media/${p.slug}/${esc(src)}" style="aspect-ratio:${dim.w}/${dim.h}" aria-label="${
+                copia ? '' : `Video para ${esc(p.cliente || p.titulo)}`
+              }"><source src="/media/${p.slug}/${esc(video)}" type="video/mp4"></video>`
+            : `<img src="/media/${p.slug}/${esc(src)}" alt="${copia ? '' : `Diseño para ${esc(p.cliente || p.titulo)}`}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">`;
+          return `<a class="cinta__item" href="/proyectos/${p.slug}/"${copia ? ' aria-hidden="true" tabindex="-1"' : ''}>
+        ${medio}
         <span>${esc(p.cliente || p.titulo)}</span>
       </a>`;
+        };
         if (piezas.length) {
           cinta = `
-  <div class="cinta" style="--piezas:${piezas.length}">
+  <div class="cinta" style="--piezas:${piezas.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
     <div class="cinta__pista">
       ${piezas.map((x) => item(x, false)).join('')}
       ${piezas.map((x) => item(x, true)).join('')}
@@ -400,7 +427,9 @@ function paginaInicio(site, projects) {
             })
           )
         : [];
-      const sinCarrusel = collages || fichas.length;
+      // "soloCinta": la sección muestra únicamente la cinta (cada pieza lleva a su proyecto), sin tarjetas
+      const soloCinta = sec.soloCinta && cinta;
+      const sinCarrusel = collages || fichas.length || soloCinta;
       const cuenta = fichas.length
         ? `${fichas.length} ${fichas.length === 1 ? 'logotipo' : 'logotipos'}`
         : `${sec.lista.length} ${sec.lista.length === 1 ? 'proyecto' : 'proyectos'}`;
@@ -431,7 +460,9 @@ function paginaInicio(site, projects) {
     </div>
   </div>`
         : '';
-      const tira = lamina
+      const tira = soloCinta
+        ? ''
+        : lamina
         ? lamina
         : fichas.length
         ? `
@@ -616,13 +647,15 @@ function paginaProyecto(site, projects, p, i) {
   // Social media sin video: la galería son publicaciones verticales y va como muro de posts
   const esLogos = p.tipo === 'logofolio';
   const esPosts = (p.categoria === 'rrss' && !p.youtube) || esLogos;
+  // Proyecto de video sin YouTube: la galería son adelantos verticales mudos, en fila como los posts
+  const esReels = p.categoria === 'video' && !p.youtube;
   const piezas = [
     p.manual && `Manual de ${p.manual} páginas`,
     esLogos
       ? plural(imagenes, 'logotipo', 'logotipos')
       : plural(imagenes, p.manual ? 'mockup' : esPosts ? 'pieza' : 'imagen', p.manual ? 'mockups' : esPosts ? 'piezas' : 'imágenes'),
     plural((p.laminas || []).length, 'ficha de marca', 'fichas de marca'),
-    plural(reels, 'reel', 'reels'),
+    plural(reels, esReels ? 'video' : 'reel', esReels ? 'videos' : 'reels'),
   ]
     .filter(Boolean)
     .join(' · ');
@@ -708,8 +741,14 @@ function paginaProyecto(site, projects, p, i) {
 
   ${
     galeria.length
-      ? `${p.manual ? '<h2 class="proyecto__subtitulo">Aplicaciones</h2>' : ''}
-  <section class="galeria${esLogos ? ' galeria--logos' : esPosts ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+      ? `${p.manual ? '<h2 class="proyecto__subtitulo">Aplicaciones</h2>' : ''}${
+          esReels && reels
+            ? galeria.every((a) => !/\.mp4$/i.test(a) || (p.videos && p.videos[a]))
+              ? '<h2 class="proyecto__subtitulo">Videos <small>toca uno para verlo con sonido</small></h2>'
+              : '<h2 class="proyecto__subtitulo">Adelantos <small>sin sonido</small></h2>'
+            : ''
+        }
+  <section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
       : ''
   }
   ${

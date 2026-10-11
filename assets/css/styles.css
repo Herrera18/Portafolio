@@ -1306,8 +1306,8 @@ main,
   display: flex;
   gap: var(--hueco);
   width: max-content;
-  /* unos 10 s por pieza: lento y parejo sin importar cuántas haya */
-  animation: cinta-desliza calc(var(--piezas) * 10s) linear infinite;
+  /* --ritmo: segundos que tarda en pasar cada pieza (10 por defecto; se ajusta por sección con "ritmo" en site.json) */
+  animation: cinta-desliza calc(var(--piezas) * var(--ritmo, 10s)) linear infinite;
 }
 
 @keyframes cinta-desliza {
@@ -1320,15 +1320,18 @@ main,
   justify-items: center;
 }
 
-.cinta__item img {
+.cinta__item img,
+.cinta__item video {
   width: auto;
+  object-fit: cover;
   height: clamp(15rem, 30vw, 23rem);
   border-radius: 10px;
   background: var(--panel-2);
   transition: scale 0.3s;
 }
 
-.cinta__item:hover img {
+.cinta__item:hover img,
+.cinta__item:hover video {
   scale: 1.02;
 }
 
@@ -2440,6 +2443,18 @@ main,
   object-fit: cover;
 }
 
+/* Reproductor vertical (Shorts): el adelanto mudo hace de portada y el botón de play va más chico */
+.yt--vertical button video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.yt--vertical .yt__play {
+  width: 3.4rem;
+  opacity: 0.92;
+}
+
 .yt__play {
   position: absolute;
   top: 50%;
@@ -2656,6 +2671,17 @@ main,
   font-weight: 600;
   line-height: 1;
   color: var(--acento-texto);
+}
+
+.proyecto__subtitulo small {
+  margin-left: 0.5em;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  word-spacing: normal;
+  color: var(--texto-2);
 }
 
 .proyecto__subtitulo {
