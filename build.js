@@ -503,7 +503,7 @@ function paginaInicio(site, projects) {
     <p class="portada__rol"><b>${esc(rol[0])}</b> <em>${esc(rol.slice(1).join(' '))}</em></p>
     <div class="portada__caja" aria-hidden="true">
       <p class="portada__titulo">Portaf<span class="portada__huella"><svg viewBox="2 1 20 21" fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><path pathLength="100" stroke-dasharray="100" d="M10.50 20.71V11a1.5 1.5 0 0 1 3.0 0V19.81"/><path pathLength="100" stroke-dasharray="46 5 49" d="M9.00 20.33V11a3.0 3.0 0 0 1 6.0 0V20.33"/><path pathLength="100" stroke-dasharray="18 4 50 5 23" d="M7.50 19.67V11a4.5 4.5 0 0 1 9.0 0V18.77"/><path pathLength="100" stroke-dasharray="62 4 34" d="M6.00 18.64V11a6.0 6.0 0 0 1 12.0 0V18.64"/><path pathLength="100" stroke-dasharray="30 5 40 4 21" d="M4.50 17.00V11a7.5 7.5 0 0 1 15.0 0V16.10"/><path pathLength="100" stroke-dasharray="12 6 30 5 47" d="M3.00 13.31V11a9.0 9.0 0 0 1 18.0 0V13.31"/><path d="M12 11.4V20.83"/></svg></span>lio</p>
-      <span class="portada__burbuja"></span>
+      <span class="portada__burbuja"><span>${(site.servicios || []).map((x) => esc(x.titulo)).join(' · ')}</span></span>
     </div>
     <p class="hero__pastilla"><span aria-hidden="true">↙</span><em>${new Date().getFullYear()}</em></p>
     <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>

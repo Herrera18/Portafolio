@@ -502,15 +502,41 @@ main,
   z-index: 1;
   width: 56%;
   height: 52%;
+  display: grid;
+  place-items: center;
   border: 1px solid var(--cristal-borde);
   border-radius: 99px;
-  background: var(--cristal);
+  /* un velo del color del fondo sobre el cristal, para que el texto de adentro se lea sobre las letras */
+  background: linear-gradient(color-mix(in srgb, var(--fondo) 50%, transparent), color-mix(in srgb, var(--fondo) 50%, transparent)), var(--cristal);
   backdrop-filter: blur(4px) saturate(1.5) brightness(0.82);
   -webkit-backdrop-filter: blur(4px) saturate(1.5) brightness(0.82);
   box-shadow:
     inset 0 1px 0 var(--cristal-brillo),
     inset 0 -1px 0 rgba(255, 255, 255, 0.06),
     0 18px 36px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* Texto dentro de la burbuja: las especialidades */
+.portada__burbuja span {
+  padding-inline: 1em;
+  font-size: clamp(0.5rem, 1.15vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--texto);
+}
+
+/* En móvil la burbuja se ensancha para que el texto quepa en una línea */
+@media (max-width: 600px) {
+  .portada__burbuja {
+    left: -7%;
+    width: 92%;
+  }
+
+  .portada__burbuja span {
+    letter-spacing: 0.06em;
+  }
 }
 
 .portada .hero__pastilla {
