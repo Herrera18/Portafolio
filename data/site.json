@@ -1,14 +1,14 @@
 {
-  "nombre": "Nacho",
-  "frase": "Soy diseñador gráfico",
-  "etiqueta": "Marketing digital · Contenido",
-  "descripcion": "Diseñador gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
-  "intro": "Trabajo en marketing digital y producción de contenido. Hago videos para clientes, diseño para redes sociales y creo marcas desde cero.",
+  "nombre": "Ignis Studio",
+  "frase": "Estudio de diseño gráfico",
+  "etiqueta": "",
+  "descripcion": "Estudio de diseño gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
+  "intro": "Trabajamos en marketing digital y producción de contenido: videos para clientes, diseño para redes sociales y marcas creadas desde cero.",
   "url": "",
   "email": "rogerignacio53@gmail.com",
   "whatsapp": "584121749963",
   "whatsappVisible": "0412 174 9963",
-  "whatsappMensaje": "Hola Nacho, vi tu portafolio y quiero conversar sobre un proyecto.",
+  "whatsappMensaje": "Hola Ignis Studio, vi el portafolio y quiero conversar sobre un proyecto.",
   "redes": [
     {
       "nombre": "Instagram",
@@ -87,7 +87,7 @@
       }
     ],
     "boton": "Cotizar edición de video",
-    "mensaje": "Hola Nacho, quiero cotizar edición de video."
+    "mensaje": "Hola Ignis Studio, quiero cotizar edición de video."
   },
   "habilidades": [
     {
@@ -134,7 +134,7 @@
   "sobreMi": {
     "foto": "media/site/nacho.webp",
     "bio": [
-      "Soy Nacho, diseñador gráfico. Trabajo en marketing digital y producción de contenido, acompañando a marcas desde la idea hasta la pieza publicada.",
+      "Soy Nacho, el diseñador gráfico detrás de Ignis Studio. Trabajo en marketing digital y producción de contenido, acompañando a marcas desde la idea hasta la pieza publicada.",
       "Me muevo entre tres terrenos que se alimentan entre sí: el video, el diseño para redes sociales y la creación de identidad visual. Me interesa que cada pieza se vea bien, pero sobre todo que le sirva al negocio que la publica.",
       "(Texto de ejemplo: reemplázalo por tu bio en data/site.json.)"
     ],

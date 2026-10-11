@@ -527,7 +527,7 @@ function paginaInicio(site, projects) {
     ${herramientas(site, 'Herramientas con las que trabajo')}
   </div>
   <div class="hero__visual">
-    ${foto && exists(foto) ? `<img src="/${esc(foto)}" alt="Retrato de ${esc(site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
+    ${foto && exists(foto) ? `<img src="/${esc(foto)}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
     ${Object.values(CATEGORIAS).map((c) => `<span class="hero__chip">${c}</span>`).join('')}
   </div>
 </section>
@@ -747,7 +747,7 @@ function paginaSobreMi(site) {
 <section class="sobre">
   ${
     s.foto && exists(s.foto)
-      ? `<img class="sobre__foto" src="/${esc(s.foto)}" alt="Retrato de ${esc(site.nombre)}"${sizeAttrs(s.foto)} decoding="async">`
+      ? `<img class="sobre__foto" src="/${esc(s.foto)}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(s.foto)} decoding="async">`
       : ''
   }
   <div class="sobre__texto">
