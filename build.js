@@ -8,9 +8,10 @@ const ROOT = __dirname;
 const OUT = path.join(ROOT, 'dist');
 
 const CATEGORIAS = {
+  rrss: 'Social media',
   video: 'Video',
-  rrss: 'RRSS',
-  identidad: 'Identidad visual',
+  identidad: 'Identidad de marca',
+  logos: 'Logofolio',
 };
 
 // ---------- utilidades ----------
@@ -83,7 +84,11 @@ function validar(projects) {
     if (!CATEGORIAS[p.categoria]) err(`"categoria" debe ser una de: ${Object.keys(CATEGORIAS).join(', ')}.`);
     if (!p.portada) err('falta "portada".');
 
-    const archivos = [p.portada, p.portadaVideo, ...(p.galeria || [])].filter(Boolean);
+    const paginasManual = Array.from({ length: p.manual || 0 }, (_, n) => String(n + 1).padStart(2, '0')).flatMap((nn) => [
+      `manual/${nn}.webp`,
+      `manual/m${nn}.webp`,
+    ]);
+    const archivos = [p.portada, p.portadaVideo, ...(p.galeria || []), ...(p.laminas || []), ...(p.mono || []).map((m) => m.archivo), ...paginasManual].filter(Boolean);
     for (const a of archivos) {
       if (!exists(`media/${p.slug}/${a}`)) err(`no existe el archivo media/${p.slug}/${a}`);
     }
@@ -134,7 +139,7 @@ function layout(site, { title, description, urlPath, image, body, active, jsonld
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#18212e">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap">
@@ -201,8 +206,15 @@ function galeriaItem(p, archivo, i) {
   <video muted loop playsinline preload="none" data-autoplay style="aspect-ratio:${s.w}/${s.h}"${tienePoster ? ` poster="${base}${esc(poster)}"` : ''} aria-label="${esc(p.titulo)}, reel ${i + 1}"><source src="${base}${esc(archivo)}" type="video/mp4"></video>
 </figure>`;
   }
+  const num = `${String(i + 1).padStart(2, '0')} / ${String(p.galeria.length).padStart(2, '0')}`;
+  // "pies" (opcional): texto bajo una imagen, por nombre de archivo. Reemplaza al número.
+  const pie = p.pies && p.pies[archivo];
+  const mini = archivo.replace(/([^/]+)$/, 'm$1');
+  const tieneMini = exists(`media/${p.slug}/${mini}`);
+  const visible = tieneMini ? mini : archivo;
   return `<figure class="galeria__item">
-  <img src="${base}${esc(archivo)}" alt="${esc(p.titulo)}, imagen ${i + 1}"${sizeAttrs(`media/${p.slug}/${archivo}`)} loading="lazy" decoding="async">
+  <img src="${base}${esc(visible)}"${tieneMini ? ` data-full="${base}${esc(archivo)}"` : ''} alt="${esc(pie || `${p.titulo}, imagen ${i + 1}`)}"${sizeAttrs(`media/${p.slug}/${visible}`)} loading="lazy" decoding="async" data-zoom>
+  ${pie ? `<figcaption class="galeria__pie">${esc(pie)}</figcaption>` : `<figcaption>${num}</figcaption>`}
 </figure>`;
 }
 
@@ -304,24 +316,209 @@ function proceso(site) {
 // ---------- páginas ----------
 
 function paginaInicio(site, projects) {
-  const destacados = projects.filter((p) => p.destacado).slice(0, 4);
+  // Una sección numerada por categoría (orden y nombres en site.json → "secciones"), con sus proyectos en una tira.
+  const secciones = (site.secciones || [])
+    .map((sec) => ({ ...sec, lista: projects.filter((p) => p.categoria === sec.categoria) }))
+    .filter((sec) => sec.lista.length)
+    .map((sec, n) => {
+      const anios = sec.lista.map((p) => Number(p.anio)).filter(Boolean);
+      const rango = anios.length ? [...new Set([Math.min(...anios), Math.max(...anios)])].join(' – ') : '';
+      const num = String(n + 1).padStart(2, '0');
+
+      // Cinta ("cinta": true en site.json): las piezas de todos los proyectos de la sección, intercaladas por
+      // cliente, en una tira que se desliza sola. Va dos veces seguida para que el recorrido no tenga corte.
+      let cinta = '';
+      if (sec.cinta) {
+        const POR_PROYECTO = 6;
+        const piezas = [];
+        for (let k = 0; k < POR_PROYECTO; k++) {
+          for (const p of sec.lista) {
+            const archivo = (p.galeria || []).filter((a) => /\.webp$/i.test(a))[k];
+            if (!archivo) continue;
+            const mini = archivo.replace(/([^/]+)$/, 'm$1');
+            piezas.push({ p, src: exists(`media/${p.slug}/${mini}`) ? mini : archivo });
+          }
+        }
+        const item = ({ p, src }, copia) =>
+          `<a class="cinta__item" href="/proyectos/${p.slug}/"${copia ? ' aria-hidden="true" tabindex="-1"' : ''}>
+        <img src="/media/${p.slug}/${esc(src)}" alt="${copia ? '' : `Diseño para ${esc(p.cliente || p.titulo)}`}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">
+        <span>${esc(p.cliente || p.titulo)}</span>
+      </a>`;
+        if (piezas.length) {
+          cinta = `
+  <div class="cinta" style="--piezas:${piezas.length}">
+    <div class="cinta__pista">
+      ${piezas.map((x) => item(x, false)).join('')}
+      ${piezas.map((x) => item(x, true)).join('')}
+    </div>
+  </div>`;
+        }
+      }
+      // Collage ("collage": true): un bloque por marca con seis piezas superpuestas y su nombre al centro.
+      // Reemplaza a las tarjetas de proyecto de esa sección.
+      const collages = sec.collage
+        ? sec.lista
+            .map((p) => {
+              const piezas = (p.galeria || [])
+                .filter((a) => /\.webp$/i.test(a))
+                .slice(0, 6)
+                .map((archivo) => {
+                  const mini = archivo.replace(/([^/]+)$/, 'm$1');
+                  return exists(`media/${p.slug}/${mini}`) ? mini : archivo;
+                });
+              return `
+  <a class="collage" href="/proyectos/${p.slug}/" aria-label="Ver el proyecto ${esc(p.titulo)}">
+    <div class="collage__barra"><span>Contenido para redes sociales</span><span>Ver proyecto ↗</span><span>${p.anio ? `${esc(p.anio)} //` : ''}</span></div>
+    <div class="collage__cuerpo">
+      <strong class="collage__marca">${esc(p.cliente || p.titulo)}</strong>
+      <div class="collage__lienzo">
+        ${piezas
+          .map(
+            (src) =>
+              `<img src="/media/${p.slug}/${esc(src)}" alt=""${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">`
+          )
+          .join('')}
+      </div>
+      <span class="collage__rubro">${esc(p.rubro || CATEGORIAS[p.categoria])}</span>
+    </div>
+  </a>`;
+            })
+            .join('')
+        : '';
+      // Rejilla ("rejilla": true): las piezas de la sección directo en una grilla (logofolio), cada una con su pie.
+      const fichas = sec.rejilla
+        ? sec.lista.flatMap((p) =>
+            (p.galeria || []).map((archivo) => {
+              const mini = archivo.replace(/([^/]+)$/, 'm$1');
+              const src = exists(`media/${p.slug}/${mini}`) ? mini : archivo;
+              const pie = (p.pies && p.pies[archivo]) || p.titulo;
+              return `
+    <a class="galeria__item" href="/proyectos/${p.slug}/">
+      <img src="/media/${p.slug}/${esc(src)}" alt="${esc(pie)}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">
+      <span class="galeria__pie">${esc(pie)}</span>
+    </a>`;
+            })
+          )
+        : [];
+      const sinCarrusel = collages || fichas.length;
+      const cuenta = fichas.length
+        ? `${fichas.length} ${fichas.length === 1 ? 'logotipo' : 'logotipos'}`
+        : `${sec.lista.length} ${sec.lista.length === 1 ? 'proyecto' : 'proyectos'}`;
+      // Si el proyecto trae sus logos a una tinta ("mono"), la sección va como lámina de logofolio:
+      // texto a la izquierda y los logos en una cuadrícula de tres columnas separada por líneas punteadas.
+      const lf = sec.rejilla && sec.lista.find((p) => (p.mono || []).length);
+      const lamina = lf
+        ? `
+  <div class="logofolio">
+    <div class="logofolio__texto">
+      <span>Portafolio — ${esc(sec.titulo)}</span>
+      <div>
+        <h3>${esc(lf.titulo)}</h3>
+        <p>${esc(lf.contexto || lf.resumen || '')}</p>
+      </div>
+      <span>${lf.mono.length} marcas</span>
+    </div>
+    <div class="logofolio__grilla">
+      ${lf.mono
+        .map(
+          (m) =>
+            `<a class="logofolio__celda" href="/proyectos/${lf.slug}/" title="${esc(m.nombre)}"><i role="img" aria-label="Logotipo de ${esc(
+              m.nombre
+            )}" style="--logo:url('/media/${lf.slug}/${esc(m.archivo)}')"></i></a>`
+        )
+        .join('')}
+      <a class="logofolio__celda logofolio__ver" href="/proyectos/${lf.slug}/">Ver logofolio ↗</a>
+    </div>
+  </div>`
+        : '';
+      const tira = lamina
+        ? lamina
+        : fichas.length
+        ? `
+  <div class="galeria galeria--logos rejilla">${fichas.join('')}
+  </div>`
+        : collages
+        ? `
+  <div class="collage-escena">${collages}
+  </div>
+  <div class="collage-puntos"></div>`
+        : `
+  <div class="carrusel" tabindex="0" aria-label="${esc(sec.titulo)}">
+    ${sec.lista.map((p, i) => card(p, { eager: n === 0 && i < 2 })).join('')}
+  </div>
+  <div class="puntos" aria-hidden="true"></div>`;
+      return `
+<section class="seccion categoria" id="${sec.categoria}"${sinCarrusel ? '' : ' data-carrusel-caja'}>
+  <a class="categoria__banda" href="/trabajos/#${sec.categoria}" aria-label="Ver todos los trabajos de ${esc(sec.titulo)}">
+    <span class="categoria__num" aria-hidden="true">${num}</span>
+    <span class="categoria__titulo">
+      <h2>${esc(sec.titulo)}</h2>
+      <small>(Categoría de trabajo)</small>
+    </span>
+    <span class="categoria__flecha" aria-hidden="true">↗</span>
+  </a>
+  <div class="categoria__barra">
+    <span>${esc(sec.detalle || '')}</span>
+    <span>${cuenta}</span>
+    <span class="categoria__nav">
+      ${rango ? `${rango} //` : ''}
+      ${
+        sinCarrusel
+          ? ''
+          : `<button class="flecha" type="button" data-carrusel="-1" aria-label="Anteriores">←</button>
+      <button class="flecha" type="button" data-carrusel="1" aria-label="Siguientes">→</button>`
+      }
+    </span>
+  </div>
+  ${cinta}${tira}${sec.categoria === 'video' ? proceso(site).replace('<section class="seccion" id="proceso">', '<div class="subseccion" id="proceso">').replace(/<\/section>\s*$/, '</div>') : ''}
+</section>`;
+    })
+    .join('\n');
   const servicios = (site.servicios || [])
-    .map((s) => `<li><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p></li>`)
+    .map((s) => {
+      // Si el servicio indica "categoria" y esa sección existe en el inicio, la tarjeta lleva a ella.
+      const destino = s.categoria && (site.secciones || []).some((x) => x.categoria === s.categoria) && projects.some((p) => p.categoria === s.categoria);
+      const dentro = `<h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p>`;
+      return destino
+        ? `<li><a href="#${s.categoria}">${dentro}<span class="servicios__ver">Ver trabajos ↓</span></a></li>`
+        : `<li>${dentro}</li>`;
+    })
     .join('');
+  const bloqueServicios = servicios
+    ? `
+<section class="seccion" id="servicios">
+  <div class="seccion__cabecera">
+    <div><h2>${esc(site.serviciosTitulo || 'Servicios')}</h2></div>
+    <div class="seccion__lado"><p class="etiqueta">Servicios</p></div>
+  </div>
+  <ul class="servicios">${servicios}</ul>
+</section>`
+    : '';
   const foto = site.sobreMi && site.sobreMi.foto;
+  // "Soy diseñador gráfico" → ["Diseñador", "gráfico"] para la línea pequeña sobre el título
+  const rol = site.frase.replace(/^soy\s+/i, '').replace(/^./, (c) => c.toUpperCase()).split(' ');
   const body = `
+<section class="portada" aria-label="Portafolio ${new Date().getFullYear()}">
+  <div class="hero__marco">
+    <p class="portada__rol"><b>${esc(rol[0])}</b> <em>${esc(rol.slice(1).join(' '))}</em></p>
+    <div class="portada__caja" aria-hidden="true">
+      <p class="portada__titulo">Portaf<span class="portada__huella"><svg viewBox="2 1 20 21" fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><path pathLength="100" stroke-dasharray="100" d="M10.50 20.71V11a1.5 1.5 0 0 1 3.0 0V19.81"/><path pathLength="100" stroke-dasharray="46 5 49" d="M9.00 20.33V11a3.0 3.0 0 0 1 6.0 0V20.33"/><path pathLength="100" stroke-dasharray="18 4 50 5 23" d="M7.50 19.67V11a4.5 4.5 0 0 1 9.0 0V18.77"/><path pathLength="100" stroke-dasharray="62 4 34" d="M6.00 18.64V11a6.0 6.0 0 0 1 12.0 0V18.64"/><path pathLength="100" stroke-dasharray="30 5 40 4 21" d="M4.50 17.00V11a7.5 7.5 0 0 1 15.0 0V16.10"/><path pathLength="100" stroke-dasharray="12 6 30 5 47" d="M3.00 13.31V11a9.0 9.0 0 0 1 18.0 0V13.31"/><path d="M12 11.4V20.83"/></svg></span>lio</p>
+      <span class="portada__burbuja"></span>
+    </div>
+    <p class="hero__pastilla"><span aria-hidden="true">↙</span><em>${new Date().getFullYear()}</em></p>
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
+      <defs><linearGradient id="pluma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--acento)"/><stop offset="1" stop-color="var(--acento-2)"/></linearGradient></defs>
+      <path fill="url(#pluma)" fill-rule="evenodd" d="M32 15l12 20-4.5 15h-15L20 35zm-1 5v11.2a3.6 3.6 0 1 0 2 0V20zM24.5 53h15v5h-15z"/>
+    </svg>
+  </div>
+</section>
+
 <section class="hero">
   <div class="hero__texto">
     ${site.etiqueta ? `<p class="etiqueta">${esc(site.etiqueta)}</p>` : ''}
-    <div class="hero__marco">
-      <h1 class="hero__nombre">${esc(site.nombre)}</h1>
-      <p class="hero__frase">${esc(site.frase)}</p>
-      <i></i><i></i><i></i><i></i>
-      <svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
-        <defs><linearGradient id="pluma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--acento)"/><stop offset="1" stop-color="var(--acento-2)"/></linearGradient></defs>
-        <path fill="url(#pluma)" fill-rule="evenodd" d="M32 15l12 20-4.5 15h-15L20 35zm-1 5v11.2a3.6 3.6 0 1 0 2 0V20zM24.5 53h15v5h-15z"/>
-      </svg>
-    </div>
+    <h1 class="hero__nombre">${esc(site.nombre)}</h1>
+    <p class="hero__frase">${esc(site.frase)}</p>
     <p class="hero__intro">${esc(site.intro)}</p>
     <div class="hero__botones">
       <a class="boton" href="/trabajos/">Ver trabajos</a>
@@ -335,32 +532,9 @@ function paginaInicio(site, projects) {
   </div>
 </section>
 
-<section class="seccion">
-  <div class="seccion__cabecera">
-    <div><h2>Algunos trabajos recientes</h2></div>
-    <div class="seccion__lado">
-      <p class="etiqueta">Destacados</p>
-      <div class="seccion__nav">
-        <a class="seccion__ver" href="/trabajos/">Ver todos los trabajos</a>
-        <button class="flecha" type="button" data-carrusel="-1" aria-label="Trabajos anteriores">←</button>
-        <button class="flecha" type="button" data-carrusel="1" aria-label="Trabajos siguientes">→</button>
-      </div>
-    </div>
-  </div>
-  <div class="carrusel" id="destacados" tabindex="0" aria-label="Trabajos destacados">
-    ${destacados.map((p, i) => card(p, { eager: i < 2, num: i + 1 })).join('')}
-  </div>
-  <div class="puntos" id="destacados-puntos" aria-hidden="true"></div>
-</section>
-
-<section class="seccion">
-  <div class="seccion__cabecera">
-    <div><h2>Qué hago</h2></div>
-    <div class="seccion__lado"><p class="etiqueta">Servicios</p></div>
-  </div>
-  <ul class="servicios">${servicios}</ul>
-</section>
-${proceso(site)}`;
+${bloqueServicios}
+${secciones}
+${(site.secciones || []).some((x) => x.categoria === 'video') && projects.some((p) => p.categoria === 'video') ? '' : proceso(site)}`;
 
   return layout(site, {
     title: `${site.nombre} — ${site.frase.replace(/^Soy\s+/i, '').replace(/^./, (c) => c.toUpperCase())}`,
@@ -426,44 +600,133 @@ function paginaProyecto(site, projects, p, i) {
   </div>`
     : `<img class="proyecto__portada" src="${base}${esc(p.portada)}" alt="${esc(p.titulo)}"${sizeAttrs(
         `media/${p.slug}/${p.portada}`
-      )} decoding="async">`;
+      )} decoding="async" data-zoom>`;
 
-  const bloque = (titulo, contenido) => (contenido ? `<div><h2>${titulo}</h2>${contenido}</div>` : '');
+  const bloque = (clase, titulo, contenido) => (contenido ? `<div class="info--${clase}"><h2>${titulo}</h2>${contenido}</div>` : '');
   const queHice = Array.isArray(p.queHice)
-    ? `<ul>${p.queHice.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
+    ? `<ol>${p.queHice.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>`
     : p.queHice
     ? `<p>${esc(p.queHice)}</p>`
     : '';
 
+  const galeria = p.galeria || [];
+  const reels = galeria.filter((a) => /\.mp4$/i.test(a)).length;
+  const imagenes = galeria.length - reels;
+  const plural = (n, uno, varios) => n && `${n} ${n === 1 ? uno : varios}`;
+  // Social media sin video: la galería son publicaciones verticales y va como muro de posts
+  const esLogos = p.tipo === 'logofolio';
+  const esPosts = (p.categoria === 'rrss' && !p.youtube) || esLogos;
+  const piezas = [
+    p.manual && `Manual de ${p.manual} páginas`,
+    esLogos
+      ? plural(imagenes, 'logotipo', 'logotipos')
+      : plural(imagenes, p.manual ? 'mockup' : esPosts ? 'pieza' : 'imagen', p.manual ? 'mockups' : esPosts ? 'piezas' : 'imágenes'),
+    plural((p.laminas || []).length, 'ficha de marca', 'fichas de marca'),
+    plural(reels, 'reel', 'reels'),
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  const fila = (dt, dd) => (dd ? `<div><dt>${dt}</dt><dd>${esc(dd)}</dd></div>` : '');
+  const wa = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+    `Hola ${site.nombre}, vi el proyecto ${p.titulo} en tu portafolio y quiero algo similar.`
+  )}`;
+
+  // Mosaico del manual: todas las páginas en filas inclinadas que se deslizan despacio.
+  // Cada fila lleva sus páginas dos veces seguidas para que el deslizamiento no tenga corte.
+  let muro = '';
+  if (p.manual) {
+    const FILAS = 4;
+    // Mínimo 7 por fila: así media fila siempre es más ancha que la pantalla y no quedan huecos al deslizarse.
+    const porFila = Math.max(7, Math.ceil(p.manual / FILAS));
+    const pagina = (n, copia) => {
+      const nn = String(n).padStart(2, '0');
+      return `<img src="${base}manual/m${nn}.webp" data-full="${base}manual/${nn}.webp" data-zoom width="640" height="360" decoding="async" alt="${
+        copia ? '' : `${esc(p.titulo)}, página ${n} del manual`
+      }"${copia ? ' aria-hidden="true"' : ''}>`;
+    };
+    const filas = Array.from({ length: FILAS }, (_, f) => {
+      const nums = Array.from({ length: porFila }, (_, k) => ((f * porFila + k) % p.manual) + 1);
+      return `<div class="muro__fila">${nums.map((n) => pagina(n, false)).join('')}${nums.map((n) => pagina(n, true)).join('')}</div>`;
+    }).join('\n      ');
+    muro = `<section class="muro" aria-label="Páginas del manual de marca">
+    <div class="muro__lienzo">
+      ${filas}
+    </div>
+    <button class="boton muro__boton" type="button" data-visor>Ver el manual página por página</button>
+  </section>`;
+  } else if (esPosts && imagenes >= 4) {
+    // Social media: el mismo mosaico, armado con las publicaciones (verticales o cuadradas) en tres filas.
+    const FILAS = 3;
+    const posts = galeria.filter((x) => /\.webp$/i.test(x));
+    // Mínimo 9 por fila para que media fila cubra siempre la pantalla; cada fila parte en una pieza distinta.
+    // Con pocas piezas la fila da vueltas completas a la lista, para que no queden dos iguales juntas en el empalme.
+    const porFila =
+      posts.length < 9 ? posts.length * Math.ceil(9 / posts.length) : Math.max(9, Math.ceil(posts.length / FILAS));
+    const salto = posts.length < 9 ? Math.ceil(posts.length / FILAS) : porFila;
+    const pieza = (archivo, copia) => {
+      const mini = archivo.replace(/([^/]+)$/, 'm$1');
+      const src = exists(`media/${p.slug}/${mini}`) ? mini : archivo;
+      return `<img src="${base}${esc(src)}" data-full="${base}${esc(archivo)}" data-zoom${sizeAttrs(`media/${p.slug}/${src}`)} decoding="async" alt="${
+        copia ? '' : `${esc(p.titulo)}, pieza ${posts.indexOf(archivo) + 1}`
+      }"${copia ? ' aria-hidden="true"' : ''}>`;
+    };
+    const filas = Array.from({ length: FILAS }, (_, f) => {
+      const lista = Array.from({ length: porFila }, (_, k) => posts[(f * salto + k) % posts.length]);
+      return `<div class="muro__fila">${lista.map((x) => pieza(x, false)).join('')}${lista.map((x) => pieza(x, true)).join('')}</div>`;
+    }).join('');
+    muro = `<section class="muro muro--posts" aria-label="Publicaciones del proyecto">
+    <div class="muro__lienzo">
+      ${filas}
+    </div>
+    <button class="boton muro__boton" type="button" data-visor>Ver las piezas una por una</button>
+  </section>`;
+  }
+
   const body = `
 <article class="proyecto">
-  <header class="cabecera">
-    <a class="etiqueta" href="/trabajos/#${p.categoria}">${CATEGORIAS[p.categoria]}</a>
-    <h1>${esc(p.titulo)}</h1>
+  <header class="cabecera proyecto__cabecera">
+    <div class="proyecto__titular">
+      <a class="etiqueta" href="/trabajos/#${p.categoria}">${CATEGORIAS[p.categoria]}</a>
+      <h1>${esc(p.titulo)}</h1>
+      ${p.resumen ? `<p class="proyecto__resumen">${esc(p.resumen)}</p>` : ''}
+    </div>
     <dl class="proyecto__ficha">
-      ${p.cliente ? `<div><dt>Cliente</dt><dd>${esc(p.cliente)}</dd></div>` : ''}
-      ${p.anio ? `<div><dt>Año</dt><dd>${esc(p.anio)}</dd></div>` : ''}
+      ${fila('Cliente', p.cliente)}
+      ${fila('Año', p.anio)}
+      ${fila('Categoría', CATEGORIAS[p.categoria])}
+      ${fila('Contenido', piezas)}
     </dl>
   </header>
 
-  <div class="proyecto__principal">${principal}</div>
+  ${muro || `<div class="proyecto__principal">${principal}</div>`}
 
-  <section class="proyecto__texto">
-    ${bloque('Contexto', p.contexto ? `<p>${esc(p.contexto)}</p>` : '')}
-    ${bloque('Qué hice', queHice)}
-    ${bloque('Resultado', p.resultado ? `<p>${esc(p.resultado)}</p>` : '')}
+  <section class="proyecto__info">
+    ${bloque('contexto', 'Contexto', p.contexto ? `<p>${esc(p.contexto)}</p>` : '')}
+    ${bloque('hice', 'Qué hice', queHice)}
+    ${bloque('resultado', 'Resultado', (p.resultado ? `<p>${esc(p.resultado)}</p>` : '') + `<a class="boton" href="${esc(wa)}" target="_blank" rel="noopener">Quiero algo así</a>`)}
   </section>
 
   ${
-    p.galeria && p.galeria.length
-      ? `<section class="galeria" aria-label="Galería">${p.galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+    galeria.length
+      ? `${p.manual ? '<h2 class="proyecto__subtitulo">Aplicaciones</h2>' : ''}
+  <section class="galeria${esLogos ? ' galeria--logos' : esPosts ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+      : ''
+  }
+  ${
+    (p.laminas || []).length
+      ? `<h2 class="proyecto__subtitulo">Fichas de marca</h2>
+  <section class="galeria galeria--posts" aria-label="Fichas de marca">${p.laminas.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
       : ''
   }
 </article>
 
 <a class="siguiente" href="/proyectos/${siguiente.slug}/">
-  <span>Siguiente proyecto</span>
-  <strong>${esc(siguiente.titulo)}</strong>
+  <img src="/media/${siguiente.slug}/${esc(siguiente.portada)}" alt=""${sizeAttrs(`media/${siguiente.slug}/${siguiente.portada}`)} loading="lazy" decoding="async">
+  <div>
+    <span>Siguiente proyecto</span>
+    <strong>${esc(siguiente.titulo)}</strong>
+    <em>${CATEGORIAS[siguiente.categoria]}${siguiente.anio ? ` · ${esc(siguiente.anio)}` : ''}</em>
+  </div>
 </a>`;
 
   return layout(site, {

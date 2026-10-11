@@ -33,7 +33,6 @@ Esto crea `media/nombre-del-proyecto/` con `cover.webp`, `01.webp`, `02.webp`…
   "cliente": "Cliente",
   "categoria": "video",
   "anio": 2026,
-  "destacado": true,
   "resumen": "Una línea. Se usa como descripción al compartir el link.",
   "contexto": "Qué necesitaba el cliente.",
   "queHice": ["Tarea 1", "Tarea 2"],
@@ -48,8 +47,8 @@ Esto crea `media/nombre-del-proyecto/` con `cover.webp`, `01.webp`, `02.webp`…
 | Campo | Notas |
 | --- | --- |
 | `slug` | Igual al nombre de la carpeta en `media/`. Minúsculas, sin espacios ni tildes. Es la URL: `/proyectos/slug/`. |
-| `categoria` | `video`, `rrss` o `identidad`. |
-| `destacado` | `true` para que salga en el inicio (se muestran los primeros 4). |
+| `categoria` | `rrss` (Social media), `video`, `identidad` (Identidad de marca) o `logos` (Logofolio). Define en qué sección numerada del inicio aparece. |
+| `manual` | Opcional. Número de páginas de un manual de marca guardado en `media/<slug>/manual/` (`01.webp` grande y `m01.webp` miniatura por página). Activa el mosaico inclinado en la página del proyecto. |
 | `youtube` | Opcional. Solo el ID: en `https://youtu.be/aqz-KE-bpKQ` es `aqz-KE-bpKQ`. Funciona con videos "No listado". |
 | `portadaVideo` | Opcional. Un reel que se reproduce en loop en la tarjeta del proyecto. |
 | `galeria` | Lista de archivos de la carpeta del proyecto. Los `.mp4` se muestran en loop y sin sonido. |
@@ -87,6 +86,8 @@ Vercel publica solo en un minuto aprox.
 - Textos, contacto y redes: `data/site.json`. Las redes con `"url": ""` no se muestran.
 - Sección "Así trabajo" del inicio: bloque `proceso` en `data/site.json` (pasos, plazo, texto del botón y mensaje de WhatsApp). Si lo borras, la sección desaparece. Cada paso puede llevar una animación con `"grafico"`: `celular`, `timeline` o `dias`.
 - Habilidades técnicas (bloque naranja en Sobre mí): lista `habilidades` en `data/site.json`. Íconos disponibles: `pluma`, `motion`, `video`, `redes`, `marca`.
+- Secciones del inicio (01 Social media, 02 Videos, 03 Identidad de marca, 04 Logofolio): lista `secciones` en `data/site.json`. Ahí se cambian el nombre, el texto de la barra y el orden.
+- Tarjetas "En qué te puedo ayudar": lista `servicios` en `data/site.json`; el título se cambia en `serviciosTitulo`. Con `categoria`, la tarjeta enlaza a esa sección del inicio.
 - Programas que usas: lista `herramientas` en `data/site.json` (sigla, nombre y `nivel` de 0 a 100, que define cuánto se llena el anillo). Si la dejas vacía (`[]`), la sección desaparece. Para mostrar un logo en vez de la sigla, agrega `"icono"` con la ruta a una silueta en WebP/PNG con fondo transparente (ver CapCut como ejemplo); se pinta sola con el color de acento.
 - Foto: reemplaza `media/site/nacho.webp` (vertical, ~1200×1500).
 - Imagen al compartir el inicio: `media/site/og.jpg` (1200×630).

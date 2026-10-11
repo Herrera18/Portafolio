@@ -2,7 +2,7 @@
   "nombre": "Nacho",
   "frase": "Soy diseñador gráfico",
   "etiqueta": "Marketing digital · Contenido",
-  "descripcion": "Diseñador gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad visual.",
+  "descripcion": "Diseñador gráfico enfocado en marketing digital y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
   "intro": "Trabajo en marketing digital y producción de contenido. Hago videos para clientes, diseño para redes sociales y creo marcas desde cero.",
   "url": "",
   "email": "rogerignacio53@gmail.com",
@@ -23,18 +23,46 @@
       "url": ""
     }
   ],
+  "secciones": [
+    {
+      "categoria": "rrss",
+      "titulo": "Social media",
+      "detalle": "Instagram · Facebook · TikTok",
+      "cinta": true,
+      "collage": true
+    },
+    {
+      "categoria": "video",
+      "titulo": "Videos",
+      "detalle": "Reels · Spots · Edición"
+    },
+    {
+      "categoria": "identidad",
+      "titulo": "Identidad de marca",
+      "detalle": "Logotipo · Manual de marca · Aplicaciones"
+    },
+    {
+      "categoria": "logos",
+      "titulo": "Logofolio",
+      "detalle": "Logotipos · Isotipos · Versiones",
+      "rejilla": true
+    }
+  ],
   "servicios": [
     {
+      "titulo": "Social media",
+      "texto": "Sistemas gráficos para redes: plantillas, carruseles, reels y campañas que mantienen la marca reconocible.",
+      "categoria": "rrss"
+    },
+    {
       "titulo": "Video",
-      "texto": "Piezas para clientes: spots, cápsulas, entrevistas y contenido vertical. Guion, edición, color y motion graphics."
+      "texto": "Piezas para clientes: spots, cápsulas, entrevistas y contenido vertical. Guion, edición, color y motion graphics.",
+      "categoria": "video"
     },
     {
-      "titulo": "RRSS",
-      "texto": "Sistemas gráficos para redes: plantillas, carruseles, reels y campañas que mantienen la marca reconocible."
-    },
-    {
-      "titulo": "Identidad visual",
-      "texto": "Creación de marca: logotipo, paleta, tipografía y manual de uso para aplicarla sin perder coherencia."
+      "titulo": "Identidad de marca",
+      "texto": "Creación de marca: logotipo, paleta, tipografía y manual de uso para aplicarla sin perder coherencia.",
+      "categoria": "identidad"
     }
   ],
   "proceso": {
@@ -116,5 +144,6 @@
       "Agencias que necesitan apoyo en producción",
       "Equipos de marketing internos"
     ]
-  }
+  },
+  "serviciosTitulo": "En qué te puedo ayudar"
 }

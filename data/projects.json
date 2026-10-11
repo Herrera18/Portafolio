@@ -1,41 +1,281 @@
 [
   {
-    "slug": "cafe-origen",
-    "titulo": "Café Origen",
-    "cliente": "Café Origen",
+    "slug": "usa-tu-subsidio",
+    "titulo": "Usa Tu Subsidio",
+    "cliente": "Usa Tu Subsidio",
+    "rubro": "Subsidios de vivienda",
+    "categoria": "rrss",
+    "anio": 2026,
+    "resumen": "Carruseles para Instagram que explican los subsidios de vivienda en Chile.",
+    "contexto": "Usa Tu Subsidio orienta a personas que quieren postular a los subsidios habitacionales en Chile. Su Instagram publica carruseles cada semana que explican fechas, requisitos y errores comunes, y necesitaba que un tema técnico se entendiera a primera vista.",
+    "queHice": [
+      "Diseño de carruseles semanales para Instagram",
+      "Portadas con un titular claro y una imagen que engancha",
+      "Línea gráfica constante: colores, tipografía y recursos de la marca",
+      "Piezas para fechas especiales: Fiestas Patrias, el Mundial, los Óscar"
+    ],
+    "resultado": "Más de 100 carruseles diseñados entre febrero y octubre de 2026, con una línea visual que se reconoce de inmediato en el feed. Aquí va una selección de portadas.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp",
+      "06.webp",
+      "07.webp",
+      "08.webp",
+      "09.webp",
+      "10.webp",
+      "11.webp",
+      "12.webp",
+      "13.webp"
+    ]
+  },
+  {
+    "slug": "websy-instagram",
+    "titulo": "Websy — Instagram",
+    "cliente": "Websy",
+    "rubro": "Marketing y tecnología",
+    "categoria": "rrss",
+    "anio": 2025,
+    "resumen": "Carruseles e historias para el Instagram de una plataforma de marketing y tecnología.",
+    "contexto": "Websy ofrece soluciones de marketing digital, CRM e inteligencia de negocios para empresas. En Instagram necesitaba explicar servicios técnicos con ideas simples y portadas que detuvieran el scroll.",
+    "queHice": [
+      "Diseño de carruseles para Instagram",
+      "Historias para acompañar cada publicación",
+      "Portadas con metáforas visuales para temas técnicos",
+      "Composición y retoque de imágenes"
+    ],
+    "resultado": "Cerca de 50 carruseles y más de una docena de sets de historias entre abril y diciembre de 2025, dentro de la misma identidad de la marca. Aquí va una selección de portadas.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp",
+      "06.webp",
+      "07.webp",
+      "08.webp",
+      "09.webp",
+      "10.webp",
+      "11.webp",
+      "12.webp"
+    ]
+  },
+  {
+    "slug": "glam-zone",
+    "titulo": "Glam Zone",
+    "cliente": "Glam Zone",
+    "rubro": "Maquillaje y skincare",
+    "categoria": "rrss",
+    "anio": 2025,
+    "resumen": "Gráficas promocionales para una tienda de maquillaje y cuidado de la piel.",
+    "contexto": "Glam Zone vende maquillaje y productos de cuidado de la piel por redes sociales. Necesitaba piezas que mostraran bien el producto, su precio y sus beneficios, con un estilo propio y femenino.",
+    "queHice": [
+      "Posts de producto con beneficios y precio",
+      "Gráficas de campañas y promociones",
+      "Avisos de temporada y fechas especiales",
+      "Línea gráfica en tonos lilas con el logotipo de la tienda"
+    ],
+    "resultado": "Un conjunto de gráficas coherentes para promociones, lanzamientos de producto y avisos de la tienda. Aquí va una selección.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp",
+      "06.webp",
+      "07.webp",
+      "08.webp"
+    ]
+  },
+  {
+    "slug": "rogienny-herrera",
+    "titulo": "Rogienny Herrera — Shop Academy",
+    "cliente": "Rogienny Herrera",
+    "rubro": "Marca personal",
+    "categoria": "rrss",
+    "anio": 2026,
+    "resumen": "Carrusel para Instagram que presenta la asesoría Shop Academy de una marca personal.",
+    "contexto": "Rogienny Herrera es una marca personal que enseña a comprar productos de marcas reconocidas a mejor precio en plataformas online. Para lanzar su asesoría Shop Academy necesitaba un carrusel que explicara qué se aprende, para quién es y qué incluye, con la misma elegancia de su identidad.",
+    "queHice": [
+      "Diseño del carrusel de lanzamiento para Instagram",
+      "Aplicación de la identidad de la marca: burdeos, beige y su tipografía",
+      "Composición con fotografía de la clienta, productos y pantallas de celular",
+      "Versiones alternativas de las láminas"
+    ],
+    "resultado": "Un carrusel de cuatro láminas que lleva de la promesa a los detalles de la asesoría, coherente con el logotipo y los colores de la marca.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp"
+    ]
+  },
+  {
+    "slug": "websy",
+    "titulo": "Websy",
+    "cliente": "Websy",
     "categoria": "identidad",
     "anio": 2026,
     "destacado": true,
-    "resumen": "Identidad visual completa para una cafetería de especialidad.",
-    "contexto": "Proyecto de ejemplo. Café Origen abría su primer local y necesitaba una marca que se distinguiera de las cafeterías de cadena y transmitiera el trabajo artesanal detrás de cada taza.",
+    "resumen": "Identidad visual y manual de marca para una plataforma de marketing digital y tecnología.",
+    "contexto": "Websy es una plataforma digital que ofrece soluciones de marketing y tecnología para empresas: desarrollo web, marketing digital y análisis de datos. Necesitaba una identidad que transmitiera crecimiento, innovación y confianza.",
     "queHice": [
-      "Logotipo y versiones secundarias",
-      "Paleta de color y sistema tipográfico",
-      "Empaques, menú y papelería",
-      "Manual de marca"
+      "Logotipo principal, secundario e isotipo",
+      "Paleta de color y tipografías",
+      "Estrategia de marca: misión, visión, personalidad, público y tono",
+      "Variaciones de color, área de seguridad y escala mínima",
+      "Manual de marca",
+      "Mockups de aplicación"
     ],
-    "resultado": "Una identidad lista para aplicarse en local, empaques y redes, con un manual que permite al equipo producir piezas nuevas sin perder coherencia.",
+    "resultado": "Una W que se funde con un gráfico ascendente y una flecha con circuitos: crecimiento y tecnología en un solo símbolo. El sistema completo quedó documentado en un manual de identidad de 21 páginas.",
     "portada": "cover.webp",
-    "galeria": ["01.webp", "02.webp", "03.webp"]
+    "galeria": [
+      "manual/18.webp",
+      "manual/19.webp",
+      "manual/20.webp",
+      "manual/21.webp"
+    ],
+    "manual": 21
   },
   {
-    "slug": "fit-club-reels",
-    "titulo": "Fit Club — Reels mensuales",
-    "cliente": "Fit Club",
-    "categoria": "rrss",
+    "slug": "micasaconsubsidio",
+    "titulo": "Micasaconsubsidio.cl",
+    "cliente": "Mi Casa con Subsidio",
+    "categoria": "identidad",
     "anio": 2026,
-    "destacado": true,
-    "resumen": "Producción mensual de reels y plantillas para un gimnasio.",
-    "contexto": "Proyecto de ejemplo. El gimnasio publicaba de forma irregular y sin una línea gráfica clara. Necesitaban contenido constante que mostrara las clases y motivara inscripciones.",
+    "resumen": "Manual de marca e identidad visual para un broker inmobiliario especializado en subsidios de vivienda.",
+    "contexto": "Mi Casa con Subsidio se presenta como el primer broker con subsidio de Chile: acompaña a familias desde el ahorro hasta su vivienda propia. Nació como contenido educativo en redes sociales y necesitaba una marca que la mostrara como una empresa profesional, sin perder la cercanía.",
     "queHice": [
-      "Grabación y edición de reels",
-      "Plantillas para historias y carruseles",
-      "Calendario de contenido mensual"
+      "Logotipo principal, secundario e isotipo",
+      "Paleta de color y guía de combinaciones",
+      "Tipografías de la marca",
+      "Estrategia de marca: historia, misión, visión, personalidad, valores, voz, arquetipos y público",
+      "Reglas de uso: zona de protección, reducción mínima y usos incorrectos",
+      "Manual de marca e identidad visual",
+      "Recursos gráficos: letrero, tarjetas, llavero y stickers"
     ],
-    "resultado": "Un flujo de publicación estable con piezas reconocibles a primera vista. Aquí van tus cifras: alcance, seguidores nuevos o consultas recibidas.",
+    "resultado": "Un isotipo que dibuja una casa con un trazo dorado en la base, sobre una paleta de azul medianoche, mostaza y un acento rosa. Todo quedó documentado en un manual de 29 páginas, con reglas pensadas también para el contenido digital.",
     "portada": "cover.webp",
-    "portadaVideo": "reel-01.mp4",
-    "galeria": ["reel-01.mp4", "reel-02.mp4", "01.webp", "02.webp"]
+    "manual": 29,
+    "galeria": [
+      "manual/26.webp",
+      "manual/27.webp",
+      "manual/28.webp",
+      "manual/29.webp"
+    ]
+  },
+  {
+    "slug": "oti-viajes",
+    "titulo": "Oti Viajes",
+    "cliente": "Oti Viajes",
+    "categoria": "identidad",
+    "anio": 2025,
+    "destacado": true,
+    "resumen": "Refresh de marca y manual de identidad visual para una agencia de viajes familiar con más de 25 años.",
+    "contexto": "Oti Viajes es una agencia de viajes y tour operadora familiar nacida en Ciudad Guayana, Venezuela, con más de 25 años de trayectoria y atención personalizada 24/7. Ya tenía un logotipo, pero no contaba con un manual de marca ni con una identidad visual clara, así que el proyecto fue un refresh de la marca.",
+    "queHice": [
+      "Refresh de la marca a partir del logotipo existente",
+      "Paleta de color y tipografías",
+      "Patrón gráfico con íconos de viaje",
+      "Estrategia de marca: concepto, historia, personalidad, público, tono y arquetipo",
+      "Reglas de uso del logotipo: área de seguridad y escala mínima",
+      "Manual de marca e identidad visual",
+      "Imagen corporativa: papelería, credenciales, gorras y maletas"
+    ],
+    "resultado": "La marca conservó su logotipo y ganó un sistema visual propio: paleta de amarillo y azul, tipografías, un patrón ilustrado y aplicaciones coherentes entre sí. Todo quedó ordenado en su primer manual de marca, de 19 páginas.",
+    "portada": "cover.webp",
+    "galeria": [
+      "manual/16.webp",
+      "manual/17.webp",
+      "manual/18.webp",
+      "manual/19.webp"
+    ],
+    "manual": 19
+  },
+  {
+    "slug": "tuarriendobarato",
+    "titulo": "Tuarriendobarato.cl",
+    "cliente": "Tuarriendobarato.cl",
+    "categoria": "identidad",
+    "anio": 2025,
+    "destacado": false,
+    "resumen": "Identidad visual y manual de marca para una plataforma chilena de arriendos económicos.",
+    "contexto": "Tuarriendobarato.cl es una plataforma de arriendo enfocada en procesos rápidos, sencillos y económicos para quienes buscan vivienda en sectores populares de Chile. La marca tenía que verse accesible y confiable a la vez.",
+    "queHice": [
+      "Logotipo corporativo e isotipo",
+      "Paleta de color y tipografía corporativa",
+      "Estrategia de marca: misión, visión, personalidad, público, tono y arquetipo",
+      "Versiones y aplicaciones correctas del logotipo",
+      "Área de seguridad y escala mínima",
+      "Manual de marca"
+    ],
+    "resultado": "Un isotipo con forma de edificios donde se leen la A de arriendo y la B de barato, acompañado de una paleta cálida. El manual de 15 páginas reúne la estrategia y la identidad visual.",
+    "portada": "cover.webp",
+    "galeria": [],
+    "manual": 15
+  },
+  {
+    "slug": "mim2",
+    "titulo": "mim2.cl",
+    "cliente": "mim2.cl — Mi Primer Metro Cuadrado",
+    "categoria": "identidad",
+    "anio": 2024,
+    "destacado": true,
+    "resumen": "Identidad visual para Mi Primer Metro Cuadrado, plataforma de educación y asesoría en inversión inmobiliaria.",
+    "contexto": "mim2.cl (Mi Primer Metro Cuadrado) es una plataforma educativa y de asesoría que busca abrir el camino de la inversión inmobiliaria para todos. Necesitaba una marca que inspirara confianza sin perder cercanía.",
+    "queHice": [
+      "Logotipo principal, secundario e isotipo",
+      "Paleta de color con el significado de cada tono",
+      "Tipografías de la marca",
+      "Variaciones de color, área de seguridad y escala mínima",
+      "Manual de marca",
+      "Mockups: sello, lanyard, tarjetas y uniformes"
+    ],
+    "resultado": "Un isotipo que une un pin de ubicación con una casa en negativo, sobre una paleta de azul oscuro, verde menta y naranja. El manual de identidad tiene 18 páginas e incluye las aplicaciones en papelería y uniformes.",
+    "portada": "cover.webp",
+    "galeria": [
+      "manual/14.webp",
+      "manual/15.webp",
+      "manual/16.webp",
+      "manual/17.webp",
+      "manual/18.webp"
+    ],
+    "manual": 18
+  },
+  {
+    "slug": "innova-dental",
+    "titulo": "Innova Dental",
+    "cliente": "Innova Dental",
+    "categoria": "identidad",
+    "anio": 2024,
+    "destacado": true,
+    "resumen": "Identidad visual y manual de marca para una clínica de odontología biomimética.",
+    "contexto": "Innova Dental es una clínica centrada en la odontología biomimética: tratamientos que imitan la naturaleza y usan materiales libres de metal. La identidad debía comunicar ese concepto de forma simple y reconocible.",
+    "queHice": [
+      "Logotipo principal, secundario e isotipo",
+      "Paleta de color y tipografías",
+      "Voz y tono de la marca",
+      "Variaciones de color, área de seguridad y escala mínima",
+      "Manual de marca",
+      "Mockups: tarjetas, papelería y lanyards"
+    ],
+    "resultado": "Un isotipo que combina una muela con una hoja que la cubre, reflejo directo del concepto de la clínica, con una paleta de azules serena. El manual de 21 páginas incluye la voz de la marca y sus aplicaciones.",
+    "portada": "cover.webp",
+    "galeria": [
+      "manual/16.webp",
+      "manual/17.webp",
+      "manual/18.webp",
+      "manual/19.webp",
+      "manual/20.webp"
+    ],
+    "manual": 21
   },
   {
     "slug": "manos-que-tejen",
@@ -43,7 +283,7 @@
     "cliente": "Fundación Telar",
     "categoria": "video",
     "anio": 2025,
-    "destacado": true,
+    "destacado": false,
     "resumen": "Documental corto sobre un taller de tejedoras.",
     "contexto": "Proyecto de ejemplo. La fundación quería mostrar el trabajo de las artesanas a posibles donantes con una pieza breve y emotiva. El video de abajo es un marcador: reemplaza el ID de YouTube por el tuyo.",
     "queHice": [
@@ -54,43 +294,10 @@
     "resultado": "Una pieza de cuatro minutos usada en la campaña anual de recaudación y en presentaciones a aliados.",
     "portada": "cover.webp",
     "youtube": "aqz-KE-bpKQ",
-    "galeria": ["01.webp", "02.webp"]
-  },
-  {
-    "slug": "brisa-verano",
-    "titulo": "Brisa — Campaña de verano",
-    "cliente": "Brisa Swimwear",
-    "categoria": "rrss",
-    "anio": 2025,
-    "destacado": true,
-    "resumen": "Lanzamiento de colección en Instagram: carruseles, historias y reel.",
-    "contexto": "Proyecto de ejemplo. La marca lanzaba su colección de verano y quería una campaña con identidad propia, distinta al contenido del resto del año.",
-    "queHice": [
-      "Concepto y dirección de arte",
-      "Carruseles e historias de lanzamiento",
-      "Reel de anuncio"
-    ],
-    "resultado": "Una campaña de tres semanas con un sistema gráfico que el equipo siguió usando durante toda la temporada.",
-    "portada": "cover.webp",
-    "galeria": ["01.webp", "reel-01.mp4", "02.webp", "03.webp"]
-  },
-  {
-    "slug": "nomada-estudio",
-    "titulo": "Nómada Estudio",
-    "cliente": "Nómada Estudio",
-    "categoria": "identidad",
-    "anio": 2025,
-    "destacado": false,
-    "resumen": "Marca para un estudio de arquitectura e interiorismo.",
-    "contexto": "Proyecto de ejemplo. Un estudio joven necesitaba verse a la altura de los proyectos que quería ganar, con una marca sobria que no compitiera con su trabajo.",
-    "queHice": [
-      "Naming y logotipo",
-      "Sistema de retícula para presentaciones",
-      "Plantillas de propuesta y redes"
-    ],
-    "resultado": "Una identidad discreta y flexible, aplicada en sitio web, propuestas comerciales y redes.",
-    "portada": "cover.webp",
-    "galeria": ["01.webp", "02.webp", "03.webp"]
+    "galeria": [
+      "01.webp",
+      "02.webp"
+    ]
   },
   {
     "slug": "spot-horizonte",
@@ -109,6 +316,112 @@
     "resultado": "Un spot principal y sus adaptaciones para cada formato de anuncio.",
     "portada": "cover.webp",
     "youtube": "eRsGyueVLvQ",
-    "galeria": ["01.webp", "02.webp"]
+    "galeria": [
+      "01.webp",
+      "02.webp"
+    ]
+  },
+  {
+    "slug": "logofolio",
+    "titulo": "Logofolio",
+    "cliente": "Varios clientes",
+    "categoria": "logos",
+    "tipo": "logofolio",
+    "resumen": "Selección de logotipos creados para marcas de distintos rubros.",
+    "contexto": "No todos los proyectos de marca terminan en un manual. Aquí reúno logotipos diseñados para emprendimientos, marcas personales y empresas, cada uno pensado para el rubro y el público de su dueño.",
+    "queHice": [
+      "Diseño de logotipo e isotipo",
+      "Versiones en positivo, negativo y a color",
+      "Paleta de color y tipografía de cada marca",
+      "Ficha de resumen con usos y aplicaciones"
+    ],
+    "resultado": "8 marcas con un logotipo propio y sus versiones listas para usar en redes, impresos y productos.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp",
+      "06.webp",
+      "07.webp",
+      "08.webp"
+    ],
+    "laminas": [
+      "ficha-01.webp",
+      "ficha-02.webp",
+      "ficha-03.webp",
+      "ficha-04.webp",
+      "ficha-05.webp",
+      "ficha-06.webp",
+      "ficha-07.webp"
+    ],
+    "pies": {
+      "01.webp": "Rogienny Herrera · Marca personal",
+      "ficha-01.webp": "Rogienny Herrera",
+      "02.webp": "Savia Essence · Spa y bienestar",
+      "ficha-02.webp": "Savia Essence",
+      "03.webp": "Amari Force · Ropa deportiva",
+      "ficha-03.webp": "Amari Force",
+      "04.webp": "TequeRois · Tequeños",
+      "ficha-04.webp": "TequeRois",
+      "05.webp": "Tuarriendobarato.cl · Arriendos",
+      "06.webp": "Micasaconsubsidio.cl · Subsidios de vivienda",
+      "07.webp": "Innova Dental · Clínica dental",
+      "08.webp": "mim2.cl · Inversión inmobiliaria",
+      "ficha-05.webp": "Tuarriendobarato.cl",
+      "ficha-06.webp": "Innova Dental",
+      "ficha-07.webp": "mim2.cl"
+    },
+    "mono": [
+      {
+        "archivo": "mono-01.webp",
+        "nombre": "Rogienny Herrera",
+        "ancho": 640,
+        "alto": 497
+      },
+      {
+        "archivo": "mono-02.webp",
+        "nombre": "Savia Essence",
+        "ancho": 640,
+        "alto": 216
+      },
+      {
+        "archivo": "mono-03.webp",
+        "nombre": "Amari Force",
+        "ancho": 640,
+        "alto": 457
+      },
+      {
+        "archivo": "mono-04.webp",
+        "nombre": "TequeRois",
+        "ancho": 640,
+        "alto": 404
+      },
+      {
+        "archivo": "mono-05.webp",
+        "nombre": "Tuarriendobarato.cl",
+        "ancho": 580,
+        "alto": 640
+      },
+      {
+        "archivo": "mono-06.webp",
+        "nombre": "Micasaconsubsidio.cl",
+        "ancho": 640,
+        "alto": 151
+      },
+      {
+        "archivo": "mono-07.webp",
+        "nombre": "Innova Dental",
+        "ancho": 640,
+        "alto": 519
+      },
+      {
+        "archivo": "mono-08.webp",
+        "nombre": "mim2.cl",
+        "ancho": 640,
+        "alto": 148
+      }
+    ]
   }
 ]

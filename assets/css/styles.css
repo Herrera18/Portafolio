@@ -29,6 +29,7 @@
   --cristal-borde: rgba(255, 255, 255, 0.22);
   --cristal-brillo: rgba(255, 255, 255, 0.3);
   --cristal-grano: 0.12;
+  --luz: #fff3e2; /* disco de la huella */
   --grano: 0.2; /* intensidad de la textura (0 la apaga) */
   --resplandor: rgba(196, 106, 66, 0.26); /* manchas de luz suaves a lo largo de la página */
   /* Atardecer para el inicio: mismo degradado, con el sol abajo a la derecha (detrás de la foto) y sin base opaca */
@@ -59,6 +60,7 @@
   --cristal-borde: rgba(255, 255, 255, 0.8);
   --cristal-brillo: rgba(255, 255, 255, 0.95);
   --cristal-grano: 0.08;
+  --luz: #f5a55a;
   --grano: 0.16;
   --resplandor: rgba(245, 165, 90, 0.2);
   color-scheme: light;
@@ -234,7 +236,6 @@ main,
 
 .panel,
 .servicios li,
-.proyecto__texto > div,
 .contacto__item,
 .card {
   border: 1px solid var(--linea);
@@ -417,12 +418,193 @@ main,
 }
 
 /* ---------- Inicio ---------- */
+.portada {
+  --brillo-bajo:
+    0 0 0.05em color-mix(in srgb, var(--luz) 55%, transparent),
+    0 0 0.2em color-mix(in srgb, var(--acento) 55%, transparent),
+    0 0 0.45em color-mix(in srgb, var(--acento-2) 28%, transparent);
+  --brillo-alto:
+    0 0 0.16em var(--luz),
+    0 0 0.62em var(--acento),
+    0 0 1.5em color-mix(in srgb, var(--acento-2) 90%, transparent);
+}
+
+/* Portada: la palabra "Portafolio" dentro del marco de selección, centrada sobre el resto del inicio */
+.portada {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(2rem, 5vw, 4rem);
+}
+
+.portada .hero__marco {
+  margin: 0 0 2.6rem;
+  padding: clamp(0.7rem, 1.6vw, 1.2rem) clamp(0.9rem, 3vw, 2.4rem) clamp(0.8rem, 1.6vw, 1.2rem);
+}
+
+.portada__rol {
+  font-size: clamp(0.85rem, 1.7vw, 1.25rem);
+  line-height: 1.2;
+}
+
+.portada__rol b {
+  font-weight: 700;
+}
+
+.portada__rol em {
+  color: var(--texto-2);
+}
+
+.portada__titulo {
+  font-family: var(--titulos);
+  font-size: clamp(2.9rem, 13.2vw, 10.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  white-space: nowrap;
+  /* Degradado de luz: letras encendidas arriba y apagadas en la base */
+  background: linear-gradient(180deg, var(--texto) 30%, color-mix(in srgb, var(--texto) 38%, var(--fondo)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* La "o" es un disco encendido con una huella dactilar. Medidas en em tomadas de la "o" de Clash Display
+   (alto 0,53em; baja 0,016em de la línea base) para que asiente igual que la "f" y la "l" vecinas.
+   La huella va en posición absoluta: así el disco se apoya en la línea base por su borde inferior. */
+.portada__huella {
+  position: relative;
+  display: inline-block;
+  width: 0.545em;
+  height: 0.545em;
+  margin-inline: 0.036em;
+  vertical-align: -0.016em;
+  border-radius: 50%;
+  background: var(--luz);
+  color: var(--fondo);
+  box-shadow: var(--brillo-alto);
+}
+
+.portada__huella svg {
+  position: absolute;
+  inset: 0;
+  width: 70%;
+  margin: auto;
+}
+
+.portada__caja {
+  position: relative;
+}
+
+/* Burbuja de cristal esmerilado que tapa la parte baja de las primeras letras y se sale del marco por la izquierda */
+.portada__burbuja {
+  position: absolute;
+  top: 65%;
+  left: -9%;
+  z-index: 1;
+  width: 56%;
+  height: 52%;
+  border: 1px solid var(--cristal-borde);
+  border-radius: 99px;
+  background: var(--cristal);
+  backdrop-filter: blur(4px) saturate(1.5) brightness(0.82);
+  -webkit-backdrop-filter: blur(4px) saturate(1.5) brightness(0.82);
+  box-shadow:
+    inset 0 1px 0 var(--cristal-brillo),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 36px -18px rgba(0, 0, 0, 0.7);
+}
+
+.portada .hero__pastilla {
+  margin-top: clamp(0.5rem, 1.6vw, 1.2rem);
+}
+
+/* ---- Animación de entrada de la portada (una vez, ~3,5 s) ----
+   Aparece la palabra → la pluma la selecciona arrastrando desde la esquina superior izquierda hasta la
+   inferior derecha → saltan los puntos de control → entra la burbuja. La huella está encendida desde el inicio. */
+
+/* El marco crece desde la esquina superior izquierda. Va con la misma duración y curva que la pluma
+   (pluma-arrastre) para que la punta quede siempre sobre la esquina que se está arrastrando. */
+@keyframes marco-arrastre {
+  0% { inset: -1.5px 100% 100% -1.5px; opacity: 0; }
+  15% { inset: -1.5px 100% 100% -1.5px; opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 0.2, 1); }
+  100% { inset: -1.5px; opacity: 1; }
+}
+
+@keyframes pluma-arrastre {
+  0% { top: 0.3rem; left: -0.8rem; opacity: 0; }
+  15% { top: 0.3rem; left: -0.8rem; opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 0.2, 1); }
+  100% { opacity: 1; }
+}
+
+@keyframes punto {
+  from { scale: 0; }
+  60% { scale: 1.5; }
+  to { scale: 1; }
+}
+
+@keyframes subir {
+  from { opacity: 0; translate: 0 0.25em; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* La huella aparece ya encendida y su luz late: baja y sube de intensidad de forma continua y suave */
+@keyframes respirar {
+  from { box-shadow: var(--brillo-bajo); }
+  to { box-shadow: var(--brillo-alto); }
+}
+
+@keyframes burbuja-entra {
+  from { opacity: 0; translate: -45% 0; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.portada__rol {
+  animation: subir 0.6s 0.1s ease-out both;
+}
+
+.portada__titulo {
+  animation: subir 0.75s 0.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.portada .hero__pastilla {
+  animation: aparecer 0.6s 0.5s ease-out both;
+}
+
+.portada .hero__pluma {
+  animation: pluma-arrastre 1.5s 0.8s linear both;
+}
+
+/* Al soltar la selección aparecen los ocho puntos de control */
+.portada .hero__marco > i {
+  animation: punto 0.3s 2.3s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+.portada__huella {
+  animation: respirar 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate-reverse;
+}
+
+.portada__burbuja {
+  animation: burbuja-entra 0.9s 2.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* En pantallas angostas la pluma se achica para no salirse por el borde derecho */
+@media (max-width: 600px) {
+  .portada .hero__pluma {
+    left: calc(100% - 0.55rem);
+    width: 1.55rem;
+  }
+}
+
 .hero {
   position: relative;
   display: grid;
   gap: clamp(2.5rem, 5vw, 4rem);
   align-items: center;
-  padding-block: clamp(2.5rem, 7vw, 5.5rem);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 7vw, 5.5rem);
 }
 
 @media (min-width: 860px) {
@@ -449,7 +631,17 @@ main,
   width: fit-content;
   margin: 1.5rem 0 3.4rem;
   padding: 0.5rem clamp(0.8rem, 2.5vw, 1.4rem) 0.9rem;
-  border: 1.5px solid color-mix(in srgb, var(--acento-texto) 75%, transparent);
+  border: 1.5px solid transparent;
+}
+
+/* La línea punteada va en una capa aparte para poder "dibujarla" al cargar */
+.hero__marco::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border: 1.5px dashed color-mix(in srgb, var(--acento-texto) 70%, transparent);
+  pointer-events: none;
+  animation: marco-arrastre 1.5s 0.8s linear both;
 }
 
 .hero__marco > i {
@@ -480,6 +672,27 @@ main,
   bottom: 0;
 }
 
+/* Puntos de control intermedios: arriba, abajo, izquierda y derecha */
+.hero__marco > i:nth-of-type(5) {
+  top: 0;
+  left: 50%;
+}
+
+.hero__marco > i:nth-of-type(6) {
+  bottom: 0;
+  left: 50%;
+}
+
+.hero__marco > i:nth-of-type(7) {
+  top: 50%;
+  left: 0;
+}
+
+.hero__marco > i:nth-of-type(8) {
+  top: 50%;
+  right: 0;
+}
+
 /* La punta de la pluma toca la esquina inferior derecha del marco */
 .hero__pluma {
   position: absolute;
@@ -492,19 +705,46 @@ main,
 }
 
 .hero__nombre {
-  margin-top: 0;
-  font-size: clamp(4rem, 13vw, 9rem);
+  margin-top: 1.1rem;
+  font-size: clamp(3.4rem, 9vw, 6.5rem);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: 0;
   color: var(--acento-texto);
-  width: fit-content;
-  padding-right: 0.06em;
+}
+
+.hero__pastilla {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+  color: var(--texto-2);
+}
+
+.hero__pastilla span,
+.hero__pastilla em {
+  display: grid;
+  place-items: center;
+  height: 2.1em;
+  border: 1px solid var(--linea);
+  border-radius: 99px;
+  background: var(--panel);
+}
+
+.hero__pastilla span {
+  aspect-ratio: 1;
+  font-size: 0.85em;
+}
+
+.hero__pastilla em {
+  padding-inline: 1em;
 }
 
 .hero__frase {
   margin-top: 0.4rem;
-  font-size: clamp(1.6rem, 4.2vw, 3rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: 0;
@@ -848,7 +1088,484 @@ main,
   }
 }
 
-/* Carrusel horizontal de destacados: se desliza con el dedo, la rueda o las flechas */
+/* ---------- Secciones por categoría del inicio ----------
+   Cada una abre con una banda: número enorme en contorno, título y flecha; debajo una barra fina con datos
+   y la tira de proyectos. */
+.categoria__banda {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.9rem, 3vw, 2.5rem);
+  padding-bottom: clamp(0.9rem, 2vw, 1.4rem);
+}
+
+.categoria__num {
+  font-family: var(--titulos);
+  font-size: clamp(4.2rem, 15vw, 11rem);
+  font-weight: 700;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--texto) 38%, transparent);
+  transition: -webkit-text-stroke-color 0.3s;
+}
+
+.categoria__banda:hover .categoria__num {
+  -webkit-text-stroke-color: var(--acento-texto);
+}
+
+.categoria__titulo {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.categoria__titulo h2 {
+  font-size: clamp(1.7rem, 5.2vw, 4rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.categoria__titulo small,
+.categoria__barra {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.categoria__flecha {
+  display: grid;
+  place-items: center;
+  width: clamp(2.6rem, 6vw, 4rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--linea);
+  border-radius: 50%;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  transition: background 0.25s, color 0.25s, border-color 0.25s, rotate 0.25s;
+}
+
+.categoria__banda:hover .categoria__flecha {
+  border-color: transparent;
+  background: var(--acento);
+  color: var(--sobre-acento);
+  rotate: 45deg;
+}
+
+.categoria__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.3rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  border-block: 1px solid var(--linea);
+}
+
+.categoria__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.categoria__nav .flecha {
+  width: 2rem;
+}
+
+.categoria__nav .flecha:first-of-type {
+  margin-left: 0.6rem;
+}
+
+@media (max-width: 700px) {
+  .categoria__barra > span:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoria__barra > span:first-child {
+    display: none;
+  }
+
+  .categoria__barra {
+    justify-content: flex-end;
+  }
+}
+
+/* Aparición de la banda al entrar en pantalla (solo con script): el número sube desde abajo como si
+   saliera de una ranura, el título entra detrás, la flecha salta y la barra se despliega de izquierda a derecha. */
+.categoria__num,
+.categoria__titulo h2,
+.categoria__titulo small,
+.categoria__flecha,
+.categoria__barra {
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    translate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    scale 0.6s cubic-bezier(0.3, 1.4, 0.5, 1),
+    clip-path 0.9s cubic-bezier(0.65, 0, 0.2, 1),
+    -webkit-text-stroke-color 0.3s,
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s,
+    rotate 0.25s;
+}
+
+.categoria__num {
+  clip-path: inset(-10% -5% -10% -5%);
+}
+
+.categoria__titulo h2 {
+  transition-delay: 0.18s;
+}
+
+.categoria__titulo small {
+  transition-delay: 0.34s;
+}
+
+/* la flecha entra con retraso, pero responde al cursor (fondo, color, giro) sin espera */
+.categoria__flecha {
+  transition-delay: 0.4s, 0.4s, 0.4s, 0.4s, 0s, 0s, 0s, 0s, 0s;
+}
+
+.categoria__barra {
+  clip-path: inset(0);
+  transition-delay: 0.5s;
+}
+
+.js .categoria:not(.visible) .categoria__num {
+  clip-path: inset(-10% -5% 100% -5%);
+  translate: 0 55%;
+}
+
+.js .categoria:not(.visible) .categoria__titulo h2 {
+  opacity: 0;
+  translate: -1.2em 0;
+}
+
+.js .categoria:not(.visible) .categoria__titulo small {
+  opacity: 0;
+  translate: 0 0.8em;
+}
+
+.js .categoria:not(.visible) .categoria__flecha {
+  opacity: 0;
+  scale: 0.3;
+}
+
+.js .categoria:not(.visible) .categoria__barra {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Cinta de diseños: tira a todo el ancho que se desliza sola, lenta y sin cortes. Se detiene al pasar el
+   cursor y también se puede arrastrar con el dedo o el trackpad. */
+.cinta {
+  --hueco: clamp(0.6rem, 1.2vw, 1rem);
+  margin-inline: calc(50% - 50vw);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.cinta::-webkit-scrollbar {
+  display: none;
+}
+
+.cinta__pista {
+  display: flex;
+  gap: var(--hueco);
+  width: max-content;
+  /* unos 10 s por pieza: lento y parejo sin importar cuántas haya */
+  animation: cinta-desliza calc(var(--piezas) * 10s) linear infinite;
+}
+
+.cinta:hover .cinta__pista,
+.cinta:focus-within .cinta__pista {
+  animation-play-state: paused;
+}
+
+@keyframes cinta-desliza {
+  to { translate: calc(-50% - var(--hueco) / 2) 0; }
+}
+
+.cinta__item {
+  display: grid;
+  gap: 0.7rem;
+  justify-items: center;
+}
+
+.cinta__item img {
+  width: auto;
+  height: clamp(15rem, 30vw, 23rem);
+  border-radius: 10px;
+  background: var(--panel-2);
+  transition: scale 0.3s;
+}
+
+.cinta__item:hover img {
+  scale: 1.02;
+}
+
+.cinta__item span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+  transition: color 0.2s;
+}
+
+.cinta__item:hover span {
+  color: var(--acento-texto);
+}
+
+/* Collage de marca: seis piezas superpuestas con el nombre del cliente. Las posiciones van en porcentajes
+   del lienzo, así el conjunto escala completo.
+   Con script, todas las marcas comparten un mismo escenario y se turnan: aparece el nombre al centro, se
+   separa (nombre arriba, rubro abajo), entran las piezas, se queda unos segundos y pasa a la siguiente.
+   Sin script se muestran una debajo de otra, ya abiertas. */
+.collage {
+  display: block;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.collage__barra {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid var(--linea);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.collage__barra span:nth-child(2) {
+  color: var(--acento-texto);
+}
+
+.collage__cuerpo {
+  position: relative;
+}
+
+.collage__lienzo {
+  position: relative;
+  aspect-ratio: 16 / 8.6;
+}
+
+.collage__lienzo img {
+  position: absolute;
+  width: 22%;
+  height: auto;
+  border-radius: clamp(4px, 0.8vw, 10px);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+}
+
+.collage__lienzo img:nth-child(1) { top: 7%; left: 3%; z-index: 1; }
+.collage__lienzo img:nth-child(2) { top: 41%; left: 11%; z-index: 2; }
+.collage__lienzo img:nth-child(3) { top: 21%; left: 28%; z-index: 3; }
+.collage__lienzo img:nth-child(4) { top: 15%; left: 49%; z-index: 2; }
+.collage__lienzo img:nth-child(5) { top: 2%; left: 66%; z-index: 4; }
+.collage__lienzo img:nth-child(6) { top: 43%; left: 75%; z-index: 3; }
+
+.collage__marca,
+.collage__rubro {
+  position: absolute;
+  left: 47%;
+  z-index: 5;
+  translate: -50% 0;
+  font-family: var(--titulos);
+  font-size: clamp(1.15rem, 3.2vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  word-spacing: 0.12em;
+}
+
+.collage__marca {
+  top: 1.5%;
+}
+
+.collage__rubro {
+  top: 87%;
+  /* centrado en el hueco que dejan las piezas de abajo, y algo más chico para no pisarlas */
+  left: 54%;
+  font-size: clamp(1rem, 2.5vw, 2.1rem);
+}
+
+.collage-puntos {
+  display: none;
+}
+
+/* ---- Escenario compartido (solo con script) ---- */
+.js .collage-escena {
+  display: grid;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.js .collage-escena .collage {
+  grid-area: 1 / 1;
+  margin-top: 0;
+  pointer-events: none;
+}
+
+.js .collage-escena .collage.activa {
+  pointer-events: auto;
+}
+
+/* Reposo: todo oculto; nombre y rubro juntos en el centro */
+.js .collage-escena .collage__barra,
+.js .collage-escena .collage__marca,
+.js .collage-escena .collage__rubro {
+  opacity: 0;
+  transition:
+    opacity 0.5s,
+    top 0.9s cubic-bezier(0.65, 0, 0.2, 1),
+    left 0.9s cubic-bezier(0.65, 0, 0.2, 1);
+}
+
+.js .collage-escena .collage__marca {
+  top: 40%;
+  left: 50%;
+}
+
+.js .collage-escena .collage__rubro {
+  top: 52%;
+  left: 50%;
+}
+
+.js .collage-escena .collage__lienzo img {
+  opacity: 0;
+  translate: 0 14%;
+  scale: 0.86;
+  rotate: -5deg;
+  transition:
+    opacity 0.45s,
+    translate 0.45s,
+    scale 0.45s,
+    rotate 0.45s;
+}
+
+.js .collage-escena .collage__lienzo img:nth-child(even) {
+  rotate: 5deg;
+}
+
+/* Paso 1 · aparece el nombre al centro */
+.js .collage-escena .activa .collage__barra,
+.js .collage-escena .activa .collage__marca,
+.js .collage-escena .activa .collage__rubro {
+  opacity: 1;
+}
+
+/* Paso 2 · el nombre sube, el rubro baja y entran las piezas una tras otra */
+.js .collage-escena .abierta .collage__marca {
+  top: 1.5%;
+  left: 47%;
+}
+
+.js .collage-escena .abierta .collage__rubro {
+  top: 87%;
+  left: 54%;
+}
+
+.js .collage-escena .abierta .collage__lienzo img {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  rotate: 0deg;
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.js .collage-escena .abierta .collage__lienzo img:nth-child(1) { transition-delay: 0.35s; }
+.js .collage-escena .abierta .collage__lienzo img:nth-child(2) { transition-delay: 0.47s; }
+.js .collage-escena .abierta .collage__lienzo img:nth-child(3) { transition-delay: 0.59s; }
+.js .collage-escena .abierta .collage__lienzo img:nth-child(4) { transition-delay: 0.71s; }
+.js .collage-escena .abierta .collage__lienzo img:nth-child(5) { transition-delay: 0.83s; }
+.js .collage-escena .abierta .collage__lienzo img:nth-child(6) { transition-delay: 0.95s; }
+
+/* Puntos para saltar de marca */
+.js .collage-puntos {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+}
+
+.collage-puntos button {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--texto) 28%, transparent);
+  cursor: pointer;
+  transition: width 0.3s, background 0.3s;
+}
+
+.collage-puntos button.activo {
+  width: 1.6rem;
+  background: var(--acento-texto);
+}
+
+/* En pantallas angostas: escenario más alto, piezas más grandes en dos filas */
+@media (max-width: 640px) {
+  .collage__barra span:nth-child(2) {
+    display: none;
+  }
+
+  .collage__lienzo {
+    aspect-ratio: 1 / 1.32;
+  }
+
+  .collage__lienzo img {
+    width: 38%;
+  }
+
+  .collage__lienzo img:nth-child(1) { top: 13%; left: 1%; }
+  .collage__lienzo img:nth-child(2) { top: 53%; left: 4%; }
+  .collage__lienzo img:nth-child(3) { top: 9%; left: 31%; }
+  .collage__lienzo img:nth-child(4) { top: 50%; left: 33%; }
+  .collage__lienzo img:nth-child(5) { top: 14%; left: 61%; }
+  .collage__lienzo img:nth-child(6) { top: 54%; left: 60%; }
+
+  .collage__marca,
+  .collage__rubro {
+    left: 50%;
+    font-size: 1.35rem;
+  }
+
+  .collage__marca,
+  .js .collage-escena .abierta .collage__marca {
+    top: 0.5%;
+    left: 50%;
+  }
+
+  .collage__rubro,
+  .js .collage-escena .abierta .collage__rubro {
+    top: 94.5%;
+    left: 50%;
+    font-size: 1.1rem;
+  }
+
+  .js .collage-escena .collage__marca {
+    top: 43%;
+  }
+
+  .js .collage-escena .collage__rubro {
+    top: 50%;
+  }
+}
+
+/* Carrusel horizontal de proyectos: se desliza con el dedo, la rueda o las flechas */
 .carrusel {
   display: flex;
   gap: clamp(1rem, 2vw, 1.5rem);
@@ -927,6 +1644,10 @@ main,
   color: var(--acento-texto);
 }
 
+.flecha[hidden] {
+  display: none;
+}
+
 .flecha:disabled {
   opacity: 0.35;
   cursor: default;
@@ -959,7 +1680,7 @@ main,
 
 .card__media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--panel-2);
 }
@@ -1080,6 +1801,31 @@ main,
   counter-increment: servicio;
 }
 
+/* Tarjeta enlazada a su sección: el enlace ocupa toda la tarjeta */
+.servicios li:has(> a) {
+  position: relative;
+  transition: border-color 0.25s, translate 0.25s;
+}
+
+.servicios li:has(> a):hover {
+  border-color: color-mix(in srgb, var(--acento-texto) 60%, transparent);
+  translate: 0 -3px;
+}
+
+.servicios a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.servicios__ver {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--acento-texto);
+}
+
 .servicios li::before {
   content: counter(servicio, decimal-leading-zero);
   display: grid;
@@ -1105,6 +1851,17 @@ main,
 }
 
 /* ---------- Proceso ---------- */
+/* "Así trabajo" va dentro de la sección de videos, separado por una línea */
+.subseccion {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--linea);
+}
+
+.subseccion .seccion__cabecera h2 {
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+}
+
 .seccion__bajada {
   max-width: 32rem;
   margin-top: 0.7rem;
@@ -1557,12 +2314,65 @@ main,
   content: '✓ ';
 }
 
-/* ---------- Página de proyecto ---------- */
+/* ---------- Página de proyecto ----------
+   Estructura tipo caso de estudio: titular + ficha, portada grande, y debajo dos columnas:
+   a la izquierda el texto (se queda fijo al bajar) y a la derecha las imágenes, una por fila. */
+.proyecto__cabecera {
+  display: grid;
+  gap: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.proyecto__resumen {
+  max-width: 36rem;
+  margin-top: 1.1rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: var(--texto-2);
+}
+
+/* Ficha en franja horizontal: cuatro datos en fila separados por líneas finas (2 × 2 en móvil) */
 .proyecto__ficha {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 3rem;
-  margin-top: clamp(1.25rem, 3vw, 2rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-block: 1px solid var(--linea);
+}
+
+.proyecto__ficha > div {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 1rem clamp(0.75rem, 2vw, 1.5rem);
+}
+
+@media (max-width: 759px) {
+  .proyecto__ficha > div:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .proyecto__ficha > div:nth-child(even) {
+    border-left: 1px solid var(--linea);
+  }
+
+  .proyecto__ficha > div:nth-child(n + 3) {
+    border-top: 1px solid var(--linea);
+  }
+}
+
+@media (min-width: 760px) {
+  .proyecto__ficha {
+    grid-template-columns: auto auto auto minmax(0, 1fr);
+  }
+
+  .proyecto__ficha > div {
+    padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .proyecto__ficha > div + div {
+    border-left: 1px solid var(--linea);
+  }
+
+  .proyecto__ficha > div:first-child {
+    padding-left: 0;
+  }
 }
 
 .proyecto__ficha dt {
@@ -1636,61 +2446,254 @@ main,
   scale: 1.08;
 }
 
-.proyecto__texto {
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  padding-block: clamp(1.5rem, 4vw, 3rem);
+.proyecto__portada,
+.galeria__item img {
+  cursor: zoom-in;
 }
 
-@media (min-width: 800px) {
-  .proyecto__texto {
-    grid-template-columns: repeat(3, 1fr);
+/* Mosaico del manual de marca: todas las páginas en filas inclinadas, a todo el ancho de la pantalla.
+   Las filas se deslizan muy despacio en sentidos alternados y se detienen al pasar el cursor. */
+.muro {
+  --hueco: clamp(0.7rem, 1.5vw, 1.4rem);
+  position: relative;
+  height: clamp(19rem, 50vw, 42rem);
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 74%, transparent);
+  mask-image: linear-gradient(#000 74%, transparent);
+}
+
+.muro__lienzo {
+  position: absolute;
+  top: 50%;
+  left: -20vw;
+  display: grid;
+  gap: var(--hueco);
+  translate: 0 -50%;
+  /* gira sobre el centro de la pantalla, no sobre el centro de la fila (que es mucho más larga) */
+  transform-origin: 70vw 50%;
+  rotate: -8deg;
+}
+
+.muro__fila {
+  display: flex;
+  gap: var(--hueco);
+  width: max-content;
+  animation: muro-desliza 90s linear infinite;
+}
+
+.muro__fila:nth-child(even) {
+  animation-direction: reverse;
+}
+
+.muro:hover .muro__fila {
+  animation-play-state: paused;
+}
+
+/* Cada fila lleva sus páginas duplicadas: al llegar a la mitad vuelve al inicio sin que se note */
+@keyframes muro-desliza {
+  to { translate: calc(-50% - var(--hueco) / 2) 0; }
+}
+
+.muro__fila img {
+  width: clamp(14rem, 27vw, 30rem);
+  height: auto;
+  border-radius: 6px;
+  background: var(--panel-2);
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.75);
+  cursor: zoom-in;
+  transition: scale 0.3s;
+}
+
+.muro__fila img:hover {
+  scale: 1.03;
+}
+
+/* Variante para publicaciones: piezas verticales o cuadradas, todas del mismo alto dentro de la fila */
+.muro--posts .muro__fila img {
+  width: auto;
+  height: clamp(11rem, 19vw, 20rem);
+}
+
+.muro__boton {
+  position: absolute;
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  left: 50%;
+  translate: -50% 0;
+  white-space: nowrap;
+}
+
+.muro__boton:hover {
+  transform: none;
+}
+
+/* Texto del proyecto. A la izquierda el contexto (párrafo grande) y, debajo, el resultado en una tarjeta
+   destacada con el botón. A la derecha, "Qué hice" como una grilla de tarjetas numeradas. */
+.proyecto__info {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 900px) {
+  .proyecto__info {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      'contexto hice'
+      'resultado hice';
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+
+  .info--contexto {
+    grid-area: contexto;
+  }
+
+  .info--hice {
+    grid-area: hice;
+  }
+
+  .info--resultado {
+    grid-area: resultado;
   }
 }
 
-.proyecto__texto > div {
-  padding: 1.6rem;
-}
-
-.proyecto__texto h2 {
+.proyecto__info h2 {
   margin-bottom: 0.8rem;
-  font-size: 0.78rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  word-spacing: normal;
   color: var(--acento-texto);
 }
 
-.proyecto__texto p,
-.proyecto__texto li {
-  font-size: 0.95rem;
+.info--contexto p {
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.info--resultado {
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border: 1px solid var(--linea);
+  border-left: 3px solid var(--acento);
+  border-radius: var(--radio);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.info--resultado p {
   color: var(--texto-2);
 }
 
-.proyecto__texto li {
-  padding-block: 0.5rem;
-  border-bottom: 1px solid var(--linea);
+.info--resultado .boton {
+  margin-top: 1.3rem;
 }
 
-.proyecto__texto li:last-child {
-  border-bottom: 0;
+.info--hice ol {
+  display: grid;
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+@media (min-width: 560px) {
+  .info--hice ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Si el total es impar, la última tarjeta ocupa las dos columnas */
+  .info--hice li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.info--hice li {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  counter-increment: paso;
+  transition: border-color 0.25s, translate 0.25s;
+}
+
+.info--hice li:hover {
+  border-color: color-mix(in srgb, var(--acento-texto) 55%, transparent);
+  translate: 0 -2px;
+}
+
+.info--hice li::before {
+  content: counter(paso, decimal-leading-zero);
+  font-family: var(--titulos);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--acento-texto);
+}
+
+.proyecto__subtitulo {
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
 }
 
 .galeria {
-  columns: 1;
-  column-gap: clamp(1rem, 2vw, 1.5rem);
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
   padding-bottom: clamp(2.5rem, 6vw, 5rem);
 }
 
 @media (min-width: 700px) {
   .galeria {
-    columns: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+/* Muro de publicaciones (social media): filas parejas en orden de lectura. Si la última fila queda
+   incompleta se centra, para que no deje huecos a un lado. */
+.galeria--posts {
+  --cols: 2;
+  --hueco: clamp(0.7rem, 1.5vw, 1.2rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--hueco);
+}
+
+@media (min-width: 700px) {
+  .galeria--posts {
+    --cols: 3;
+  }
+}
+
+@media (min-width: 1100px) {
+  .galeria--posts {
+    --cols: 4;
+  }
+}
+
+.galeria--posts .galeria__item {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--hueco)) / var(--cols));
+  border-radius: 12px;
+  transition: translate 0.25s, border-color 0.25s;
+}
+
+.galeria--posts .galeria__item:hover {
+  border-color: color-mix(in srgb, var(--acento-texto) 55%, transparent);
+  translate: 0 -3px;
+}
+
 .galeria__item {
-  break-inside: avoid;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--linea);
   border-radius: var(--radio);
@@ -1706,26 +2709,277 @@ main,
   object-fit: cover;
 }
 
-.siguiente {
+.galeria__item figcaption {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* Pie con texto (nombre del cliente, rubro): va debajo de la imagen, no encima como el número */
+.galeria__item .galeria__pie {
+  position: static;
+  padding: 0.75rem 0.95rem 0.85rem;
+  border-radius: 0;
+  background: none;
+  color: var(--texto);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* Logofolio: fichas cuadradas, una por marca */
+.galeria--logos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.5vw, 1.2rem);
+}
+
+@media (min-width: 760px) {
+  .galeria--logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .galeria--logos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.galeria--logos .galeria__item {
+  border-radius: 14px;
+  transition: translate 0.25s, border-color 0.25s;
+}
+
+.galeria--logos .galeria__item:hover {
+  border-color: color-mix(in srgb, var(--acento-texto) 55%, transparent);
+  translate: 0 -3px;
+}
+
+/* Lámina de logofolio: panel en el color contrario al fondo (crema sobre navy, navy sobre crema),
+   con los logos a una tinta en una cuadrícula separada por líneas punteadas. */
+.logofolio {
+  --lf-fondo: var(--texto);
+  --lf-tinta: var(--fondo);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.4rem, 4vw, 3.5rem);
+  border-radius: var(--radio);
+  background: var(--lf-fondo);
+  color: var(--lf-tinta);
+}
+
+@media (min-width: 900px) {
+  .logofolio {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+  }
+}
+
+.logofolio__texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.logofolio__texto h3 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.logofolio__texto p {
+  max-width: 24rem;
+}
+
+.logofolio__grilla {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.logofolio__celda {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border: 0 dashed color-mix(in srgb, var(--lf-tinta) 28%, transparent);
+  border-width: 0 1.5px 1.5px 0;
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    scale 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.25s;
+}
+
+.logofolio__celda:nth-child(3n) {
+  border-right-width: 0;
+}
+
+.logofolio__celda:nth-last-child(-n + 3) {
+  border-bottom-width: 0;
+}
+
+.logofolio__celda:hover {
+  background: color-mix(in srgb, var(--lf-tinta) 7%, transparent);
+}
+
+/* El logo es una silueta usada como máscara: toma el color de la tinta del panel.
+   Ocupa una caja fija dentro de la celda y se ajusta a ella, sea ancho o alto. */
+.logofolio__celda i {
+  position: absolute;
+  inset: 21% 14%;
+  background: var(--lf-tinta);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}
+
+.logofolio__ver {
+  font-size: clamp(0.62rem, 1.2vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.js .categoria:not(.visible) .logofolio__celda {
+  opacity: 0;
+  scale: 0.85;
+}
+
+.categoria.visible .logofolio__celda:nth-child(3n + 2) { transition-delay: 0.1s, 0.1s, 0s; }
+.categoria.visible .logofolio__celda:nth-child(3n) { transition-delay: 0.2s, 0.2s, 0s; }
+.categoria.visible .logofolio__celda:nth-child(n + 4) { transition-delay: 0.3s, 0.3s, 0s; }
+.categoria.visible .logofolio__celda:nth-child(n + 7) { transition-delay: 0.45s, 0.45s, 0s; }
+
+/* Rejilla de la sección Logofolio en el inicio: las fichas aparecen escalonadas con la banda */
+.rejilla .galeria__item {
   display: block;
-  padding-block: clamp(2rem, 5vw, 4rem);
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s;
+}
+
+.rejilla .galeria__pie {
+  display: block;
+}
+
+.js .categoria:not(.visible) .rejilla .galeria__item {
+  opacity: 0;
+  translate: 0 1.5rem;
+}
+
+.categoria.visible .rejilla .galeria__item:nth-child(4n + 2) { transition-delay: 0.08s, 0.08s, 0s; }
+.categoria.visible .rejilla .galeria__item:nth-child(4n + 3) { transition-delay: 0.16s, 0.16s, 0s; }
+.categoria.visible .rejilla .galeria__item:nth-child(4n + 4) { transition-delay: 0.24s, 0.24s, 0s; }
+
+/* Los reels son verticales: van más angostos y centrados para no ocupar toda la columna */
+.galeria__item--reel {
+  width: min(100%, 22rem);
+  justify-self: center;
+}
+
+/* Visor: imagen ampliada a pantalla completa (clic en cualquier imagen del proyecto) */
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  background: color-mix(in srgb, var(--fondo) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.visor[hidden] {
+  display: none;
+}
+
+.visor img {
+  max-width: 100%;
+  max-height: calc(100vh - 7.5rem);
+  max-height: calc(100dvh - 7.5rem);
+  width: auto;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+}
+
+.visor__barra {
+  position: absolute;
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  translate: -50% 0;
+  font-size: 0.85rem;
+  color: var(--texto-2);
+}
+
+.visor__cerrar {
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.visor .flecha {
+  display: grid;
+}
+
+.siguiente {
+  display: grid;
+  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding-block: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--linea);
 }
 
-.siguiente span {
+@media (min-width: 700px) {
+  .siguiente {
+    grid-template-columns: minmax(0, 20rem) 1fr;
+  }
+}
+
+.siguiente img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.siguiente:hover img {
+  transform: scale(1.03);
+}
+
+.siguiente span,
+.siguiente em {
   display: block;
-  margin-bottom: 0.4rem;
   font-size: 0.72rem;
+  font-style: normal;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--texto-2);
 }
 
 .siguiente strong {
+  display: block;
+  margin-block: 0.4rem 0.5rem;
   font-family: var(--titulos);
-  word-spacing: 0.12em;
   font-weight: 600;
-  font-size: clamp(1.8rem, 5.5vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  word-spacing: 0.12em;
   line-height: 1.1;
   letter-spacing: 0;
   transition: color 0.2s;
@@ -1903,7 +3157,9 @@ main,
     scroll-behavior: auto;
   }
 
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
     animation: none !important;
   }
