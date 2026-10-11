@@ -664,7 +664,7 @@ main,
 
 @media (min-width: 860px) {
   .hero {
-    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
@@ -820,7 +820,7 @@ main,
 
 .hero__visual {
   position: relative;
-  width: min(100%, 26rem);
+  width: min(100%, 33rem);
   margin-inline: auto;
   aspect-ratio: 1;
 }
@@ -3090,7 +3090,7 @@ main,
 .sobre {
   display: grid;
   gap: clamp(2rem, 5vw, 4.5rem);
-  padding-bottom: clamp(3rem, 7vw, 6rem);
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 @media (min-width: 800px) {
@@ -3119,15 +3119,43 @@ main,
   font-size: 1.4rem;
 }
 
-.sobre__texto .herramientas {
+.sobre__texto .boton {
+  margin-top: 2rem;
+}
+
+/* Segunda franja de Sobre mí, a todo el ancho (bajo la foto y la bio): clientes a la izquierda en dos
+   columnas y herramientas a la derecha. Así no queda un hueco bajo la foto. */
+.sobre-extra {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem);
+  border-top: 1px solid var(--linea);
+}
+
+@media (min-width: 900px) {
+  .sobre-extra {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.sobre-extra h2 {
+  margin-bottom: 1.1rem;
+  font-size: 1.4rem;
+}
+
+.sobre-extra .herramientas {
   margin-top: 0;
 }
 
 .lista {
   display: grid;
   gap: 0.6rem;
-  max-width: 38rem;
-  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 560px) {
+  .lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .lista li {

@@ -818,11 +818,15 @@ function paginaSobreMi(site) {
   <div class="sobre__texto">
     ${(s.bio || []).map((t) => `<p>${esc(t)}</p>`).join('')}
     ${(site.habilidades || []).length ? `<h2>Habilidades técnicas</h2>${habilidades(site)}` : ''}
-    <h2>Con quién trabajo</h2>
-    <ul class="lista">${(s.clientes || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
-    ${(site.herramientas || []).length ? `<h2>Herramientas</h2>${herramientas(site)}` : ''}
     <a class="boton" href="/contacto/">Hablemos</a>
   </div>
+</section>
+<section class="sobre-extra">
+  <div>
+    <h2>Con quién trabajo</h2>
+    <ul class="lista">${(s.clientes || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+  </div>
+  ${(site.herramientas || []).length ? `<div><h2>Herramientas</h2>${herramientas(site)}</div>` : ''}
 </section>`;
   return layout(site, {
     title: 'Sobre mí',
