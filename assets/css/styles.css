@@ -529,7 +529,7 @@ main,
 }
 
 /* En móvil la palabra es chica y la burbuja la tapaba casi entera: baja a quedar justo debajo de las letras
-   (apenas las roza) y se ajusta al ancho de su texto; el año pasa a la línea siguiente. */
+   (apenas las roza) y se ajusta al ancho de su texto. */
 @media (max-width: 600px) {
   .portada__burbuja {
     top: 88%;
@@ -544,8 +544,23 @@ main,
     letter-spacing: 0.06em;
   }
 
+  /* el año sube a la primera línea, a la derecha del rol, para no dejar una fila casi vacía abajo */
   .portada .hero__marco .hero__pastilla {
-    margin-top: 2.2rem;
+    position: absolute;
+    top: clamp(0.7rem, 1.6vw, 1.2rem);
+    right: clamp(0.9rem, 3vw, 2.4rem);
+    margin: 0;
+    font-size: 0.66rem;
+    line-height: 1;
+  }
+
+  .portada .hero__pastilla span {
+    display: none;
+  }
+
+  /* espacio para la burbuja, que cuelga bajo la palabra */
+  .portada__caja {
+    margin-bottom: 1.55rem;
   }
 }
 

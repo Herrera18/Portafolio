@@ -118,6 +118,37 @@
     ]
   },
   {
+    "slug": "oti-viajes-social",
+    "titulo": "Oti Viajes — Campañas",
+    "cliente": "Oti Viajes",
+    "rubro": "Agencia de viajes",
+    "categoria": "rrss",
+    "anio": 2025,
+    "resumen": "Anuncios para redes sociales de una agencia de viajes: destinos, paquetes y su plan de pago en cuotas.",
+    "contexto": "Oti Viajes es una agencia de viajes familiar con sede en Venezuela. Después del refresh de su marca, necesitaba anuncios para sus campañas en redes: paquetes a Margarita, la Gran Sabana, Punta Cana o Europa, y la promoción de Oticrédito, su plan para pagar el viaje en cuotas.",
+    "queHice": [
+      "Diseño de anuncios para campañas en redes sociales",
+      "Versiones cuadradas y verticales de cada pieza",
+      "Aplicación de la nueva identidad: azules, amarillo y tipografía de la marca",
+      "Composición con fotos de destinos, precios y condiciones del paquete"
+    ],
+    "resultado": "Una línea de anuncios reconocible para las campañas de 2025, coherente con el manual de marca que se hizo para la agencia. Aquí va una selección.",
+    "portada": "cover.webp",
+    "galeria": [
+      "01.webp",
+      "02.webp",
+      "03.webp",
+      "04.webp",
+      "05.webp",
+      "06.webp",
+      "07.webp",
+      "08.webp",
+      "09.webp",
+      "10.webp",
+      "11.webp"
+    ]
+  },
+  {
     "slug": "venechi-videos",
     "titulo": "Venechi — Anuncios",
     "cliente": "Venechi",
