@@ -1331,6 +1331,12 @@ main,
   transition: scale 0.3s;
 }
 
+/* Piezas horizontales (páginas de manual, mockups): más bajas, para que quepan varias a la vez */
+.cinta--ancha .cinta__item img,
+.cinta--ancha .cinta__item video {
+  height: clamp(9rem, 17vw, 13.5rem);
+}
+
 .cinta__item:hover img,
 .cinta__item:hover video {
   scale: 1.02;

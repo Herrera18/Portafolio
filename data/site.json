@@ -42,7 +42,10 @@
     {
       "categoria": "identidad",
       "titulo": "Identidad de marca",
-      "detalle": "Logotipo · Manual de marca · Aplicaciones"
+      "detalle": "Logotipo · Manual de marca · Aplicaciones",
+      "cinta": true,
+      "soloCinta": true,
+      "ritmo": 10
     },
     {
       "categoria": "logos",

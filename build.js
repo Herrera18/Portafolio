@@ -344,9 +344,17 @@ function paginaInicio(site, projects) {
         for (let k = 0; k < POR_PROYECTO; k++) {
           for (const p of sec.lista) {
             // Imágenes tal cual; de los reels se usa su póster (reel-01.mp4 → reel-01.webp)
-            const archivo = (p.galeria || [])
+            let lista = (p.galeria || [])
               .map((a) => (/\.mp4$/i.test(a) ? a.replace(/\.mp4$/i, '.webp') : a))
-              .filter((a) => /\.webp$/i.test(a) && exists(`media/${p.slug}/${a}`))[k];
+              .filter((a) => /\.webp$/i.test(a) && exists(`media/${p.slug}/${a}`));
+            // Manuales de marca: primero la tapa, luego los mockups; si hay pocos, se completa con páginas
+            // repartidas a lo largo del manual (logotipo, colores, tipografía suelen caer ahí).
+            if (p.manual) {
+              const pag = (n) => `manual/${String(n).padStart(2, '0')}.webp`;
+              const extra = [0.45, 0.6, 0.75, 0.9].map((f) => pag(Math.max(2, Math.round(p.manual * f))));
+              lista = [...new Set([pag(1), ...lista, ...extra])].slice(0, Math.max(4, lista.length + 1));
+            }
+            const archivo = lista[k];
             if (!archivo) continue;
             const mini = archivo.replace(/([^/]+)$/, 'm$1');
             // Si la pieza es el póster de un reel, se guarda también el video para reproducirlo en la cinta
@@ -373,7 +381,11 @@ function paginaInicio(site, projects) {
         };
         if (piezas.length) {
           cinta = `
-  <div class="cinta" style="--piezas:${piezas.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
+  <div class="cinta${
+    (webpSize(`media/${piezas[0].p.slug}/${piezas[0].src}`) || { w: 1, h: 2 }).w > (webpSize(`media/${piezas[0].p.slug}/${piezas[0].src}`) || { w: 1, h: 2 }).h
+      ? ' cinta--ancha'
+      : ''
+  }" style="--piezas:${piezas.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
     <div class="cinta__pista">
       ${piezas.map((x) => item(x, false)).join('')}
       ${piezas.map((x) => item(x, true)).join('')}
