@@ -11,29 +11,28 @@ if (botonTema) {
   });
 }
 
-// Filtro de la galería de trabajos (también responde a /trabajos/#video)
+// Trabajos: cada categoría tiene su vista (láminas). El filtro muestra una a la vez y responde a /trabajos/#video.
 const filtros = document.querySelectorAll('[data-filtro]');
 if (filtros.length) {
-  const tarjetas = document.querySelectorAll('#galeria .card');
-  const galeria = document.getElementById('galeria');
   const vistas = document.querySelectorAll('[data-vista]');
+  const cuenta = document.querySelector('[data-cuenta]');
+  const conVista = (cat) => [...vistas].some((v) => v.dataset.vista === cat);
+  // Sin categoría en la dirección se abre la primera
+  const inicial = [...filtros].map((b) => b.dataset.filtro).find(conVista);
   const aplicar = (cat) => {
     filtros.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtro === cat)));
-    tarjetas.forEach((t) => (t.hidden = cat !== 'todos' && t.dataset.cat !== cat));
-    // Algunas categorías tienen vista propia en lugar de tarjetas: los videos mismos, las láminas de social media
-    let propia = false;
-    vistas.forEach((v) => {
-      v.hidden = v.dataset.vista !== cat;
-      propia = propia || !v.hidden;
-    });
-    galeria.hidden = propia;
-    // los carruseles calculan flechas y puntos al cambiar de tamaño: se les avisa ahora que son visibles
-    window.dispatchEvent(new Event('resize'));
+    vistas.forEach((v) => (v.hidden = v.dataset.vista !== cat));
+    // Arriba a la derecha: nombre y cantidad de proyectos de la categoría que se está viendo
+    const activo = [...filtros].find((b) => b.dataset.filtro === cat);
+    if (cuenta && activo) {
+      const n = Number(activo.dataset.total);
+      cuenta.textContent = `${activo.dataset.nombre} · ${n} ${n === 1 ? 'proyecto' : 'proyectos'}`;
+    }
   };
   const desdeHash = () => {
     const cat = location.hash.slice(1);
-    const valido = [...filtros].some((b) => b.dataset.filtro === cat);
-    aplicar(valido ? cat : 'todos');
+    const valido = conVista(cat);
+    aplicar(valido ? cat : inicial);
     // Si se llega desde una sección del inicio, la página queda posicionada en los filtros
     if (valido) {
       const ir = () => filtros[0].parentElement.scrollIntoView({ block: 'start', behavior: 'instant' });
@@ -45,13 +44,13 @@ if (filtros.length) {
   };
   filtros.forEach((b) =>
     b.addEventListener('click', () => {
+      // Categoría con un solo proyecto: el botón abre ese proyecto
       if (b.dataset.ir) {
         location.href = b.dataset.ir;
         return;
       }
-      const cat = b.dataset.filtro;
-      history.replaceState(null, '', cat === 'todos' ? location.pathname : `#${cat}`);
-      aplicar(cat);
+      history.replaceState(null, '', `#${b.dataset.filtro}`);
+      aplicar(b.dataset.filtro);
     })
   );
   window.addEventListener('hashchange', desdeHash);
@@ -66,7 +65,8 @@ if (videos.length) {
   if (ahorro || sinMovimiento || !('IntersectionObserver' in window)) {
     videos.forEach((v) => {
       if (v.closest('.card')) v.remove();
-      else v.controls = true;
+      // en las láminas de Trabajos el video es solo un adelanto dentro de un enlace: queda su póster
+      else if (!v.closest('.lamina__celda')) v.controls = true;
     });
   } else {
     const obs = new IntersectionObserver(

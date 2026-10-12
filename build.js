@@ -325,6 +325,26 @@ function proceso(site) {
 
 // ---------- páginas ----------
 
+// Cinta de marcas: los logos a una tinta del logofolio, cada uno dentro de una caja del mismo tamaño,
+// pasando despacio y sin corte (van dos veces seguidas).
+function cintaMarcas(projects) {
+  const lf = projects.find((p) => (p.mono || []).length);
+  if (!lf) return '';
+  const logo = (m, copia) =>
+    `<i${copia ? ' aria-hidden="true"' : ` role="img" aria-label="${esc(m.nombre)}"`} style="--logo:url('/media/${lf.slug}/${esc(
+      m.archivo
+    )}')"></i>`;
+  return `
+<div class="marcas">
+  <div class="cinta marcas__cinta" role="group" aria-label="Marcas que confiaron en mi trabajo" style="--piezas:${lf.mono.length};--ritmo:4.5s">
+    <div class="cinta__pista">
+      ${lf.mono.map((m) => logo(m, false)).join('')}
+      ${lf.mono.map((m) => logo(m, true)).join('')}
+    </div>
+  </div>
+</div>`;
+}
+
 function paginaInicio(site, projects) {
   // Una sección numerada por categoría (orden y nombres en site.json → "secciones"), con sus proyectos en una tira.
   const secciones = (site.secciones || [])
@@ -603,7 +623,7 @@ function paginaInicio(site, projects) {
     ${Object.values(CATEGORIAS).map((c) => `<span class="hero__chip">${c}</span>`).join('')}
   </div>
 </section>
-
+${cintaMarcas(projects)}
 ${bloqueServicios}
 ${secciones}
 ${(site.secciones || []).some((x) => x.categoria === 'video') && projects.some((p) => p.categoria === 'video') ? '' : proceso(site)}`;
@@ -630,106 +650,106 @@ ${(site.secciones || []).some((x) => x.categoria === 'video') && projects.some((
 function paginaTrabajos(site, projects) {
   const usadas = Object.keys(CATEGORIAS).filter((c) => projects.some((p) => p.categoria === c));
   const filtros = [
-    `<button type="button" data-filtro="todos" aria-pressed="true">Todos <sup>${projects.length}</sup></button>`,
     ...usadas.map((c) => {
       const lista = projects.filter((p) => p.categoria === c);
       // Categoría con un solo proyecto: el botón abre ese proyecto directamente
-      return `<button type="button" data-filtro="${c}"${lista.length === 1 ? ` data-ir="/proyectos/${lista[0].slug}/"` : ''} aria-pressed="false">${
+      return `<button type="button" data-filtro="${c}" data-nombre="${CATEGORIAS[c]}" data-total="${lista.length}"${lista.length === 1 ? ` data-ir="/proyectos/${lista[0].slug}/"` : ''} aria-pressed="false">${
         CATEGORIAS[c]
       } <sup>${lista.length}</sup></button>`;
     }),
   ].join('');
-  // Cinta de marcas: los logos a una tinta del logofolio, cada uno dentro de una caja del mismo tamaño
-  const lf = projects.find((p) => (p.mono || []).length);
-  const logo = (m, copia) =>
-    `<i${copia ? ' aria-hidden="true"' : ` role="img" aria-label="${esc(m.nombre)}"`} style="--logo:url('/media/${lf.slug}/${esc(
-      m.archivo
-    )}')"></i>`;
-  const marcas = lf
-    ? `
-  <div class="marcas">
-    <div class="cinta marcas__cinta" role="group" aria-label="Marcas que confiaron en mi trabajo" style="--piezas:${lf.mono.length};--ritmo:4.5s">
-      <div class="cinta__pista">
-        ${lf.mono.map((m) => logo(m, false)).join('')}
-        ${lf.mono.map((m) => logo(m, true)).join('')}
-      </div>
-    </div>
-  </div>`
-    : '';
-  // Videoteca: con el filtro "Video" las tarjetas se reemplazan por los videos mismos, una fila por cliente.
-  // Cada fila es un carrusel con flechas; los videos se reproducen mudos y un toque los abre con sonido.
-  const conVideos = projects.filter((p) => p.categoria === 'video' && !p.youtube && (p.galeria || []).some((a) => /\.mp4$/i.test(a)));
-  const videoteca = conVideos.length
-    ? `
-  <div class="videoteca" data-vista="video" hidden>
-    ${conVideos
-      .map((p) => {
-        const reels = p.galeria.filter((a) => /\.mp4$/i.test(a));
-        return `<section class="proyecto__reels videoteca__fila" data-carrusel-caja aria-label="Videos de ${esc(p.cliente || p.titulo)}">
-      <div class="proyecto__reels-cab">
-        <h2 class="proyecto__subtitulo">${esc(p.cliente || p.titulo)} <small>${esc(
-          [p.rubro, `${reels.length} ${reels.length === 1 ? 'video' : 'videos'}`].filter(Boolean).join(' · ')
-        )}</small></h2>
-        <span class="seccion__nav">
-          <a class="seccion__ver" href="/proyectos/${p.slug}/">Ver proyecto</a>
-          <button class="flecha" type="button" data-carrusel="-1" aria-label="Videos anteriores">←</button>
-          <button class="flecha" type="button" data-carrusel="1" aria-label="Videos siguientes">→</button>
-        </span>
-      </div>
-      <div class="carrusel galeria galeria--posts">${reels.map((a, n) => galeriaItem(p, a, n)).join('\n')}</div>
-      <div class="puntos" aria-hidden="true"></div>
-    </section>`;
-      })
-      .join('\n    ')}
-  </div>`
-    : '';
-  // Láminas de social media: con el filtro "Social media" cada marca va en una lámina, con el texto a un lado
-  // y sus piezas en un mosaico (una grande y cuatro chicas). Toda pieza lleva al proyecto.
-  const conPosts = projects
-    .map((p) => ({ p, posts: (p.galeria || []).filter((a) => /\.webp$/i.test(a)) }))
-    .filter((x) => x.p.categoria === 'rrss' && x.posts.length >= 5);
-  const laminas = conPosts.length
-    ? `
-  <div class="laminas" data-vista="rrss" hidden>
-    ${conPosts
-      .map(({ p, posts }, n) => {
-        const pieza = (archivo, k) => {
-          const mini = archivo.replace(/([^/]+)$/, 'm$1');
-          // la pieza grande usa la imagen completa; las chicas, su miniatura
-          const src = k > 0 && exists(`media/${p.slug}/${mini}`) ? mini : archivo;
-          return `<a href="/proyectos/${p.slug}/"${k ? ' tabindex="-1"' : ''}><img src="/media/${p.slug}/${esc(src)}" alt="${
-            k ? '' : `Diseños para ${esc(p.cliente || p.titulo)}`
-          }"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async"></a>`;
-        };
-        return `<article class="lamina">
+  // Láminas: con los filtros "Social media", "Video" e "Identidad de marca" cada marca va en una lámina, con el
+  // texto a un lado y sus piezas en un mosaico (una grande y varias chicas).
+  const lamina = (p, piezas, n, total, tipo) => {
+    const ancha = tipo === 'ancha';
+    // Imágenes: cada pieza lleva al proyecto
+    const pieza = (archivo, k) => {
+      const mini = archivo.replace(/([^/]+)$/, 'm$1');
+      // la pieza grande usa la imagen completa; las chicas, su miniatura
+      const src = k > 0 && exists(`media/${p.slug}/${mini}`) ? mini : archivo;
+      return `<a href="/proyectos/${p.slug}/"${k ? ' tabindex="-1"' : ''}><img src="/media/${p.slug}/${esc(src)}" alt="${
+        k ? '' : `Diseños para ${esc(p.cliente || p.titulo)}`
+      }"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async"></a>`;
+    };
+    // Videos: aquí solo van los adelantos mudos en bucle; cada uno lleva al proyecto, donde se ven completos.
+    // Si el proyecto tiene más de los que se muestran, la última pieza avisa cuántos faltan.
+    const resto = tipo === 'video' ? p.galeria.filter((a) => /\.mp4$/i.test(a)).length - piezas.length : 0;
+    const celda = (archivo, k) => {
+      const poster = archivo.replace(/\.mp4$/i, '.webp');
+      return `<a class="lamina__celda" href="/proyectos/${p.slug}/"${k ? ' tabindex="-1"' : ''} aria-label="Ver los videos de ${esc(
+        p.cliente || p.titulo
+      )}"><video muted loop playsinline preload="none" data-autoplay${
+        exists(`media/${p.slug}/${poster}`) ? ` poster="/media/${p.slug}/${esc(poster)}"` : ''
+      }><source src="/media/${p.slug}/${esc(archivo)}" type="video/mp4"></video>${
+        // la última pieza lleva siempre un aviso visible; las demás lo muestran al pasar el cursor
+        k === piezas.length - 1
+          ? `<span class="lamina__mas">${resto > 0 ? `+${resto} más` : 'Ver completo'}</span>`
+          : '<span class="lamina__mas lamina__mas--cursor">Ver completo</span>'
+      }</a>`;
+    };
+    return `<article class="lamina${ancha ? ' lamina--ancha' : ''}${tipo === 'video' ? ' lamina--video' : ''}">
       <div class="lamina__texto">
-        <span>Social media — ${String(n + 1).padStart(2, '0')} / ${String(conPosts.length).padStart(2, '0')}</span>
+        <span>${esc(CATEGORIAS[p.categoria])} — ${String(n + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</span>
         <div>
-          <h2>${esc(p.cliente || p.titulo)}</h2>
+          <h2>${esc(ancha ? p.titulo : p.cliente || p.titulo)}</h2>
           <p>${esc(p.contexto || p.resumen || '')}</p>
           <a class="boton" href="/proyectos/${p.slug}/">Ver proyecto</a>
         </div>
         <span>${esc([p.rubro, p.anio].filter(Boolean).join(' · '))}</span>
       </div>
-      <div class="lamina__mosaico">${posts.slice(0, 5).map(pieza).join('')}</div>
+      <div class="lamina__mosaico${tipo === 'video' ? ` lamina__mosaico--fila" style="--n:${piezas.length}` : ''}">${piezas
+        .map(tipo === 'video' ? celda : pieza)
+        .join('')}</div>
     </article>`;
-      })
-      .join('\n    ')}
+  };
+  const vistaLaminas = (cat, lista, tipo) =>
+    lista.length
+      ? `
+  <div class="laminas" data-vista="${cat}" hidden>
+    ${lista.map(({ p, piezas }, n) => lamina(p, piezas, n, lista.length, tipo)).join('\n    ')}
   </div>`
-    : '';
+      : '';
+  // Social media: las primeras cinco publicaciones (formato vertical)
+  const conPosts = projects
+    .filter((p) => p.categoria === 'rrss')
+    .map((p) => ({ p, piezas: (p.galeria || []).filter((a) => /\.webp$/i.test(a)).slice(0, 5) }))
+    .filter((x) => x.piezas.length === 5);
+  // Identidad: la tapa del manual en grande, luego los mockups y, si faltan, páginas repartidas a lo largo
+  // del manual (logotipo, colores, tipografía suelen caer ahí). Seis piezas apaisadas.
+  const conManual = projects
+    .filter((p) => p.categoria === 'identidad' && p.manual)
+    .map((p) => {
+      const pag = (n) => `manual/${String(n).padStart(2, '0')}.webp`;
+      const mockups = (p.galeria || []).filter((a) => /\.webp$/i.test(a));
+      const extra = [0.25, 0.4, 0.55, 0.7, 0.85].map((f) => pag(Math.max(2, Math.round(p.manual * f))));
+      return { p, piezas: [...new Set([pag(1), ...mockups.slice(0, 3), ...extra, ...mockups.slice(3)])].slice(0, 6) };
+    })
+    .filter((x) => x.piezas.length === 6);
+  // Video: hasta tres videos por marca, iguales y en fila
+  const conVideos = projects
+    .filter((p) => p.categoria === 'video' && !p.youtube)
+    .map((p) => {
+      const reels = (p.galeria || []).filter((a) => /\.mp4$/i.test(a));
+      return { p, piezas: reels.slice(0, 3) };
+    })
+    .filter((x) => x.piezas.length);
+  // La primera vista sale visible desde el HTML (las demás las muestra el filtro)
+  const laminas = (vistaLaminas('rrss', conPosts, '') + vistaLaminas('video', conVideos, 'video') + vistaLaminas('identidad', conManual, 'ancha')).replace(' hidden>', '>');
   const body = `
-<section class="cabecera cabecera--gigante">
+<section class="cabecera cabecera--trabajos">
   <div class="cabecera__fila">
     <p class="etiqueta">Portafolio</p>
-    <p class="cabecera__dato">${projects.length} proyectos · ${new Date().getFullYear()}</p>
+    <p class="cabecera__dato" data-cuenta>${(() => {
+      // cantidad de la primera categoría; al cambiar de filtro la actualiza main.js
+      const n = projects.filter((p) => p.categoria === usadas[0]).length;
+      return `${CATEGORIAS[usadas[0]]} · ${n} ${n === 1 ? 'proyecto' : 'proyectos'}`;
+    })()}</p>
   </div>
-  <h1>Trabajos</h1>${marcas}
+  <h1 class="solo-lectores">Trabajos</h1>
   <div class="filtros" role="group" aria-label="Filtrar por categoría">${filtros}</div>
 </section>
 <section class="seccion seccion--pegada">
-  <div class="grid grid--3" id="galeria">
-    ${projects.map((p, i) => card(p, { eager: i < 3 })).join('\n')}
-  </div>${laminas}${videoteca}
+  ${laminas}
 </section>`;
   return layout(site, {
     title: 'Trabajos',

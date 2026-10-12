@@ -1195,9 +1195,23 @@ main,
   line-height: 1;
 }
 
-/* Cabecera gigante (Trabajos): la palabra ocupa todo el ancho del contenido y debajo pasa la cinta de marcas */
-.cabecera--gigante {
-  container-type: inline-size;
+/* Texto que solo leen los lectores de pantalla y los buscadores (el título de Trabajos) */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Cabecera de Trabajos: sin título grande, para que los proyectos se vean de inmediato */
+.cabecera--trabajos {
+  padding-block: clamp(1.5rem, 3.5vw, 2.75rem) clamp(1.25rem, 3vw, 2rem);
+}
+
+.cabecera--trabajos .filtros {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
 }
 
 .cabecera__fila {
@@ -1215,22 +1229,10 @@ main,
   color: var(--texto-2);
 }
 
-.cabecera--gigante h1 {
-  margin-top: clamp(0.6rem, 1.5cqw, 1.25rem);
-  margin-inline: -0.04em;
-  font-size: 17.1cqw;
-  line-height: 0.82;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
+/* Cinta de marcas (inicio, bajo la presentación) */
 .marcas {
-  display: grid;
-  gap: clamp(0.9rem, 2cqw, 1.4rem);
-  align-items: center;
-  margin-top: clamp(1.5rem, 4cqw, 3rem);
-  padding-top: clamp(1rem, 2.2cqw, 1.6rem);
-  border-top: 1px solid var(--linea);
+  container-type: inline-size;
+  padding-block: clamp(0.5rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2.5rem);
 }
 
 .marcas__cinta {
@@ -3008,6 +3010,12 @@ main,
   font-size: clamp(1.6rem, 3vw, 2.3rem);
   line-height: 1.05;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* nombres de una sola palabra larga (Micasaconsubsidio.cl): letra más chica para que no se partan */
+.lamina--ancha .lamina__texto h2 {
+  font-size: clamp(1.25rem, 1.75vw, 1.7rem);
 }
 
 .lamina__texto p {
@@ -3025,7 +3033,7 @@ main,
   gap: clamp(0.5rem, 1vw, 0.8rem);
 }
 
-.lamina__mosaico a {
+.lamina__mosaico > a:not(.lamina__celda) {
   position: relative;
   overflow: hidden;
   min-height: 0;
@@ -3034,7 +3042,7 @@ main,
   background: var(--panel-2);
 }
 
-.lamina__mosaico a:first-child {
+.lamina__mosaico > a:not(.lamina__celda):first-child {
   grid-column: span 2;
   grid-row: span 2;
 }
@@ -3050,7 +3058,7 @@ main,
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .lamina__mosaico a:hover img {
+  .lamina__mosaico > a:not(.lamina__celda):hover img {
     scale: 1.04;
   }
 }
@@ -3065,34 +3073,141 @@ main,
   }
 
   /* en las láminas pares la pieza grande va a la derecha, para variar el ritmo */
-  .lamina:nth-child(even) .lamina__mosaico a:first-child {
+  .lamina:nth-child(even) .lamina__mosaico > a:not(.lamina__celda):first-child {
     grid-column: 3 / span 2;
     grid-row: 1 / span 2;
   }
 }
 
-/* Videoteca (Trabajos con el filtro "Video"): una fila de videos por cliente */
+/* Lámina apaisada (identidad de marca): seis piezas 16:9 en tres columnas, la tapa del manual en grande */
+.lamina--ancha .lamina__mosaico > a:not(.lamina__celda) {
+  aspect-ratio: 16 / 9;
+}
+
+/* en dos columnas la sexta pieza quedaría sola: se oculta */
+@media (max-width: 859px) {
+  .lamina--ancha .lamina__mosaico > a:not(.lamina__celda):nth-child(6) {
+    display: none;
+  }
+}
+
+@media (min-width: 860px) {
+  .lamina--ancha {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+
+  .lamina--ancha .lamina__mosaico {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lamina--ancha:nth-child(even) .lamina__mosaico > a:not(.lamina__celda):first-child {
+    grid-column: 2 / span 2;
+  }
+}
+
+/* Lámina de video: celdas 9:16 con los videos reproduciéndose; con menos de cinco van iguales en fila */
 .filtros {
   scroll-margin-top: 8rem;
 }
 
-.videoteca[hidden],
-.laminas[hidden],
-.grid[hidden] {
+.laminas[hidden] {
   display: none;
 }
 
-.videoteca__fila + .videoteca__fila {
-  padding-top: clamp(1.5rem, 3vw, 2.5rem);
-  border-top: 1px solid var(--linea);
+.lamina__celda {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: var(--panel-2);
 }
 
-.videoteca__fila:last-child {
-  padding-bottom: 0;
+.lamina__celda:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
-.videoteca__fila .proyecto__reels-cab {
-  flex-wrap: wrap;
+.lamina__celda video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lamina__mas {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 99px;
+  background: rgba(10, 14, 20, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f4efe6;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lamina__mas::after {
+  content: ' ↗';
+}
+
+/* aviso que solo aparece al pasar el cursor (en táctil no existe: ahí basta el de la última pieza) */
+.lamina__mas--cursor {
+  opacity: 0;
+  translate: 0 4px;
+  transition: opacity 0.2s ease-out, translate 0.2s ease-out, background 0.2s, color 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lamina__celda:hover .lamina__mas {
+    background: var(--acento);
+    color: var(--sobre-acento);
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* El filtro de una categoría con un solo proyecto abre otra página: lo avisa con una flecha */
+.filtros button[data-ir]::after {
+  content: ' ↗';
+  color: var(--acento-texto);
+}
+
+/* En pantallas angostas el texto de la lámina se acorta a tres líneas, para llegar antes a las piezas */
+@media (max-width: 859px) {
+  .lamina__texto p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+}
+
+.lamina__mosaico--fila {
+  /* en móvil los tres caben en una fila; uno solo ocupa hasta la mitad del ancho */
+  grid-template-columns: repeat(var(--n), minmax(0, calc(min(48%, 100% / var(--n)) - 0.4rem)));
+  justify-content: center;
+}
+
+.lamina__mosaico--fila .lamina__celda:first-child {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+@media (min-width: 860px) {
+  .lamina--video:nth-child(even) .lamina__mosaico:not(.lamina__mosaico--fila) .lamina__celda:first-child {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 2;
+  }
+
+  /* la fila se centra; cada video ocupa hasta un 30 % del ancho */
+  .lamina__mosaico--fila {
+    grid-template-columns: repeat(var(--n), minmax(0, calc(min(30%, 100% / var(--n)) - 0.6rem)));
+  }
 }
 
 /* Videos de un proyecto: van arriba en una sola fila que se desliza con las flechas (o con el dedo) */
