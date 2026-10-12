@@ -564,10 +564,10 @@ function paginaInicio(site, projects) {
     </div>
     <p class="hero__pastilla"><span aria-hidden="true">↙</span><em>${new Date().getFullYear()}</em></p>
     <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-    <svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
+    <span class="hero__guia"><svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
       <defs><linearGradient id="pluma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--acento)"/><stop offset="1" stop-color="var(--acento-2)"/></linearGradient></defs>
       <path fill="url(#pluma)" fill-rule="evenodd" d="M32 15l12 20-4.5 15h-15L20 35zm-1 5v11.2a3.6 3.6 0 1 0 2 0V20zM24.5 53h15v5h-15z"/>
-    </svg>
+    </svg></span>
   </div>
 </section>
 
@@ -623,10 +623,30 @@ function paginaTrabajos(site, projects) {
         }</sup></button>`
     ),
   ].join('');
+  // Cinta de marcas: los logos a una tinta del logofolio, cada uno dentro de una caja del mismo tamaño
+  const lf = projects.find((p) => (p.mono || []).length);
+  const logo = (m, copia) =>
+    `<i${copia ? ' aria-hidden="true"' : ` role="img" aria-label="${esc(m.nombre)}"`} style="--logo:url('/media/${lf.slug}/${esc(
+      m.archivo
+    )}')"></i>`;
+  const marcas = lf
+    ? `
+  <div class="marcas">
+    <div class="cinta marcas__cinta" role="group" aria-label="Marcas que confiaron en mi trabajo" style="--piezas:${lf.mono.length};--ritmo:4.5s">
+      <div class="cinta__pista">
+        ${lf.mono.map((m) => logo(m, false)).join('')}
+        ${lf.mono.map((m) => logo(m, true)).join('')}
+      </div>
+    </div>
+  </div>`
+    : '';
   const body = `
-<section class="cabecera">
-  <p class="etiqueta">Portafolio</p>
-  <h1>Trabajos</h1>
+<section class="cabecera cabecera--gigante">
+  <div class="cabecera__fila">
+    <p class="etiqueta">Portafolio</p>
+    <p class="cabecera__dato">${projects.length} proyectos · ${new Date().getFullYear()}</p>
+  </div>
+  <h1>Trabajos</h1>${marcas}
   <div class="filtros" role="group" aria-label="Filtrar por categoría">${filtros}</div>
 </section>
 <section class="seccion seccion--pegada">
