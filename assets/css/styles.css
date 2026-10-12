@@ -2928,29 +2928,6 @@ main,
   padding-block: clamp(2rem, 5vw, 4rem);
 }
 
-@media (min-width: 900px) {
-  .proyecto__info {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-areas:
-      'contexto hice'
-      'resultado hice';
-    grid-template-rows: auto 1fr;
-    align-items: start;
-  }
-
-  .info--contexto {
-    grid-area: contexto;
-  }
-
-  .info--hice {
-    grid-area: hice;
-  }
-
-  .info--resultado {
-    grid-area: resultado;
-  }
-}
-
 .proyecto__info h2 {
   margin-bottom: 0.8rem;
   font-family: var(--sans);
@@ -3002,6 +2979,36 @@ main,
 /* Si el total es impar, la última tarjeta ocupa las dos columnas */
 .info--hice li:last-child:nth-child(odd) {
   grid-column: 1 / -1;
+}
+
+/* Escritorio: los tres bloques van apilados a todo el ancho. Contexto de extremo a extremo, debajo los
+   pasos de "Qué hice" en una sola fila, y al final el resultado con el texto a la izquierda y el botón a la derecha. */
+@media (min-width: 900px) {
+  .info--hice ol {
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  }
+
+  .info--hice li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .info--resultado {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .info--resultado h2,
+  .info--resultado p {
+    grid-column: 1;
+  }
+
+  .info--resultado .boton {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 559px) {
