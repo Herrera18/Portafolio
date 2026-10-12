@@ -3612,58 +3612,6 @@ main,
   text-transform: uppercase;
 }
 
-/* Los puntos del carrusel solo existen en teléfonos */
-.logofolio .puntos {
-  display: none;
-}
-
-/* En teléfonos los logos no se apilan en tres filas: van en una sola fila que se desliza con el dedo,
-   de a dos por pantalla, para que la sección no alargue la página. */
-@media (max-width: 700px) {
-  .logofolio {
-    gap: 1.25rem;
-  }
-
-  .logofolio__grilla {
-    display: flex;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .logofolio__grilla::-webkit-scrollbar {
-    display: none;
-  }
-
-  .logofolio__grilla .logofolio__celda {
-    flex: 0 0 50%;
-    border-width: 0 1.5px 0 0;
-    scroll-snap-align: start;
-  }
-
-  .logofolio__grilla .logofolio__celda:last-child {
-    border-right-width: 0;
-  }
-
-  .logofolio__ver {
-    font-size: 0.7rem;
-  }
-
-  .logofolio .puntos {
-    display: flex;
-    margin-top: 0;
-  }
-
-  .logofolio .puntos button {
-    background: color-mix(in srgb, var(--lf-tinta) 25%, transparent);
-  }
-
-  .logofolio .puntos button.activo {
-    background: var(--lf-tinta);
-  }
-}
-
 .js .categoria:not(.visible) .logofolio__celda {
   opacity: 0;
   scale: 0.85;

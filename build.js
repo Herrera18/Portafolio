@@ -489,7 +489,7 @@ function paginaInicio(site, projects) {
       const lf = sec.rejilla && sec.lista.find((p) => (p.mono || []).length);
       const lamina = lf
         ? `
-  <div class="logofolio" data-carrusel-caja>
+  <div class="logofolio">
     <div class="logofolio__texto">
       <span>Portafolio — ${esc(sec.titulo)}</span>
       <div>
@@ -498,7 +498,7 @@ function paginaInicio(site, projects) {
       </div>
       <span>${lf.mono.length} marcas</span>
     </div>
-    <div class="logofolio__grilla" data-carrusel-pista>
+    <div class="logofolio__grilla">
       ${lf.mono
         .map(
           (m) =>
@@ -509,7 +509,6 @@ function paginaInicio(site, projects) {
         .join('')}
       <a class="logofolio__celda logofolio__ver" href="/proyectos/${lf.slug}/">Ver logofolio ↗</a>
     </div>
-    <div class="puntos" aria-hidden="true"></div>
   </div>`
         : '';
       const tira = soloCinta
