@@ -504,7 +504,10 @@ function paginaInicio(site, projects) {
   <div class="puntos" aria-hidden="true"></div>`;
       return `
 <section class="seccion categoria" id="${sec.categoria}"${sinCarrusel ? '' : ' data-carrusel-caja'}>
-  <a class="categoria__banda" href="/trabajos/#${sec.categoria}" aria-label="Ver todos los trabajos de ${esc(sec.titulo)}">
+  <a class="categoria__banda" href="${
+    // Si la categoría tiene un solo proyecto (Logofolio), el clic lleva directo a él, sin pasar por Trabajos
+    sec.lista.length === 1 ? `/proyectos/${sec.lista[0].slug}/` : `/trabajos/#${sec.categoria}`
+  }" aria-label="${sec.lista.length === 1 ? `Ver ${esc(sec.titulo)}` : `Ver todos los trabajos de ${esc(sec.titulo)}`}">
     <span class="categoria__num" aria-hidden="true">${num}</span>
     <span class="categoria__titulo">
       <h2>${esc(sec.titulo)}</h2>
@@ -628,12 +631,13 @@ function paginaTrabajos(site, projects) {
   const usadas = Object.keys(CATEGORIAS).filter((c) => projects.some((p) => p.categoria === c));
   const filtros = [
     `<button type="button" data-filtro="todos" aria-pressed="true">Todos <sup>${projects.length}</sup></button>`,
-    ...usadas.map(
-      (c) =>
-        `<button type="button" data-filtro="${c}" aria-pressed="false">${CATEGORIAS[c]} <sup>${
-          projects.filter((p) => p.categoria === c).length
-        }</sup></button>`
-    ),
+    ...usadas.map((c) => {
+      const lista = projects.filter((p) => p.categoria === c);
+      // Categoría con un solo proyecto: el botón abre ese proyecto directamente
+      return `<button type="button" data-filtro="${c}"${lista.length === 1 ? ` data-ir="/proyectos/${lista[0].slug}/"` : ''} aria-pressed="false">${
+        CATEGORIAS[c]
+      } <sup>${lista.length}</sup></button>`;
+    }),
   ].join('');
   // Cinta de marcas: los logos a una tinta del logofolio, cada uno dentro de una caja del mismo tamaño
   const lf = projects.find((p) => (p.mono || []).length);
@@ -652,6 +656,67 @@ function paginaTrabajos(site, projects) {
     </div>
   </div>`
     : '';
+  // Videoteca: con el filtro "Video" las tarjetas se reemplazan por los videos mismos, una fila por cliente.
+  // Cada fila es un carrusel con flechas; los videos se reproducen mudos y un toque los abre con sonido.
+  const conVideos = projects.filter((p) => p.categoria === 'video' && !p.youtube && (p.galeria || []).some((a) => /\.mp4$/i.test(a)));
+  const videoteca = conVideos.length
+    ? `
+  <div class="videoteca" data-vista="video" hidden>
+    ${conVideos
+      .map((p) => {
+        const reels = p.galeria.filter((a) => /\.mp4$/i.test(a));
+        return `<section class="proyecto__reels videoteca__fila" data-carrusel-caja aria-label="Videos de ${esc(p.cliente || p.titulo)}">
+      <div class="proyecto__reels-cab">
+        <h2 class="proyecto__subtitulo">${esc(p.cliente || p.titulo)} <small>${esc(
+          [p.rubro, `${reels.length} ${reels.length === 1 ? 'video' : 'videos'}`].filter(Boolean).join(' · ')
+        )}</small></h2>
+        <span class="seccion__nav">
+          <a class="seccion__ver" href="/proyectos/${p.slug}/">Ver proyecto</a>
+          <button class="flecha" type="button" data-carrusel="-1" aria-label="Videos anteriores">←</button>
+          <button class="flecha" type="button" data-carrusel="1" aria-label="Videos siguientes">→</button>
+        </span>
+      </div>
+      <div class="carrusel galeria galeria--posts">${reels.map((a, n) => galeriaItem(p, a, n)).join('\n')}</div>
+      <div class="puntos" aria-hidden="true"></div>
+    </section>`;
+      })
+      .join('\n    ')}
+  </div>`
+    : '';
+  // Láminas de social media: con el filtro "Social media" cada marca va en una lámina, con el texto a un lado
+  // y sus piezas en un mosaico (una grande y cuatro chicas). Toda pieza lleva al proyecto.
+  const conPosts = projects
+    .map((p) => ({ p, posts: (p.galeria || []).filter((a) => /\.webp$/i.test(a)) }))
+    .filter((x) => x.p.categoria === 'rrss' && x.posts.length >= 5);
+  const laminas = conPosts.length
+    ? `
+  <div class="laminas" data-vista="rrss" hidden>
+    ${conPosts
+      .map(({ p, posts }, n) => {
+        const pieza = (archivo, k) => {
+          const mini = archivo.replace(/([^/]+)$/, 'm$1');
+          // la pieza grande usa la imagen completa; las chicas, su miniatura
+          const src = k > 0 && exists(`media/${p.slug}/${mini}`) ? mini : archivo;
+          return `<a href="/proyectos/${p.slug}/"${k ? ' tabindex="-1"' : ''}><img src="/media/${p.slug}/${esc(src)}" alt="${
+            k ? '' : `Diseños para ${esc(p.cliente || p.titulo)}`
+          }"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async"></a>`;
+        };
+        return `<article class="lamina">
+      <div class="lamina__texto">
+        <span>Social media — ${String(n + 1).padStart(2, '0')} / ${String(conPosts.length).padStart(2, '0')}</span>
+        <div>
+          <h2>${esc(p.cliente || p.titulo)}</h2>
+          <p>${esc(p.contexto || p.resumen || '')}</p>
+          <a class="boton" href="/proyectos/${p.slug}/">Ver proyecto</a>
+        </div>
+        <span>${esc([p.rubro, p.anio].filter(Boolean).join(' · '))}</span>
+      </div>
+      <div class="lamina__mosaico">${posts.slice(0, 5).map(pieza).join('')}</div>
+    </article>`;
+      })
+      .join('\n    ')}
+  </div>`
+    : '';
   const body = `
 <section class="cabecera cabecera--gigante">
   <div class="cabecera__fila">
@@ -664,7 +729,7 @@ function paginaTrabajos(site, projects) {
 <section class="seccion seccion--pegada">
   <div class="grid grid--3" id="galeria">
     ${projects.map((p, i) => card(p, { eager: i < 3 })).join('\n')}
-  </div>
+  </div>${laminas}${videoteca}
 </section>`;
   return layout(site, {
     title: 'Trabajos',
@@ -773,6 +838,19 @@ function paginaProyecto(site, projects, p, i) {
   </section>`;
   }
 
+  const galeriaHtml = galeria.length
+      ? `${p.manual ? '<h2 class="proyecto__subtitulo">Aplicaciones</h2>' : ''}${
+          esReels && reels
+            ? galeria.every((a) => !/\.mp4$/i.test(a) || (p.videos && p.videos[a]))
+              ? '<h2 class="proyecto__subtitulo">Videos <small>toca uno para verlo con sonido</small></h2>'
+              : '<h2 class="proyecto__subtitulo">Adelantos <small>sin sonido</small></h2>'
+            : ''
+        }
+  <section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+      : '';
+  // Proyectos de video: los videos (que ya se reproducen mudos) van arriba, en lugar de la imagen de portada
+  const reelsArriba = esReels && reels > 0;
+
   const body = `
 <article class="proyecto">
   <header class="cabecera proyecto__cabecera">
@@ -789,7 +867,18 @@ function paginaProyecto(site, projects, p, i) {
     </dl>
   </header>
 
-  ${muro || `<div class="proyecto__principal">${principal}</div>`}
+  ${muro || (reelsArriba
+      ? `<div class="proyecto__reels" data-carrusel-caja>
+    <div class="proyecto__reels-cab">
+      ${galeriaHtml.slice(0, galeriaHtml.indexOf('<section')).trim()}
+      <span class="seccion__nav">
+        <button class="flecha" type="button" data-carrusel="-1" aria-label="Videos anteriores">←</button>
+        <button class="flecha" type="button" data-carrusel="1" aria-label="Videos siguientes">→</button>
+      </span>
+    </div>
+    ${galeriaHtml.slice(galeriaHtml.indexOf('<section')).replace('<section class="galeria', '<section class="carrusel galeria')}
+    <div class="puntos" aria-hidden="true"></div>
+  </div>` : `<div class="proyecto__principal">${principal}</div>`)}
 
   <section class="proyecto__info">
     ${bloque('contexto', 'Contexto', p.contexto ? `<p>${esc(p.contexto)}</p>` : '')}
@@ -797,18 +886,7 @@ function paginaProyecto(site, projects, p, i) {
     ${bloque('resultado', 'Resultado', (p.resultado ? `<p>${esc(p.resultado)}</p>` : '') + `<a class="boton" href="${esc(wa)}" target="_blank" rel="noopener">Quiero algo así</a>`)}
   </section>
 
-  ${
-    galeria.length
-      ? `${p.manual ? '<h2 class="proyecto__subtitulo">Aplicaciones</h2>' : ''}${
-          esReels && reels
-            ? galeria.every((a) => !/\.mp4$/i.test(a) || (p.videos && p.videos[a]))
-              ? '<h2 class="proyecto__subtitulo">Videos <small>toca uno para verlo con sonido</small></h2>'
-              : '<h2 class="proyecto__subtitulo">Adelantos <small>sin sonido</small></h2>'
-            : ''
-        }
-  <section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
-      : ''
-  }
+  ${reelsArriba ? '' : galeriaHtml}
   ${
     (p.laminas || []).length
       ? `<h2 class="proyecto__subtitulo">Fichas de marca</h2>

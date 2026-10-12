@@ -15,16 +15,40 @@ if (botonTema) {
 const filtros = document.querySelectorAll('[data-filtro]');
 if (filtros.length) {
   const tarjetas = document.querySelectorAll('#galeria .card');
+  const galeria = document.getElementById('galeria');
+  const vistas = document.querySelectorAll('[data-vista]');
   const aplicar = (cat) => {
     filtros.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtro === cat)));
     tarjetas.forEach((t) => (t.hidden = cat !== 'todos' && t.dataset.cat !== cat));
+    // Algunas categorías tienen vista propia en lugar de tarjetas: los videos mismos, las láminas de social media
+    let propia = false;
+    vistas.forEach((v) => {
+      v.hidden = v.dataset.vista !== cat;
+      propia = propia || !v.hidden;
+    });
+    galeria.hidden = propia;
+    // los carruseles calculan flechas y puntos al cambiar de tamaño: se les avisa ahora que son visibles
+    window.dispatchEvent(new Event('resize'));
   };
   const desdeHash = () => {
     const cat = location.hash.slice(1);
-    aplicar([...filtros].some((b) => b.dataset.filtro === cat) ? cat : 'todos');
+    const valido = [...filtros].some((b) => b.dataset.filtro === cat);
+    aplicar(valido ? cat : 'todos');
+    // Si se llega desde una sección del inicio, la página queda posicionada en los filtros
+    if (valido) {
+      const ir = () => filtros[0].parentElement.scrollIntoView({ block: 'start', behavior: 'instant' });
+      ir();
+      // al terminar de cargar (fuentes, imágenes) la página puede haberse movido: se vuelve a posicionar
+      if (document.readyState !== 'complete') window.addEventListener('load', ir, { once: true });
+      if (document.fonts && document.fonts.status !== 'loaded') document.fonts.ready.then(ir);
+    }
   };
   filtros.forEach((b) =>
     b.addEventListener('click', () => {
+      if (b.dataset.ir) {
+        location.href = b.dataset.ir;
+        return;
+      }
       const cat = b.dataset.filtro;
       history.replaceState(null, '', cat === 'todos' ? location.pathname : `#${cat}`);
       aplicar(cat);
@@ -60,13 +84,13 @@ if (videos.length) {
   }
 }
 
-// Carruseles del inicio (uno por sección): las flechas avanzan de a una tarjeta y los puntos marcan la posición
+// Carruseles (secciones del inicio, videos de un proyecto): las flechas avanzan de a una pieza y los puntos marcan la posición
 document.querySelectorAll('[data-carrusel-caja]').forEach((caja) => {
   const carrusel = caja.querySelector('.carrusel');
   const flechas = caja.querySelectorAll('[data-carrusel]');
   const puntos = caja.querySelector('.puntos');
   const paso = () => {
-    const tarjeta = carrusel.querySelector('.card');
+    const tarjeta = carrusel.firstElementChild;
     return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap || 0);
   };
   const fin = () => carrusel.scrollWidth - carrusel.clientWidth;

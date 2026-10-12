@@ -2974,6 +2974,155 @@ main,
   }
 }
 
+/* Láminas (Trabajos con el filtro "Social media"): una por marca, texto a un lado y mosaico de piezas al otro */
+.laminas {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.lamina {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding: clamp(1.1rem, 2.6vw, 2.2rem);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--panel);
+}
+
+.lamina__texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.lamina__texto > span {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.lamina__texto h2 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.lamina__texto p {
+  margin-block: 0.9rem 1.4rem;
+  font-size: 0.95rem;
+  color: var(--texto-2);
+}
+
+/* Mosaico: una pieza grande (2 × 2) y cuatro chicas; todas en formato 4:5 */
+.lamina__mosaico {
+  display: grid;
+  /* si el texto de al lado es más alto, el mosaico se centra en vez de estirar sus filas */
+  align-self: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.5rem, 1vw, 0.8rem);
+}
+
+.lamina__mosaico a {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  border-radius: 14px;
+  aspect-ratio: 4 / 5;
+  background: var(--panel-2);
+}
+
+.lamina__mosaico a:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* la imagen no participa del tamaño de la celda: así una pieza más alta (9:16) no estira su fila */
+.lamina__mosaico img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lamina__mosaico a:hover img {
+    scale: 1.04;
+  }
+}
+
+@media (min-width: 860px) {
+  .lamina {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+  }
+
+  .lamina__mosaico {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* en las láminas pares la pieza grande va a la derecha, para variar el ritmo */
+  .lamina:nth-child(even) .lamina__mosaico a:first-child {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* Videoteca (Trabajos con el filtro "Video"): una fila de videos por cliente */
+.filtros {
+  scroll-margin-top: 8rem;
+}
+
+.videoteca[hidden],
+.laminas[hidden],
+.grid[hidden] {
+  display: none;
+}
+
+.videoteca__fila + .videoteca__fila {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--linea);
+}
+
+.videoteca__fila:last-child {
+  padding-bottom: 0;
+}
+
+.videoteca__fila .proyecto__reels-cab {
+  flex-wrap: wrap;
+}
+
+/* Videos de un proyecto: van arriba en una sola fila que se desliza con las flechas (o con el dedo) */
+.proyecto__reels {
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.proyecto__reels-cab {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.proyecto__reels-cab .proyecto__subtitulo {
+  margin-bottom: 0;
+}
+
+.proyecto__reels .galeria {
+  flex-wrap: nowrap;
+  justify-content: safe center;
+  margin-block: -0.5rem 0;
+  padding-block: 0.5rem;
+}
+
+.proyecto__reels .galeria__item {
+  scroll-snap-align: start;
+}
+
 .galeria__item {
   position: relative;
   overflow: hidden;

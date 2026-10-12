@@ -218,7 +218,10 @@
     "portada": "cover.webp",
     "galeria": [
       "reel-01.mp4"
-    ]
+    ],
+    "videos": {
+      "reel-01.mp4": "LlBN6suOHjs"
+    }
   },
   {
     "slug": "usa-tu-subsidio-videos",
@@ -242,8 +245,19 @@
       "reel-02.mp4",
       "reel-03.mp4",
       "reel-04.mp4",
-      "reel-05.mp4"
-    ]
+      "reel-05.mp4",
+      "reel-06.mp4",
+      "reel-07.mp4"
+    ],
+    "videos": {
+      "reel-01.mp4": "2hEobx71al8",
+      "reel-02.mp4": "BCsPzBDuAWo",
+      "reel-03.mp4": "2UNT8a-DjPU",
+      "reel-04.mp4": "12vWfzrKvs0",
+      "reel-05.mp4": "Dp6mIgOl7vc",
+      "reel-06.mp4": "wpKxd1YWcgI",
+      "reel-07.mp4": "ebPM4k4W7Gk"
+    }
   },
   {
     "slug": "websy-videos",
