@@ -142,7 +142,7 @@ function layout(site, { title, description, urlPath, image, body, active, jsonld
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@300,500,600,700&f[]=satoshi@400,500,700&display=swap">
 <link rel="stylesheet" href="/assets/css/styles.css?v=${VERSION}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>` : ''}
 </head>

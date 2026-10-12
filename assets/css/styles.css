@@ -1698,7 +1698,11 @@ main,
   top: 87%;
   /* centrado en el hueco que dejan las piezas de abajo, y algo más chico para no pisarlas */
   left: 54%;
-  font-size: clamp(1rem, 2.5vw, 2.1rem);
+  font-size: clamp(0.78rem, 1.6vw, 1.35rem);
+  /* trazo fino, más chico y apagado que el nombre de la marca, para que no compitan */
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--texto-2);
 }
 
 .collage-puntos {
@@ -1846,9 +1850,9 @@ main,
 
   .collage__rubro,
   .js .collage-escena .abierta .collage__rubro {
-    top: 94.5%;
+    top: 95.5%;
     left: 50%;
-    font-size: 1.1rem;
+    font-size: 0.82rem;
   }
 
   /* aquí el lienzo mide 132 % de su ancho: 42,5 % del alto = 56,1cqw; 44,5 % = 58,74cqw */
