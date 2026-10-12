@@ -162,7 +162,7 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(
 ${body}
 </main>
 <footer class="footer">
-  <p class="footer__cta">¿Trabajamos juntos?</p>
+  <p class="footer__cta">¿Le damos forma a tu marca?</p>
   <div class="footer__links">
     <a href="${esc(waLink(site))}" target="_blank" rel="noopener">WhatsApp</a>
     <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>
@@ -981,7 +981,7 @@ function paginaContacto(site) {
 <section class="cabecera">
   <p class="etiqueta">Hablemos</p>
   <h1>Contacto</h1>
-  <p class="cabecera__bajada">Cuéntame qué necesitas y te respondo con una propuesta.</p>
+  <p class="cabecera__bajada">Cuéntame qué necesitas. Te respondo con una propuesta clara: qué haría, en cuánto tiempo y cuánto cuesta.</p>
 </section>
 <section class="contacto">
   <a class="contacto__item contacto__item--principal" href="${esc(waLink(site))}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>${esc(

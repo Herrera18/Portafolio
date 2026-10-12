@@ -9,7 +9,7 @@
   },
   "etiqueta": "",
   "descripcion": "Estudio de diseño gráfico y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
-  "intro": "Hacemos diseño gráfico y producción de contenido: videos para clientes, diseño para redes sociales y marcas creadas desde cero.",
+  "intro": "Diseño marcas, contenido para redes y videos que se reconocen a primera vista. No piezas sueltas: una línea visual que tu negocio puede sostener semana a semana.",
   "url": "",
   "email": "rogerignacio53@gmail.com",
   "whatsapp": "584121749963",
@@ -64,17 +64,17 @@
   "servicios": [
     {
       "titulo": "Social media",
-      "texto": "Sistemas gráficos para redes: plantillas, carruseles, reels y campañas que mantienen la marca reconocible.",
+      "texto": "Tu feed con una sola línea gráfica. Carruseles, historias y campañas que se reconocen como tuyos antes de leer el nombre.",
       "categoria": "rrss"
     },
     {
       "titulo": "Video",
-      "texto": "Piezas para clientes: spots, cápsulas, entrevistas y contenido vertical. Guion, edición, color y motion graphics.",
+      "texto": "Tú grabas con el celular y yo lo convierto en un video listo para publicar: gancho, cortes, subtítulos, color y sonido.",
       "categoria": "video"
     },
     {
       "titulo": "Identidad de marca",
-      "texto": "Creación de marca: logotipo, paleta, tipografía y manual de uso para aplicarla sin perder coherencia.",
+      "texto": "Una marca que se pueda usar, no solo un logo. Logotipo, colores, tipografía y un manual para aplicarla igual en todas partes.",
       "categoria": "identidad"
     }
   ],
@@ -147,9 +147,9 @@
   "sobreMi": {
     "foto": "media/site/nacho.webp",
     "bio": [
-      "Soy Nacho, el diseñador gráfico detrás de Ignis Studio. Trabajo en diseño y producción de contenido, acompañando a marcas desde la idea hasta la pieza publicada.",
-      "Me muevo entre tres terrenos que se alimentan entre sí: el video, el diseño para redes sociales y la creación de identidad visual. Me interesa que cada pieza se vea bien, pero sobre todo que le sirva al negocio que la publica.",
-      "(Texto de ejemplo: reemplázalo por tu bio en data/site.json.)"
+      "Soy Nacho, el diseñador detrás de Ignis Studio. Ignis significa fuego en latín, y de eso se trata mi trabajo: darle a una marca la chispa que hace que la reconozcan.",
+      "Trabajo en tres terrenos que se alimentan entre sí: identidad de marca, diseño para redes y edición de video. Por eso puedo llevar un proyecto completo, del logotipo al carrusel de la semana y al anuncio en video, con la misma línea.",
+      "He diseñado más de 100 carruseles para una sola marca, manuales de identidad de hasta 29 páginas y anuncios en video para negocios de Chile y Venezuela. Me importa que cada pieza se vea bien, pero sobre todo que le sirva al negocio que la publica."
     ],
     "clientes": [
       "Emprendimientos y marcas personales",
