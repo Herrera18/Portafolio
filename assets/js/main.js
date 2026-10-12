@@ -127,9 +127,9 @@ document.querySelectorAll('.collage-escena').forEach((escena) => {
   const puntos = escena.nextElementSibling;
   if (!marcas.length) return;
 
-  const NOMBRE = 1300; // el nombre solo, al centro
-  const ABIERTA = 5500; // nombre arriba + diseños a la vista
-  const SALIDA = 650; // desvanecido antes de la siguiente
+  const NOMBRE = 700; // el nombre solo, al centro
+  const ABIERTA = 2400; // nombre arriba + diseños a la vista
+  const SALIDA = 400; // desvanecido antes de la siguiente
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let actual = 0;
   let relojes = [];
