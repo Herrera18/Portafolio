@@ -557,9 +557,11 @@ function paginaInicio(site, projects) {
       // Si el servicio indica "categoria" y esa sección existe en el inicio, la tarjeta lleva a ella.
       const destino = s.categoria && (site.secciones || []).some((x) => x.categoria === s.categoria) && projects.some((p) => p.categoria === s.categoria);
       const dentro = `<h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p>`;
+      // "Ver más" solo existe en móvil, donde el texto va recortado: lo despliega hacia abajo (main.js)
+      const mas = '<button class="servicios__mas" type="button" aria-expanded="false" hidden>Ver más</button>';
       return destino
-        ? `<li><a href="#${s.categoria}">${dentro}<span class="servicios__ver">Ver trabajos ↓</span></a></li>`
-        : `<li>${dentro}</li>`;
+        ? `<li><a href="#${s.categoria}">${dentro}<span class="servicios__ver">Ver trabajos ↓</span></a>${mas}</li>`
+        : `<li>${dentro}${mas}</li>`;
     })
     .join('');
   const bloqueServicios = servicios

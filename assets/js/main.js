@@ -57,6 +57,24 @@ if (filtros.length) {
   desdeHash();
 }
 
+// Servicios en móvil: el texto va recortado a dos líneas y "Ver más" lo despliega hacia abajo
+document.querySelectorAll('.servicios__mas').forEach((boton) => {
+  const li = boton.closest('li');
+  const texto = li.querySelector('p');
+  // el botón solo aparece si de verdad hay texto escondido (en escritorio se ve completo)
+  const revisar = () => {
+    if (!li.classList.contains('abierto')) boton.hidden = texto.scrollHeight <= texto.clientHeight + 1;
+  };
+  boton.addEventListener('click', () => {
+    const abierto = li.classList.toggle('abierto');
+    boton.setAttribute('aria-expanded', String(abierto));
+    boton.textContent = abierto ? 'Ver menos' : 'Ver más';
+  });
+  window.addEventListener('resize', revisar);
+  if (document.fonts) document.fonts.ready.then(revisar);
+  revisar();
+});
+
 // Reels: se reproducen en loop y sin sonido solo mientras están en pantalla
 const videos = document.querySelectorAll('video[data-autoplay]');
 const ahorro = navigator.connection && navigator.connection.saveData;

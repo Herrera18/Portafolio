@@ -2051,7 +2051,6 @@ main,
 
 .servicios li {
   padding: 1.6rem;
-  counter-increment: servicio;
 }
 
 /* Tarjeta enlazada a su sección: el enlace ocupa toda la tarjeta */
@@ -2081,20 +2080,6 @@ main,
   color: var(--acento-texto);
 }
 
-.servicios li::before {
-  content: counter(servicio, decimal-leading-zero);
-  display: grid;
-  place-items: center;
-  width: 2.6rem;
-  aspect-ratio: 1;
-  margin-bottom: 1.1rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--acento), var(--acento-2));
-  color: var(--sobre-acento);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
 .servicios h3 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
@@ -2103,6 +2088,76 @@ main,
 .servicios p {
   font-size: 0.93rem;
   color: var(--texto-2);
+}
+
+/* "Ver más": botón que despliega el texto recortado (solo se muestra cuando hay algo escondido) */
+.servicios__mas {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0;
+  border: 0;
+  background: none;
+  color: var(--acento-texto);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.servicios__mas::after {
+  content: ' +';
+}
+
+.servicios li.abierto .servicios__mas::after {
+  content: ' −';
+}
+
+.servicios__mas[hidden] {
+  display: none;
+}
+
+/* En móvil cada servicio es una fila compacta: título, dos líneas de texto con "Ver más"
+   y una flecha a la derecha en lugar de "Ver trabajos". */
+@media (max-width: 799px) {
+  .servicios {
+    gap: 0.6rem;
+  }
+
+  .servicios li {
+    position: relative;
+    padding: 1rem 2.8rem 0.8rem 1.1rem;
+  }
+
+  .servicios h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .servicios p {
+    font-size: 0.85rem;
+  }
+
+  .servicios li:not(.abierto) p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .servicios__ver {
+    position: absolute;
+    top: 1.05rem;
+    right: 1rem;
+    margin: 0;
+    font-size: 0;
+  }
+
+  .servicios__ver::after {
+    content: '↓';
+    font-size: 1.1rem;
+  }
 }
 
 /* ---------- Proceso ---------- */
