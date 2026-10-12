@@ -489,7 +489,7 @@ function paginaInicio(site, projects) {
       const lf = sec.rejilla && sec.lista.find((p) => (p.mono || []).length);
       const lamina = lf
         ? `
-  <div class="logofolio">
+  <div class="logofolio" data-carrusel-caja>
     <div class="logofolio__texto">
       <span>Portafolio — ${esc(sec.titulo)}</span>
       <div>
@@ -498,7 +498,7 @@ function paginaInicio(site, projects) {
       </div>
       <span>${lf.mono.length} marcas</span>
     </div>
-    <div class="logofolio__grilla">
+    <div class="logofolio__grilla" data-carrusel-pista>
       ${lf.mono
         .map(
           (m) =>
@@ -509,6 +509,7 @@ function paginaInicio(site, projects) {
         .join('')}
       <a class="logofolio__celda logofolio__ver" href="/proyectos/${lf.slug}/">Ver logofolio ↗</a>
     </div>
+    <div class="puntos" aria-hidden="true"></div>
   </div>`
         : '';
       const tira = soloCinta
@@ -723,16 +724,33 @@ function paginaTrabajos(site, projects) {
     ${lista.map(({ p, piezas }, n) => lamina(p, piezas, n, lista.length, tipo)).join('\n    ')}${cierre}
   </div>`
       : '';
-  // Cierre de la vista de Video: una invitación a cotizar, con el mismo botón de "Así trabajo"
-  const pr = site.proceso;
-  const cierreVideo =
-    pr && pr.boton
-      ? `
+  // Cierre de cada vista: una frase y un botón para cotizar ese servicio por WhatsApp
+  const cierre = (frase, apoyo, boton, mensaje) => `
     <div class="laminas__cierre">
-      <p>¿Ya tienes tus clips grabados? <span>De todo lo demás me encargo yo.</span></p>
-      <a class="boton" href="https://wa.me/${site.whatsapp}?text=${encodeURIComponent(pr.mensaje || site.whatsappMensaje || '')}" target="_blank" rel="noopener">${esc(pr.boton)}</a>
-    </div>`
-      : '';
+      <p>${esc(frase)} <span>${esc(apoyo)}</span></p>
+      <a class="boton" href="https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensaje)}" target="_blank" rel="noopener">${esc(boton)}</a>
+    </div>`;
+  const pr = site.proceso || {};
+  const cierres = {
+    rrss: cierre(
+      '¿Quieres un feed con una sola línea gráfica?',
+      'Yo me encargo del diseño.',
+      'Cotizar diseño para redes',
+      `Hola ${site.nombre}, quiero cotizar diseño para redes sociales.`
+    ),
+    video: cierre(
+      '¿Ya tienes tus clips grabados?',
+      'De todo lo demás me encargo yo.',
+      pr.boton || 'Cotizar edición de video',
+      pr.mensaje || `Hola ${site.nombre}, quiero cotizar edición de video.`
+    ),
+    identidad: cierre(
+      '¿Tu marca necesita una identidad propia?',
+      'La construyo contigo, del logotipo al manual.',
+      'Cotizar identidad de marca',
+      `Hola ${site.nombre}, quiero cotizar una identidad de marca.`
+    ),
+  };
   // Social media: las primeras cinco publicaciones (formato vertical)
   const conPosts = projects
     .filter((p) => p.categoria === 'rrss')
@@ -758,7 +776,7 @@ function paginaTrabajos(site, projects) {
     })
     .filter((x) => x.piezas.length);
   // La primera vista sale visible desde el HTML (las demás las muestra el filtro)
-  const laminas = (vistaLaminas('rrss', conPosts, '') + vistaLaminas('video', conVideos, 'video', cierreVideo) + vistaLaminas('identidad', conManual, 'ancha')).replace(' hidden>', '>');
+  const laminas = (vistaLaminas('rrss', conPosts, '', cierres.rrss) + vistaLaminas('video', conVideos, 'video', cierres.video) + vistaLaminas('identidad', conManual, 'ancha', cierres.identidad)).replace(' hidden>', '>');
   const body = `
 <section class="cabecera cabecera--trabajos">
   <div class="cabecera__fila">
@@ -890,7 +908,14 @@ function paginaProyecto(site, projects, p, i) {
               : '<h2 class="proyecto__subtitulo">Adelantos <small>sin sonido</small></h2>'
             : ''
         }
-  <section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}" aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+  ${
+    // Logofolio: en teléfonos los logos van en un carrusel de a dos (lo arma el CSS); los puntos marcan la posición
+    esLogos ? '<div class="logos-caja" data-carrusel-caja>' : ''
+  }<section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}"${
+          esLogos ? ' data-carrusel-pista' : ''
+        } aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>${
+          esLogos ? '<div class="puntos" aria-hidden="true"></div></div>' : ''
+        }`
       : '';
   // Proyectos de video: los videos (que ya se reproducen mudos) van arriba, en lugar de la imagen de portada
   const reelsArriba = esReels && reels > 0;
@@ -934,7 +959,18 @@ function paginaProyecto(site, projects, p, i) {
   ${
     (p.laminas || []).length
       ? `<h2 class="proyecto__subtitulo">Fichas de marca</h2>
-  <section class="galeria galeria--posts" aria-label="Fichas de marca">${p.laminas.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+  <section class="galeria galeria--fichas" aria-label="Fichas de marca">${p.laminas.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>`
+      : ''
+  }
+  ${
+    // Logofolio: cierra con su propio botón para cotizar, igual que las vistas de Trabajos
+    esLogos
+      ? `<div class="laminas__cierre laminas__cierre--proyecto">
+    <p>¿Tu marca necesita un logotipo? <span>Lo diseño con sus versiones listas para usar.</span></p>
+    <a class="boton" href="https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+      `Hola ${site.nombre}, quiero cotizar un logotipo.`
+    )}" target="_blank" rel="noopener">Cotizar logotipo</a>
+  </div>`
       : ''
   }
 </article>

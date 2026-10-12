@@ -105,12 +105,12 @@ if (videos.length) {
 
 // Carruseles (secciones del inicio, videos de un proyecto): las flechas avanzan de a una pieza y los puntos marcan la posición
 document.querySelectorAll('[data-carrusel-caja]').forEach((caja) => {
-  const carrusel = caja.querySelector('.carrusel');
+  const carrusel = caja.querySelector('.carrusel, [data-carrusel-pista]');
   const flechas = caja.querySelectorAll('[data-carrusel]');
   const puntos = caja.querySelector('.puntos');
   const paso = () => {
     const tarjeta = carrusel.firstElementChild;
-    return tarjeta.offsetWidth + parseFloat(getComputedStyle(carrusel).columnGap || 0);
+    return tarjeta.offsetWidth + (parseFloat(getComputedStyle(carrusel).columnGap) || 0);
   };
   const fin = () => carrusel.scrollWidth - carrusel.clientWidth;
   // Un punto por cada posición a la que se puede deslizar (no por tarjeta: varias caben a la vez)

@@ -3229,6 +3229,72 @@ main,
   }
 }
 
+/* Página de Logofolio: los puntos del carrusel solo existen en teléfonos */
+.logos-caja .puntos {
+  display: none;
+}
+
+/* En teléfonos los ocho logos no se apilan en cuatro filas: van en una fila que se desliza, de a dos */
+@media (max-width: 700px) {
+  .logos-caja {
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .logos-caja .galeria--logos {
+    display: flex;
+    gap: 0.7rem;
+    padding-bottom: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .logos-caja .galeria--logos::-webkit-scrollbar {
+    display: none;
+  }
+
+  .logos-caja .galeria--logos .galeria__item {
+    flex: 0 0 calc(50% - 0.35rem);
+    scroll-snap-align: start;
+  }
+
+  .logos-caja .puntos {
+    display: flex;
+    margin-top: 1rem;
+  }
+}
+
+/* Fichas de marca: tienen altos muy distintos, así que van en columnas tipo mosaico (cada ficha se
+   acomoda bajo la anterior) en vez de filas, que dejaban huecos junto a las más altas. */
+.galeria--fichas {
+  display: block;
+  columns: 2;
+  column-gap: clamp(0.7rem, 1.5vw, 1.2rem);
+}
+
+.galeria--fichas .galeria__item {
+  break-inside: avoid;
+  margin-bottom: clamp(0.7rem, 1.5vw, 1.2rem);
+  border-radius: 12px;
+}
+
+@media (min-width: 700px) {
+  .galeria--fichas {
+    columns: 3;
+  }
+}
+
+@media (min-width: 1100px) {
+  .galeria--fichas {
+    columns: 4;
+  }
+}
+
+.laminas__cierre--proyecto {
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
 /* Cierre de una vista de láminas: una línea y un botón para escribir */
 .laminas__cierre {
   display: flex;
@@ -3544,6 +3610,58 @@ main,
   letter-spacing: 0.12em;
   text-align: center;
   text-transform: uppercase;
+}
+
+/* Los puntos del carrusel solo existen en teléfonos */
+.logofolio .puntos {
+  display: none;
+}
+
+/* En teléfonos los logos no se apilan en tres filas: van en una sola fila que se desliza con el dedo,
+   de a dos por pantalla, para que la sección no alargue la página. */
+@media (max-width: 700px) {
+  .logofolio {
+    gap: 1.25rem;
+  }
+
+  .logofolio__grilla {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .logofolio__grilla::-webkit-scrollbar {
+    display: none;
+  }
+
+  .logofolio__grilla .logofolio__celda {
+    flex: 0 0 50%;
+    border-width: 0 1.5px 0 0;
+    scroll-snap-align: start;
+  }
+
+  .logofolio__grilla .logofolio__celda:last-child {
+    border-right-width: 0;
+  }
+
+  .logofolio__ver {
+    font-size: 0.7rem;
+  }
+
+  .logofolio .puntos {
+    display: flex;
+    margin-top: 0;
+  }
+
+  .logofolio .puntos button {
+    background: color-mix(in srgb, var(--lf-tinta) 25%, transparent);
+  }
+
+  .logofolio .puntos button.activo {
+    background: var(--lf-tinta);
+  }
 }
 
 .js .categoria:not(.visible) .logofolio__celda {
