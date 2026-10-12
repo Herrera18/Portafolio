@@ -1037,6 +1037,27 @@ main,
   mask: var(--icono) center / contain no-repeat;
 }
 
+/* En teléfonos todas las herramientas van en una sola fila: se reparten el ancho por igual
+   y el anillo se achica lo necesario para caber, sea cual sea el tamaño de la pantalla. */
+@media (max-width: 600px) {
+  .herramientas ul {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .herramientas li {
+    width: auto;
+    font-size: 0.64rem;
+  }
+
+  .herramientas b {
+    width: min(100%, 3.8rem);
+    font-size: clamp(0.85rem, 4.2vw, 1.15rem);
+  }
+}
+
 /* ---------- Habilidades técnicas ---------- */
 .habilidades {
   display: grid;
