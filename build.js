@@ -366,7 +366,7 @@ function paginaInicio(site, projects) {
             });
           }
         }
-        const item = ({ p, src, video }, copia) => {
+        const item = ({ p, src, video }, copia, i = -1) => {
           const dim = webpSize(`media/${p.slug}/${src}`) || { w: 9, h: 16 };
           // Los reels se reproducen mudos y en loop solo mientras pasan por la pantalla (lo maneja main.js)
           const medio = video
@@ -374,12 +374,24 @@ function paginaInicio(site, projects) {
                 copia ? '' : `Video para ${esc(p.cliente || p.titulo)}`
               }"><source src="/media/${p.slug}/${esc(video)}" type="video/mp4"></video>`
             : `<img src="/media/${p.slug}/${esc(src)}" alt="${copia ? '' : `Diseño para ${esc(p.cliente || p.titulo)}`}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">`;
-          return `<a class="cinta__item" href="/proyectos/${p.slug}/"${copia ? ' aria-hidden="true" tabindex="-1"' : ''}>
-        ${medio}
+          return `<a class="cinta__item" href="/proyectos/${p.slug}/"${copia ? ' aria-hidden="true" tabindex="-1"' : ''}${i >= 0 ? ` style="--i:${i}"` : ''}>
+        ${i >= 0 ? medio.replace('loading="lazy"', 'loading="eager"') : medio}
         <span>${esc(p.cliente || p.titulo)}</span>
       </a>`;
         };
-        if (piezas.length) {
+        // "curva": las piezas van sobre un cilindro que gira, visto desde fuera (la del centro queda grande y de frente; las de los lados se alejan e inclinan).
+        // El anillo necesita una cantidad pareja de piezas: se recorta a 20 y, si hay pocas, se repiten hasta 16.
+        if (sec.curva && piezas.length) {
+          const anillo = piezas.slice(0, 20);
+          const propias = anillo.length;
+          while (anillo.length < 16) anillo.push(...anillo.slice(0, propias));
+          cinta = `
+  <div class="cinta cinta--curva" style="--piezas:${anillo.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
+    <div class="cinta__pista">
+      ${anillo.map((x, i) => item(x, i >= propias, i)).join('')}
+    </div>
+  </div>`;
+        } else if (piezas.length) {
           cinta = `
   <div class="cinta${
     (webpSize(`media/${piezas[0].p.slug}/${piezas[0].src}`) || { w: 1, h: 2 }).w > (webpSize(`media/${piezas[0].p.slug}/${piezas[0].src}`) || { w: 1, h: 2 }).h

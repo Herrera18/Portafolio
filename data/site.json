@@ -35,6 +35,7 @@
       "titulo": "Social media",
       "detalle": "Instagram · Facebook · TikTok",
       "cinta": true,
+      "curva": true,
       "collage": true
     },
     {

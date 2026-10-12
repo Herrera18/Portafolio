@@ -931,6 +931,20 @@ main,
   white-space: nowrap;
 }
 
+/* Flotan suave, cada una a su ritmo y desfasada, para que no suban y bajen a la vez */
+.hero__chip {
+  animation: flotar 5.5s ease-in-out infinite alternate;
+}
+
+.hero__chip:nth-of-type(2) { animation-duration: 6.6s; animation-delay: -2.1s; }
+.hero__chip:nth-of-type(3) { animation-duration: 5s; animation-delay: -3.4s; }
+.hero__chip:nth-of-type(4) { animation-duration: 7.2s; animation-delay: -1.2s; }
+
+@keyframes flotar {
+  from { translate: 0 -5px; rotate: -1deg; }
+  to { translate: 0 6px; rotate: 1deg; }
+}
+
 .hero__chip::before {
   content: '';
   display: inline-block;
@@ -1483,6 +1497,53 @@ main,
   border-radius: 10px;
   background: var(--panel-2);
   transition: scale 0.3s;
+}
+
+/* Cinta curva: las piezas van sobre un cilindro que gira y se mira desde fuera, así la del centro queda
+   grande y de frente y las de los lados se alejan e inclinan. Solo se anima un transform (el giro del anillo). */
+.cinta--curva {
+  --alto: clamp(15rem, 30vw, 23rem);
+  --ancho: calc(var(--alto) * 0.8);
+  --radio-anillo: calc(var(--piezas) * (var(--ancho) + var(--hueco)) / 6.2832);
+  /* el anillo es más ancho que la cinta: los cantos del cilindro quedan fuera y los lados se difuminan */
+  --fundido: clamp(3rem, 20%, 13rem);
+  height: calc(var(--alto) + 3.2rem);
+  overflow: hidden;
+  perspective: calc(var(--radio-anillo) * 1.4);
+}
+
+@media (max-width: 639px) {
+  .cinta--curva {
+    --fundido: 2.2rem;
+  }
+}
+
+.cinta--curva .cinta__pista {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation-name: cinta-gira;
+}
+
+@keyframes cinta-gira {
+  from { transform: translateZ(calc(var(--radio-anillo) * -1)) rotateY(0deg); }
+  to { transform: translateZ(calc(var(--radio-anillo) * -1)) rotateY(-360deg); }
+}
+
+.cinta--curva .cinta__item {
+  position: absolute;
+  top: 0.4rem;
+  left: calc(50% - var(--ancho) / 2);
+  width: var(--ancho);
+  transform: rotateY(calc(var(--i) * 360deg / var(--piezas))) translateZ(var(--radio-anillo));
+  backface-visibility: hidden;
+}
+
+.cinta--curva .cinta__item img {
+  width: 100%;
+  height: var(--alto);
 }
 
 /* Piezas horizontales (páginas de manual, mockups): más bajas, para que quepan varias a la vez */
