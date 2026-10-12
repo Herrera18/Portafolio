@@ -2262,12 +2262,30 @@ main,
   font-size: 0.85rem;
 }
 
+/* En pantallas angostas los tres pasos no se apilan: van en una fila que se desliza con el dedo.
+   Cada paso ocupa casi todo el ancho y el siguiente asoma por la derecha para invitar a deslizar. */
 @media (max-width: 959px) {
+  .proceso {
+    display: flex;
+    gap: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .proceso::-webkit-scrollbar {
+    display: none;
+  }
+
+  .proceso > li {
+    flex: 0 0 min(84%, 24rem);
+    padding: 1.2rem;
+    scroll-snap-align: start;
+  }
+
   .proceso > li + li::before {
-    content: '↓';
-    top: calc(clamp(1rem, 2vw, 1.5rem) / -2);
-    left: 2.9rem;
-    translate: -50% -50%;
+    left: -0.45rem;
   }
 }
 
@@ -3199,6 +3217,30 @@ main,
   .lamina--ancha:nth-child(even) .lamina__mosaico > a:not(.lamina__celda):first-child {
     grid-column: 2 / span 2;
   }
+}
+
+/* Cierre de una vista de láminas: una línea y un botón para escribir */
+.laminas__cierre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: clamp(1.1rem, 2.6vw, 2rem) clamp(1.1rem, 2.6vw, 2.2rem);
+  border: 1px solid color-mix(in srgb, var(--acento-texto) 35%, transparent);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--acento-texto) 8%, transparent);
+}
+
+.laminas__cierre p {
+  font-family: var(--titulos);
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.laminas__cierre p span {
+  color: var(--texto-2);
 }
 
 /* Lámina de video: celdas 9:16 con los videos reproduciéndose; con menos de cinco van iguales en fila */

@@ -704,12 +704,22 @@ function paginaTrabajos(site, projects) {
         .join('')}</div>
     </article>`;
   };
-  const vistaLaminas = (cat, lista, tipo) =>
+  const vistaLaminas = (cat, lista, tipo, cierre = '') =>
     lista.length
       ? `
   <div class="laminas" data-vista="${cat}" hidden>
-    ${lista.map(({ p, piezas }, n) => lamina(p, piezas, n, lista.length, tipo)).join('\n    ')}
+    ${lista.map(({ p, piezas }, n) => lamina(p, piezas, n, lista.length, tipo)).join('\n    ')}${cierre}
   </div>`
+      : '';
+  // Cierre de la vista de Video: una invitación a cotizar, con el mismo botón de "Así trabajo"
+  const pr = site.proceso;
+  const cierreVideo =
+    pr && pr.boton
+      ? `
+    <div class="laminas__cierre">
+      <p>¿Ya tienes tus clips grabados? <span>De todo lo demás me encargo yo.</span></p>
+      <a class="boton" href="https://wa.me/${site.whatsapp}?text=${encodeURIComponent(pr.mensaje || site.whatsappMensaje || '')}" target="_blank" rel="noopener">${esc(pr.boton)}</a>
+    </div>`
       : '';
   // Social media: las primeras cinco publicaciones (formato vertical)
   const conPosts = projects
@@ -736,7 +746,7 @@ function paginaTrabajos(site, projects) {
     })
     .filter((x) => x.piezas.length);
   // La primera vista sale visible desde el HTML (las demás las muestra el filtro)
-  const laminas = (vistaLaminas('rrss', conPosts, '') + vistaLaminas('video', conVideos, 'video') + vistaLaminas('identidad', conManual, 'ancha')).replace(' hidden>', '>');
+  const laminas = (vistaLaminas('rrss', conPosts, '') + vistaLaminas('video', conVideos, 'video', cierreVideo) + vistaLaminas('identidad', conManual, 'ancha')).replace(' hidden>', '>');
   const body = `
 <section class="cabecera cabecera--trabajos">
   <div class="cabecera__fila">
