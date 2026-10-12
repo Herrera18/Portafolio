@@ -34,8 +34,6 @@
       "categoria": "rrss",
       "titulo": "Social media",
       "detalle": "Instagram · Facebook · TikTok",
-      "cinta": true,
-      "curva": true,
       "collage": true
     },
     {
@@ -52,7 +50,8 @@
       "detalle": "Logotipo · Manual de marca · Aplicaciones",
       "cinta": true,
       "soloCinta": true,
-      "ritmo": 10
+      "ritmo": 10,
+      "curva": true
     },
     {
       "categoria": "logos",

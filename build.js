@@ -406,7 +406,10 @@ function paginaInicio(site, projects) {
           const propias = anillo.length;
           while (anillo.length < 16) anillo.push(...anillo.slice(0, propias));
           cinta = `
-  <div class="cinta cinta--curva" style="--piezas:${anillo.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
+  <div class="cinta cinta--curva${
+    // piezas apaisadas (páginas de manual): el anillo usa celdas 16:9
+    (webpSize(`media/${anillo[0].p.slug}/${anillo[0].src}`) || { w: 1, h: 2 }).w > (webpSize(`media/${anillo[0].p.slug}/${anillo[0].src}`) || { w: 1, h: 2 }).h ? ' cinta--ancha' : ''
+  }" style="--piezas:${anillo.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
     <div class="cinta__pista">
       ${anillo.map((x, i) => item(x, i >= propias, i)).join('')}
       ${
@@ -539,7 +542,11 @@ function paginaInicio(site, projects) {
     </span>
     <span class="categoria__flecha" aria-hidden="true">↗</span>
   </a>
-  <div class="categoria__barra">
+  ${
+    // Con el escenario de marcas no va esta barra: el escenario ya trae la suya (rubro, enlace y año)
+    collages
+      ? ''
+      : `<div class="categoria__barra">
     <span>${esc(sec.detalle || '')}</span>
     <span>${cuenta}</span>
     <span class="categoria__nav">
@@ -551,7 +558,8 @@ function paginaInicio(site, projects) {
       <button class="flecha" type="button" data-carrusel="1" aria-label="Siguientes">→</button>`
       }
     </span>
-  </div>
+  </div>`
+  }
   ${cinta}${tira}${sec.categoria === 'video' ? proceso(site).replace('<section class="seccion" id="proceso">', '<div class="subseccion" id="proceso">').replace(/<\/section>\s*$/, '</div>') : ''}
 </section>`;
     })

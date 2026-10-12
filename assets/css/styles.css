@@ -1550,9 +1550,15 @@ main,
   --radio-anillo: calc(var(--piezas) * (var(--ancho) + var(--hueco)) / 6.2832);
   /* el anillo es más ancho que la cinta: los cantos del cilindro quedan fuera y los lados se difuminan */
   --fundido: clamp(3rem, 20%, 13rem);
-  height: calc(var(--alto) + 3.2rem);
+  height: calc(var(--alto) + 2.4rem);
   overflow: hidden;
   perspective: calc(var(--radio-anillo) * 1.4);
+}
+
+/* Anillo de piezas apaisadas (identidad de marca): celdas 16:9, más bajas */
+.cinta--curva.cinta--ancha {
+  --alto: clamp(9rem, 17vw, 13.5rem);
+  --ancho: calc(var(--alto) * 16 / 9);
 }
 
 @media (max-width: 639px) {
@@ -3904,6 +3910,36 @@ main,
   margin-top: 2.5rem;
   font-size: 0.78rem;
   color: var(--texto-2);
+}
+
+/* Una cinta que cierra su sección no suma margen propio: el espacio lo pone la sección siguiente */
+.categoria > .cinta:last-child {
+  margin-bottom: 0;
+}
+
+/* Separación pareja entre los bloques del inicio: cada uno aporta la misma media distancia arriba y abajo,
+   así entre presentación, marcas, servicios y las secciones 01 a 04 queda siempre el mismo espacio. */
+:root {
+  --entre: clamp(2rem, 4.5vw, 3.5rem);
+}
+
+.seccion.categoria,
+#servicios,
+.marcas {
+  padding-block: var(--entre);
+}
+
+.hero {
+  padding-bottom: var(--entre);
+}
+
+.marcas .marcas__cinta {
+  margin-bottom: 0;
+}
+
+/* Sin la barra de la sección, el escenario de marcas queda más cerca de la banda del título */
+.js .categoria > .collage-escena {
+  margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
 }
 
 /* ---------- Fluidez ---------- */
