@@ -93,7 +93,8 @@ if (videos.length) {
           if (e.isIntersecting) e.target.play().catch(() => {});
           else e.target.pause();
         }),
-      { rootMargin: '100px', threshold: 0.2 }
+      // en teléfonos solo se reproducen los que están bien dentro de la pantalla (menos videos a la vez)
+      matchMedia('(max-width: 700px)').matches ? { threshold: 0.5 } : { rootMargin: '100px', threshold: 0.2 }
     );
     videos.forEach((v) => {
       v.addEventListener('playing', () => v.classList.add('activo'), { once: true });
@@ -145,6 +146,16 @@ document.querySelectorAll('[data-carrusel-caja]').forEach((caja) => {
   actualizar();
 });
 
+// Las animaciones continuas (cintas, mosaicos, gráficos de "Así trabajo", burbujas) se pausan mientras
+// están fuera de la pantalla: así el teléfono solo mueve lo que se está viendo.
+if ('IntersectionObserver' in window) {
+  const pausar = new IntersectionObserver(
+    (entradas) => entradas.forEach((e) => e.target.classList.toggle('en-pausa', !e.isIntersecting)),
+    { rootMargin: '150px' }
+  );
+  document.querySelectorAll('.portada, .hero__visual, .cinta, .muro, .proceso').forEach((el) => pausar.observe(el));
+}
+
 // Secciones del inicio: la banda (número, título, flecha y barra) aparece al entrar en pantalla
 const categorias = document.querySelectorAll('.categoria');
 if (categorias.length && 'IntersectionObserver' in window) {
@@ -169,7 +180,9 @@ document.querySelectorAll('.collage-escena').forEach((escena) => {
   const puntos = escena.nextElementSibling;
   if (!marcas.length) return;
 
-  const NOMBRE = 700; // el nombre solo, al centro
+  // En teléfonos no hay pausa con el nombre solo: las piezas salen de inmediato
+  const movil = matchMedia('(max-width: 700px)').matches;
+  const NOMBRE = movil ? 0 : 700; // el nombre solo, al centro
   const ABIERTA = 2400; // nombre arriba + diseños a la vista
   const SALIDA = 400; // desvanecido antes de la siguiente
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -213,7 +226,8 @@ document.querySelectorAll('.collage-escena').forEach((escena) => {
       if (enPantalla) mostrar(actual);
       else limpiar();
     },
-    { threshold: 0.3 }
+    // en teléfonos arranca apenas asoma, para que al llegar ya estén las piezas
+    movil ? { rootMargin: '0px 0px 20% 0px', threshold: 0 } : { threshold: 0.3 }
   ).observe(escena);
 });
 

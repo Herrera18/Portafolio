@@ -409,6 +409,10 @@ function paginaInicio(site, projects) {
   <div class="cinta cinta--curva" style="--piezas:${anillo.length}${sec.ritmo ? `;--ritmo:${Number(sec.ritmo)}s` : ''}">
     <div class="cinta__pista">
       ${anillo.map((x, i) => item(x, i >= propias, i)).join('')}
+      ${
+        // En teléfonos la cinta va plana (más liviana): necesita las piezas una segunda vez para no tener corte
+        anillo.map((x) => item(x, true).replace('class="cinta__item"', 'class="cinta__item cinta__item--movil"')).join('')
+      }
     </div>
   </div>`;
         } else if (piezas.length) {
