@@ -908,8 +908,14 @@ function paginaProyecto(site, projects, p, i) {
             : ''
         }
   ${
-    // Logofolio: en teléfonos los logos van en un carrusel de a dos (lo arma el CSS); los puntos marcan la posición
-    esLogos ? '<div class="logos-caja" data-carrusel-caja>' : ''
+    // Logofolio: los logos van en un carrusel (de a cuatro en escritorio, de a dos en teléfonos), con flechas y puntos
+    esLogos
+      ? `<div class="logos-caja" data-carrusel-caja>
+    <div class="logos-caja__nav">
+      <button class="flecha" type="button" data-carrusel="-1" aria-label="Logos anteriores">←</button>
+      <button class="flecha" type="button" data-carrusel="1" aria-label="Logos siguientes">→</button>
+    </div>`
+      : ''
   }<section class="galeria${esLogos ? ' galeria--logos' : esPosts || esReels ? ' galeria--posts' : ''}"${
           esLogos ? ' data-carrusel-pista' : ''
         } aria-label="Galería">${galeria.map((a, n) => galeriaItem(p, a, n)).join('\n')}</section>${

@@ -2994,14 +2994,20 @@ main,
   counter-reset: paso;
 }
 
-@media (min-width: 560px) {
-  .info--hice ol {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+/* Dos tarjetas por fila en cualquier pantalla (cuatro pasos = dos filas) */
+.info--hice ol {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 
-  /* Si el total es impar, la última tarjeta ocupa las dos columnas */
-  .info--hice li:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+/* Si el total es impar, la última tarjeta ocupa las dos columnas */
+.info--hice li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 559px) {
+  .info--hice li {
+    padding: 0.85rem 0.9rem 0.95rem;
+    font-size: 0.88rem;
   }
 }
 
@@ -3229,40 +3235,54 @@ main,
   }
 }
 
-/* Página de Logofolio: los puntos del carrusel solo existen en teléfonos */
-.logos-caja .puntos {
+/* Página de Logofolio: los logos van en un carrusel con flechas y puntos.
+   Se ven cuatro por pantalla en escritorio, tres en tabletas y dos en teléfonos. */
+.logos-caja {
+  --n: 2;
+  --hueco: clamp(0.7rem, 1.5vw, 1.2rem);
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+@media (min-width: 701px) {
+  .logos-caja {
+    --n: 3;
+  }
+}
+
+@media (min-width: 1100px) {
+  .logos-caja {
+    --n: 4;
+  }
+}
+
+.logos-caja__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.logos-caja .galeria--logos {
+  display: flex;
+  gap: var(--hueco);
+  padding-block: 0.3rem 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.logos-caja .galeria--logos::-webkit-scrollbar {
   display: none;
 }
 
-/* En teléfonos los ocho logos no se apilan en cuatro filas: van en una fila que se desliza, de a dos */
-@media (max-width: 700px) {
-  .logos-caja {
-    padding-bottom: clamp(2.5rem, 6vw, 5rem);
-  }
+.logos-caja .galeria--logos .galeria__item {
+  flex: 0 0 calc((100% - (var(--n) - 1) * var(--hueco)) / var(--n));
+  scroll-snap-align: start;
+}
 
-  .logos-caja .galeria--logos {
-    display: flex;
-    gap: 0.7rem;
-    padding-bottom: 0;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .logos-caja .galeria--logos::-webkit-scrollbar {
-    display: none;
-  }
-
-  .logos-caja .galeria--logos .galeria__item {
-    flex: 0 0 calc(50% - 0.35rem);
-    scroll-snap-align: start;
-  }
-
-  .logos-caja .puntos {
-    display: flex;
-    margin-top: 1rem;
-  }
+.logos-caja .puntos {
+  margin-top: 1rem;
 }
 
 /* Fichas de marca: tienen altos muy distintos, así que van en columnas tipo mosaico (cada ficha se
