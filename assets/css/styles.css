@@ -3994,6 +3994,37 @@ main,
   color: var(--acento-texto);
 }
 
+/* "En qué te puedo ayudar": al llegar a la sección, las tarjetas entran una por una, de izquierda a derecha.
+   Es una animación (no una transición) y solo rige antes de empezar, para no pisar el efecto al pasar el cursor. */
+.js #servicios:not(.visible) .servicios li {
+  opacity: 0;
+}
+
+#servicios.visible .servicios li {
+  animation: servicio-entra 0.95s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+}
+
+#servicios.visible .servicios li:nth-child(2) { animation-delay: 0.25s; }
+#servicios.visible .servicios li:nth-child(3) { animation-delay: 0.5s; }
+#servicios.visible .servicios li:nth-child(4) { animation-delay: 0.75s; }
+
+@keyframes servicio-entra {
+  from { opacity: 0; translate: 0 1.75rem; }
+}
+
+/* "Así trabajo": los tres pasos entran igual, uno tras otro, al llegar a ese bloque */
+.js #proceso:not(.visible) .proceso > li {
+  opacity: 0;
+}
+
+#proceso.visible .proceso > li {
+  animation: servicio-entra 0.95s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+}
+
+#proceso.visible .proceso > li:nth-child(2) { animation-delay: 0.25s; }
+#proceso.visible .proceso > li:nth-child(3) { animation-delay: 0.5s; }
+#proceso.visible .proceso > li:nth-child(4) { animation-delay: 0.75s; }
+
 /* ---------- Fluidez ---------- */
 /* Fuera de pantalla las animaciones continuas se detienen (la clase la pone main.js) */
 .en-pausa,
