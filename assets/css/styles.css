@@ -4161,14 +4161,14 @@ main,
 
 .footer__marca {
   height: 0.8em;
-  margin-top: clamp(1.5rem, 4cqw, 3rem);
+  margin-top: clamp(0.4rem, 1.2cqw, 1rem);
   overflow: hidden;
   font-family: var(--titulos);
   font-size: 17.1cqw;
   font-weight: 700;
   line-height: 0.92;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
   color: transparent;
   background: linear-gradient(180deg, color-mix(in srgb, var(--texto) 24%, transparent), color-mix(in srgb, var(--texto) 4%, transparent) 78%);
   -webkit-background-clip: text;

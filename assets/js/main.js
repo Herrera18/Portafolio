@@ -57,6 +57,31 @@ if (filtros.length) {
   desdeHash();
 }
 
+// Pie de página: el nombre grande se ajusta para ir exactamente de un margen al otro del contenido.
+// Se mide el dibujo real de las letras (no su caja) y se corrige el tamaño y el pequeño aire lateral de la fuente.
+const marca = document.querySelector('.footer__marca');
+if (marca) {
+  const lienzo = document.createElement('canvas').getContext('2d');
+  const ajustar = () => {
+    marca.style.fontSize = '';
+    marca.style.translate = '';
+    const caja = marca.parentElement.querySelector('.footer__fila').getBoundingClientRect();
+    const estilo = getComputedStyle(marca);
+    const base = parseFloat(estilo.fontSize);
+    lienzo.font = `${estilo.fontWeight} ${base}px ${estilo.fontFamily}`;
+    const m = lienzo.measureText(marca.textContent);
+    const tinta = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+    if (!tinta || !caja.width) return;
+    const escala = caja.width / tinta;
+    marca.style.fontSize = `${base * escala}px`;
+    // el texto va alineado a la izquierda: se corre lo que la primera letra deja de aire a su lado
+    marca.style.translate = `${caja.left - marca.getBoundingClientRect().left + m.actualBoundingBoxLeft * escala}px 0`;
+  };
+  ajustar();
+  if (document.fonts) document.fonts.ready.then(ajustar);
+  window.addEventListener('resize', ajustar);
+}
+
 // Servicios en móvil: el texto va recortado a dos líneas y "Ver más" lo despliega hacia abajo
 document.querySelectorAll('.servicios__mas').forEach((boton) => {
   const li = boton.closest('li');
