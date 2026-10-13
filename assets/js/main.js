@@ -75,7 +75,8 @@ if (marca) {
     const escala = caja.width / tinta;
     marca.style.fontSize = `${base * escala}px`;
     // el texto va alineado a la izquierda: se corre lo que la primera letra deja de aire a su lado
-    marca.style.translate = `${caja.left - marca.getBoundingClientRect().left + m.actualBoundingBoxLeft * escala}px 0`;
+    const relleno = parseFloat(getComputedStyle(marca).paddingLeft) || 0;
+    marca.style.translate = `${caja.left - marca.getBoundingClientRect().left - relleno + m.actualBoundingBoxLeft * escala}px 0`;
   };
   ajustar();
   if (document.fonts) document.fonts.ready.then(ajustar);

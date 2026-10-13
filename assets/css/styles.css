@@ -3980,7 +3980,6 @@ main,
   place-items: center;
   width: 2.9rem;
   aspect-ratio: 1;
-  margin-right: -1rem;
   border: 1px solid var(--linea);
   border-radius: 50%;
   background: var(--panel);
@@ -4156,12 +4155,17 @@ main,
 }
 
 .footer__fila .footer__links {
+  gap: 0.6rem 0.8rem;
   margin-top: 0.2rem;
 }
 
 .footer__marca {
   height: 0.8em;
   margin-top: clamp(0.4rem, 1.2cqw, 1rem);
+  /* la caja es un poco más ancha que las letras: el relleno del texto solo se pinta dentro de la caja,
+     y sin este margen la última letra quedaba cortada */
+  margin-inline: -0.15em;
+  padding-inline: 0.15em;
   overflow: hidden;
   font-family: var(--titulos);
   font-size: 17.1cqw;
