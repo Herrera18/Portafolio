@@ -3986,6 +3986,14 @@ main,
   font-size: min(clamp(2.6rem, 8vw, 5.5rem), calc((100vw - 2 * var(--margen)) / (var(--letras, 8) * 0.6)));
 }
 
+/* Firma al final del manifiesto de Sobre mí */
+.sobre__texto .sobre__firma {
+  font-family: var(--titulos);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 600;
+  color: var(--acento-texto);
+}
+
 /* ---------- Fluidez ---------- */
 /* Fuera de pantalla las animaciones continuas se detienen (la clase la pone main.js) */
 .en-pausa,

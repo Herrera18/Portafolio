@@ -164,7 +164,7 @@ ${body}
 <footer class="footer">
   <div class="footer__fila">
     <div>
-      <p class="footer__cta">¿Le damos forma a tu marca?</p>
+      <p class="footer__cta">¿Tienes una marca por forjar?</p>
       <p class="footer__legal">© ${new Date().getFullYear()} ${esc(site.nombre)}. Todos los derechos reservados.</p>
     </div>
     <div class="footer__links">
@@ -632,7 +632,7 @@ function paginaInicio(site, projects) {
     <p class="hero__intro">${esc(site.intro)}</p>
     <div class="hero__botones">
       <a class="boton" href="/trabajos/">Ver trabajos</a>
-      <a class="boton boton--linea" href="/contacto/">Hablemos</a>
+      <a class="boton boton--linea" href="/contacto/">Forjemos tu marca</a>
     </div>
     ${herramientas(site, 'Herramientas con las que trabajo')}
   </div>
@@ -647,7 +647,7 @@ ${secciones}
 ${(site.secciones || []).some((x) => x.categoria === 'video') && projects.some((p) => p.categoria === 'video') ? '' : proceso(site)}`;
 
   return layout(site, {
-    title: `${site.nombre} — ${site.frase.replace(/^Soy\s+/i, '').replace(/^./, (c) => c.toUpperCase())}`,
+    title: `${site.nombre} — ${site.frase.replace(/\.$/, '')}`,
     description: site.descripcion,
     urlPath: '/',
     active: 'inicio',
@@ -1016,8 +1016,9 @@ function paginaSobreMi(site) {
   }
   <div class="sobre__texto">
     ${(s.bio || []).map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${s.firma ? `<p class="sobre__firma">${esc(s.firma)}</p>` : ''}
     ${(site.habilidades || []).length ? `<h2>Habilidades técnicas</h2>${habilidades(site)}` : ''}
-    <a class="boton" href="/contacto/">Hablemos</a>
+    <a class="boton" href="/contacto/">Forjemos tu marca</a>
   </div>
 </section>
 <section class="sobre-extra">
@@ -1048,7 +1049,7 @@ function paginaContacto(site) {
 <section class="cabecera">
   <p class="etiqueta">Hablemos</p>
   <h1>Contacto</h1>
-  <p class="cabecera__bajada">Cuéntame qué necesitas. Te respondo con una propuesta clara: qué haría, en cuánto tiempo y cuánto cuesta.</p>
+  <p class="cabecera__bajada">¿Tienes una marca por forjar? Escríbeme y te respondo con una propuesta clara: qué haría, en cuánto tiempo y cuánto cuesta.</p>
 </section>
 <section class="contacto">
   <a class="contacto__item contacto__item--principal" href="${esc(waLink(site))}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>${esc(

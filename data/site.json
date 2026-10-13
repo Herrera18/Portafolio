@@ -1,6 +1,6 @@
 {
-  "nombre": "Ignis Studio",
-  "frase": "Estudio de diseño gráfico",
+  "nombre": "Studio Herre",
+  "frase": "Marcas hechas a fuego.",
   "fotoInicio": "media/site/retrato-inicio.webp",
   "fotoInicioCirculo": {
     "cx": 540,
@@ -8,13 +8,13 @@
     "r": 418
   },
   "etiqueta": "",
-  "descripcion": "Estudio de diseño gráfico y producción de contenido: video para clientes, diseño para redes sociales e identidad de marca.",
-  "intro": "Diseño marcas, contenido para redes y videos que se reconocen a primera vista. No piezas sueltas: una línea visual que tu negocio puede sostener semana a semana.",
+  "descripcion": "Studio Herre, estudio de diseño gráfico: marcas hechas a fuego. Video, redes sociales e identidad visual con oficio de taller.",
+  "intro": "Video, redes sociales e identidad visual con oficio de taller.",
   "url": "",
   "email": "rogerignacio53@gmail.com",
   "whatsapp": "584121749963",
   "whatsappVisible": "0412 174 9963",
-  "whatsappMensaje": "Hola Ignis Studio, vi el portafolio y quiero conversar sobre un proyecto.",
+  "whatsappMensaje": "Hola Studio Herre, vi el portafolio y tengo una marca por forjar.",
   "redes": [
     {
       "nombre": "Instagram",
@@ -63,17 +63,17 @@
   "servicios": [
     {
       "titulo": "Social media",
-      "texto": "Tu feed con una sola línea gráfica. Carruseles, historias y campañas que se reconocen como tuyos antes de leer el nombre.",
+      "texto": "Hago piezas para redes que hacen detenerse a mirar, no pasar de largo. Carruseles, historias y campañas con una sola línea gráfica.",
       "categoria": "rrss"
     },
     {
       "titulo": "Video",
-      "texto": "Tú grabas con el celular y yo lo convierto en un video listo para publicar: gancho, cortes, subtítulos, color y sonido.",
+      "texto": "Tú grabas con el celular y yo le doy forma: gancho, cortes, subtítulos, color y sonido, hasta dejarlo listo para publicar.",
       "categoria": "video"
     },
     {
       "titulo": "Identidad de marca",
-      "texto": "Una marca que se pueda usar, no solo un logo. Logotipo, colores, tipografía y un manual para aplicarla igual en todas partes.",
+      "texto": "Tomo tu idea en bruto y le doy forma hasta que se reconozca sola: logotipo, colores, tipografía y un manual para usarla igual en todas partes.",
       "categoria": "identidad"
     }
   ],
@@ -99,7 +99,7 @@
       }
     ],
     "boton": "Cotizar edición de video",
-    "mensaje": "Hola Ignis Studio, quiero cotizar edición de video."
+    "mensaje": "Hola Studio Herre, quiero cotizar edición de video."
   },
   "habilidades": [
     {
@@ -146,16 +146,20 @@
   "sobreMi": {
     "foto": "media/site/nacho.webp",
     "bio": [
-      "Soy Nacho, el diseñador detrás de Ignis Studio. Ignis significa fuego en latín, y de eso se trata mi trabajo: darle a una marca la chispa que hace que la reconozcan.",
-      "Trabajo en tres terrenos que se alimentan entre sí: identidad de marca, diseño para redes y edición de video. Por eso puedo llevar un proyecto completo, del logotipo al carrusel de la semana y al anuncio en video, con la misma línea.",
-      "He diseñado más de 100 carruseles para una sola marca, manuales de identidad de hasta 29 páginas y anuncios en video para negocios de Chile y Venezuela. Me importa que cada pieza se vea bien, pero sobre todo que le sirva al negocio que la publica."
+      "Antes de que existieran los logos, las marcas se hacían a fuego.",
+      "Un herrero calentaba el hierro hasta que brillaba, lo golpeaba con paciencia y lo apoyaba en la piel o en la madera. Lo que quedaba no se borraba. Eso era una marca: algo que se reconoce y permanece.",
+      "Vengo de una familia de apellido Herrera, gente de herrería. No trabajo el hierro, pero trabajo igual: tomo una idea en bruto, la caliento hasta entenderla y la golpeo hasta que tiene forma propia.",
+      "No hago piezas para llenar un feed. Hago marcas que se reconocen al primer vistazo y que la gente recuerda cuando ya pasó de largo.",
+      "Cada video, cada post y cada identidad pasa por el mismo fuego: entender, dar forma, terminar con cuidado. Sin atajos, sin plantillas, sin prisa por lo que merece tiempo.",
+      "Porque una marca no se diseña. Se forja."
     ],
     "clientes": [
       "Emprendimientos y marcas personales",
       "Pymes de comercio, gastronomía y servicios",
       "Agencias que necesitan apoyo en producción",
       "Equipos de comunicación internos"
-    ]
+    ],
+    "firma": "Studio Herre. Marcas hechas a fuego."
   },
   "serviciosTitulo": "En qué te puedo ayudar"
 }

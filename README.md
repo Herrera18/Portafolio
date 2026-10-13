@@ -1,4 +1,4 @@
-# Portafolio — Ignis Studio
+# Portafolio — Studio Herre
 
 Sitio estático (HTML, CSS y JS, sin frameworks ni base de datos). Las páginas se generan a partir de dos archivos de datos con un script de Node sin dependencias (`build.js`), que Vercel ejecuta solo en cada publicación.
 
