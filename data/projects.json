@@ -166,12 +166,23 @@
     "resultado": "Una serie de anuncios de 20 a 35 segundos usados en las campañas de la marca durante 2025.",
     "portada": "cover.webp",
     "galeria": [
-      "reel-01.mp4",
       "reel-02.mp4",
       "reel-03.mp4",
       "reel-04.mp4",
-      "reel-05.mp4"
-    ]
+      "reel-05.mp4",
+      "reel-06.mp4",
+      "reel-07.mp4",
+      "reel-08.mp4"
+    ],
+    "videos": {
+      "reel-02.mp4": "hYHNWYNCKMw",
+      "reel-03.mp4": "dJ5ROrUZWV8",
+      "reel-04.mp4": "gUCCg6tQ4I8",
+      "reel-05.mp4": "jZrS8fFQ8TY",
+      "reel-06.mp4": "jBa40rDuezc",
+      "reel-07.mp4": "oftSFUlvDQQ",
+      "reel-08.mp4": "4juRATZkU_M"
+    }
   },
   {
     "slug": "rosangele-herrera-videos",
