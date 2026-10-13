@@ -14,11 +14,8 @@
   --sobre-acento: #18212e;
 
   /* Degradados */
-  --grad-amanecer: linear-gradient(180deg, #efeae0 30%, #f2cb9f 68%, #c98266 100%);
-  --grad-atardecer: radial-gradient(ellipse 90% 70% at 10% 105%, #f5a55a 0%, #c46a42 28%, #6a3a30 48%, transparent 75%), #18212e;
   --grad-fuego: linear-gradient(135deg, #f5a55a 0%, #d57a47 50%, #9e4e36 100%);
   --grad-noche: radial-gradient(ellipse 120% 80% at 50% 0%, #2e3e54 0%, #18212e 70%);
-  --grad-arena: linear-gradient(160deg, #efeae0 0%, #ddd5c6 50%, #c9c0ae 100%);
 
   /* Fondo de todo el sitio: Noche + un destello naranja suave arriba, que queda detrás del panel del menú */
   --destello: radial-gradient(ellipse 46% 24% at 34% 0%, rgba(245, 165, 90, 0.42), rgba(196, 106, 66, 0.16) 55%, transparent 78%);
@@ -1175,25 +1172,6 @@ main,
   padding-bottom: 0.3rem;
 }
 
-.seccion__ver {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--texto-2);
-  transition: color 0.2s;
-}
-
-.seccion__ver::after {
-  content: ' ↗';
-  color: var(--acento-texto);
-}
-
-.seccion__ver:hover {
-  color: var(--acento-texto);
-}
-
 /* En móvil el título ocupa todo el ancho; etiqueta y enlace van en una fila debajo */
 @media (max-width: 560px) {
   .seccion__cabecera:has(.seccion__nav) {
@@ -1206,10 +1184,6 @@ main,
     align-items: center;
     justify-content: space-between;
     padding-bottom: 0;
-  }
-
-  .seccion__ver {
-    font-size: 0.68rem;
   }
 }
 
@@ -1306,24 +1280,6 @@ main,
 }
 
 /* ---------- Tarjetas de proyecto ---------- */
-.grid {
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-@media (min-width: 640px) {
-  .grid--2,
-  .grid--3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid--3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 /* ---------- Secciones por categoría del inicio ----------
    Cada una abre con una banda: número enorme en contorno, título y flecha; debajo una barra fina con datos
    y la tira de proyectos. */
@@ -1920,10 +1876,6 @@ main,
   gap: 0.5rem;
 }
 
-.seccion__nav .seccion__ver {
-  margin-right: 0.6rem;
-}
-
 .flecha {
   display: grid;
   place-items: center;
@@ -2011,19 +1963,6 @@ main,
   .card:hover .card__media video {
     transform: scale(1.04);
   }
-}
-
-.card__num {
-  position: absolute;
-  top: 0.8rem;
-  left: 0.8rem;
-  z-index: 1;
-  padding: 0.15rem 0.55rem;
-  border-radius: 7px;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 500;
 }
 
 .card__info {
@@ -4074,8 +4013,7 @@ main,
   .hero__chip,
   .info--contexto p,
   .info--resultado,
-  .lamina__mas,
-  .teja__cat {
+  .lamina__mas {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

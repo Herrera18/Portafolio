@@ -225,6 +225,23 @@ document.querySelectorAll('.collage-escena').forEach((escena) => {
   });
   if (marcas.length > 1) puntos.append(...botones);
 
+  // Las piezas de cada marca se descargan recién cuando le toca (ella y la siguiente), no las de todas juntas.
+  // Sin script las imágenes conservan su dirección y cargan normal.
+  const piezasDe = (m) => m.querySelectorAll('.collage__lienzo img');
+  marcas.forEach((m, k) => {
+    if (k < 2) return;
+    piezasDe(m).forEach((img) => {
+      img.dataset.src = img.getAttribute('src');
+      img.removeAttribute('src');
+    });
+  });
+  const cargar = (k) =>
+    piezasDe(marcas[k]).forEach((img) => {
+      if (!img.dataset.src) return;
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    });
+
   const limpiar = () => {
     relojes.forEach(clearTimeout);
     relojes = [];
@@ -234,6 +251,8 @@ document.querySelectorAll('.collage-escena').forEach((escena) => {
   function mostrar(i) {
     limpiar();
     actual = i;
+    cargar(i);
+    cargar((i + 1) % marcas.length);
     marcas.forEach((m, k) => m.classList.toggle('activa', k === i));
     marcas.forEach((m) => m.classList.remove('abierta'));
     botones.forEach((b, k) => b.classList.toggle('activo', k === i));

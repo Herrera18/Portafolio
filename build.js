@@ -181,14 +181,13 @@ ${body}
 `;
 }
 
-function card(p, { eager = false, num = 0 } = {}) {
+function card(p, { eager = false } = {}) {
   const base = `/media/${p.slug}/`;
   const video = p.portadaVideo
     ? `<video muted loop playsinline preload="none" data-autoplay aria-hidden="true"><source src="${base}${esc(p.portadaVideo)}" type="video/mp4"></video>`
     : '';
   return `<a class="card" href="/proyectos/${p.slug}/" data-cat="${p.categoria}">
   <div class="card__media">
-    ${num ? `<span class="card__num">${String(num).padStart(2, '0')}</span>` : ''}
     <img src="${base}${esc(p.portada)}" alt="${esc(p.titulo)}"${sizeAttrs(`media/${p.slug}/${p.portada}`)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">
     ${video}
   </div>
