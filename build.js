@@ -930,7 +930,7 @@ function paginaProyecto(site, projects, p, i) {
   <header class="cabecera proyecto__cabecera">
     <div class="proyecto__titular">
       <a class="etiqueta" href="/trabajos/#${p.categoria}">${CATEGORIAS[p.categoria]}</a>
-      <h1>${esc(p.titulo)}</h1>
+      <h1 style="--letras:${Math.max(...p.titulo.split(/\s+/).map((w) => w.length))}">${esc(p.titulo)}</h1>
       ${p.resumen ? `<p class="proyecto__resumen">${esc(p.resumen)}</p>` : ''}
     </div>
     <dl class="proyecto__ficha">

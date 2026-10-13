@@ -2618,10 +2618,13 @@ main,
   background: repeating-linear-gradient(90deg, var(--acento) 0 8%, transparent 8% 10.2%);
 }
 
-.g-sonido {
-  background: repeating-linear-gradient(90deg, var(--texto-2) 0 2px, transparent 2px 5px);
-  -webkit-mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 7px), linear-gradient(#000, #000) center / 100% 45% no-repeat;
-  mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 7px), linear-gradient(#000, #000) center / 100% 45% no-repeat;
+/* Onda de sonido: barras redondeadas de distinta altura, centradas (una silueta SVG que se repite) */
+.g-fila .g-sonido {
+  height: 1.35rem;
+  border-radius: 0;
+  background: var(--texto-2);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 16' preserveAspectRatio='none'%3E%3Crect x='0.6' y='6.0' width='1.8' height='4' rx='0.9'/%3E%3Crect x='3.6' y='4.5' width='1.8' height='7' rx='0.9'/%3E%3Crect x='6.6' y='2.5' width='1.8' height='11' rx='0.9'/%3E%3Crect x='9.6' y='1.0' width='1.8' height='14' rx='0.9'/%3E%3Crect x='12.6' y='3.5' width='1.8' height='9' rx='0.9'/%3E%3Crect x='15.6' y='5.0' width='1.8' height='6' rx='0.9'/%3E%3Crect x='18.6' y='2.0' width='1.8' height='12' rx='0.9'/%3E%3Crect x='21.6' y='0.0' width='1.8' height='16' rx='0.9'/%3E%3Crect x='24.6' y='3.0' width='1.8' height='10' rx='0.9'/%3E%3Crect x='27.6' y='5.5' width='1.8' height='5' rx='0.9'/%3E%3Crect x='30.6' y='4.0' width='1.8' height='8' rx='0.9'/%3E%3Crect x='33.6' y='1.5' width='1.8' height='13' rx='0.9'/%3E%3Crect x='36.6' y='0.5' width='1.8' height='15' rx='0.9'/%3E%3Crect x='39.6' y='2.5' width='1.8' height='11' rx='0.9'/%3E%3Crect x='42.6' y='4.5' width='1.8' height='7' rx='0.9'/%3E%3Crect x='45.6' y='6.0' width='1.8' height='4' rx='0.9'/%3E%3Crect x='48.6' y='3.5' width='1.8' height='9' rx='0.9'/%3E%3Crect x='51.6' y='1.0' width='1.8' height='14' rx='0.9'/%3E%3Crect x='54.6' y='2.0' width='1.8' height='12' rx='0.9'/%3E%3Crect x='57.6' y='5.0' width='1.8' height='6' rx='0.9'/%3E%3Crect x='60.6' y='3.0' width='1.8' height='10' rx='0.9'/%3E%3Crect x='63.6' y='0.0' width='1.8' height='16' rx='0.9'/%3E%3Crect x='66.6' y='4.0' width='1.8' height='8' rx='0.9'/%3E%3Crect x='69.6' y='5.5' width='1.8' height='5' rx='0.9'/%3E%3C/svg%3E") left center / 4.5rem 100% repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 16' preserveAspectRatio='none'%3E%3Crect x='0.6' y='6.0' width='1.8' height='4' rx='0.9'/%3E%3Crect x='3.6' y='4.5' width='1.8' height='7' rx='0.9'/%3E%3Crect x='6.6' y='2.5' width='1.8' height='11' rx='0.9'/%3E%3Crect x='9.6' y='1.0' width='1.8' height='14' rx='0.9'/%3E%3Crect x='12.6' y='3.5' width='1.8' height='9' rx='0.9'/%3E%3Crect x='15.6' y='5.0' width='1.8' height='6' rx='0.9'/%3E%3Crect x='18.6' y='2.0' width='1.8' height='12' rx='0.9'/%3E%3Crect x='21.6' y='0.0' width='1.8' height='16' rx='0.9'/%3E%3Crect x='24.6' y='3.0' width='1.8' height='10' rx='0.9'/%3E%3Crect x='27.6' y='5.5' width='1.8' height='5' rx='0.9'/%3E%3Crect x='30.6' y='4.0' width='1.8' height='8' rx='0.9'/%3E%3Crect x='33.6' y='1.5' width='1.8' height='13' rx='0.9'/%3E%3Crect x='36.6' y='0.5' width='1.8' height='15' rx='0.9'/%3E%3Crect x='39.6' y='2.5' width='1.8' height='11' rx='0.9'/%3E%3Crect x='42.6' y='4.5' width='1.8' height='7' rx='0.9'/%3E%3Crect x='45.6' y='6.0' width='1.8' height='4' rx='0.9'/%3E%3Crect x='48.6' y='3.5' width='1.8' height='9' rx='0.9'/%3E%3Crect x='51.6' y='1.0' width='1.8' height='14' rx='0.9'/%3E%3Crect x='54.6' y='2.0' width='1.8' height='12' rx='0.9'/%3E%3Crect x='57.6' y='5.0' width='1.8' height='6' rx='0.9'/%3E%3Crect x='60.6' y='3.0' width='1.8' height='10' rx='0.9'/%3E%3Crect x='63.6' y='0.0' width='1.8' height='16' rx='0.9'/%3E%3Crect x='66.6' y='4.0' width='1.8' height='8' rx='0.9'/%3E%3Crect x='69.6' y='5.5' width='1.8' height='5' rx='0.9'/%3E%3C/svg%3E") left center / 4.5rem 100% repeat-x;
 }
 
 .g-cursor {
@@ -4037,6 +4040,12 @@ main,
 /* Sin la barra de la sección, el escenario de marcas queda más cerca de la banda del título */
 .js .categoria > .collage-escena {
   margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
+}
+
+/* Título del proyecto: si trae una palabra muy larga (Micasaconsubsidio.cl), la letra se achica lo justo
+   para que esa palabra quepa en el ancho de la pantalla. "--letras" es el largo de la palabra más larga. */
+.proyecto__titular h1 {
+  font-size: min(clamp(2.6rem, 8vw, 5.5rem), calc((100vw - 2 * var(--margen)) / (var(--letras, 8) * 0.6)));
 }
 
 /* ---------- Fluidez ---------- */
