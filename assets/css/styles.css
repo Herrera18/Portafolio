@@ -4132,6 +4132,51 @@ main,
   .js .collage-escena .abierta .collage__lienzo img:nth-child(6) { transition-delay: 0.25s; }
 }
 
+/* Pie de página: frase y derechos a la izquierda, íconos a la derecha, y debajo el nombre del estudio
+   en grande, apenas visible y cortado por el borde inferior. */
+.footer {
+  padding-bottom: 0;
+  container-type: inline-size;
+}
+
+.footer__fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+}
+
+.footer__fila .footer__cta {
+  font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+}
+
+.footer__fila .footer__legal {
+  margin-top: 0.7rem;
+}
+
+.footer__fila .footer__links {
+  margin-top: 0.2rem;
+}
+
+.footer__marca {
+  height: 0.8em;
+  margin-top: clamp(1.5rem, 4cqw, 3rem);
+  overflow: hidden;
+  font-family: var(--titulos);
+  font-size: 17.1cqw;
+  font-weight: 700;
+  line-height: 0.92;
+  white-space: nowrap;
+  text-align: center;
+  color: transparent;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--texto) 24%, transparent), color-mix(in srgb, var(--texto) 4%, transparent) 78%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
+}
+
 /* Respuesta al presionar (ratón o dedo): un leve hundimiento confirma el toque */
 .boton:active {
   transform: scale(0.97);
