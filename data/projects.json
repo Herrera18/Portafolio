@@ -93,14 +93,14 @@
     ]
   },
   {
-    "slug": "rogienny-herrera",
-    "titulo": "Rogienny Herrera — Shop Academy",
-    "cliente": "Rogienny Herrera",
+    "slug": "rogienny",
+    "titulo": "Rogienny — Shop Academy",
+    "cliente": "Rogienny",
     "rubro": "Marca personal",
     "categoria": "rrss",
     "anio": 2026,
     "resumen": "Carrusel para Instagram que presenta la asesoría Shop Academy de una marca personal.",
-    "contexto": "Rogienny Herrera es una marca personal que enseña a comprar productos de marcas reconocidas a mejor precio en plataformas online. Para lanzar su asesoría Shop Academy necesitaba un carrusel que explicara qué se aprende, para quién es y qué incluye, con la misma elegancia de su identidad.",
+    "contexto": "Rogienny es una marca personal que enseña a comprar productos de marcas reconocidas a mejor precio en plataformas online. Para lanzar su asesoría Shop Academy necesitaba un carrusel que explicara qué se aprende, para quién es y qué incluye, con la misma elegancia de su identidad.",
     "queHice": [
       "Diseño del carrusel de lanzamiento para Instagram",
       "Aplicación de la identidad de la marca: burdeos, beige y su tipografía",
@@ -149,14 +149,14 @@
     ]
   },
   {
-    "slug": "rogienny-herrera-videos",
-    "titulo": "Rogienny Herrera — Videos",
-    "cliente": "Rogienny Herrera",
+    "slug": "rogienny-videos",
+    "titulo": "Rogienny — Videos",
+    "cliente": "Rogienny",
     "rubro": "Marca personal",
     "categoria": "video",
     "anio": 2026,
     "resumen": "Videos para redes de una marca personal: su asesoría de compras y recomendaciones de productos de cuidado del cabello.",
-    "contexto": "Rogienny Herrera enseña a comprar productos de marcas reconocidas a mejor precio y recomienda productos de belleza a su comunidad. Necesitaba videos verticales que presentaran su asesoría y respondieran dudas frecuentes con la misma elegancia de su marca.",
+    "contexto": "Rogienny enseña a comprar productos de marcas reconocidas a mejor precio y recomienda productos de belleza a su comunidad. Necesitaba videos verticales que presentaran su asesoría y respondieran dudas frecuentes con la misma elegancia de su marca.",
     "queHice": [
       "Edición de videos verticales para redes",
       "Textos animados y subtítulos con la tipografía de la marca",
@@ -213,14 +213,14 @@
     }
   },
   {
-    "slug": "rosangele-herrera-videos",
-    "titulo": "Rosangele Herrera — Odontología",
-    "cliente": "Rosangele Herrera",
+    "slug": "rosangele-videos",
+    "titulo": "Rosangele — Odontología",
+    "cliente": "Rosangele",
     "rubro": "Odontología",
     "categoria": "video",
     "anio": 2026,
     "resumen": "Videos para redes de una odontóloga: explicaciones de tratamientos y presentación de su consulta.",
-    "contexto": "Rosangele Herrera es odontóloga y usa sus redes para explicar tratamientos con un tono cercano. Necesitaba videos claros y cuidados, grabados en su consulta, que generaran confianza en nuevos pacientes.",
+    "contexto": "Rosangele es odontóloga y usa sus redes para explicar tratamientos con un tono cercano. Necesitaba videos claros y cuidados, grabados en su consulta, que generaran confianza en nuevos pacientes.",
     "queHice": [
       "Edición de videos verticales para redes",
       "Subtítulos y títulos animados",
@@ -530,8 +530,8 @@
       "ficha-07.webp"
     ],
     "pies": {
-      "01.webp": "Rogienny Herrera · Marca personal",
-      "ficha-01.webp": "Rogienny Herrera",
+      "01.webp": "Rogienny · Marca personal",
+      "ficha-01.webp": "Rogienny",
       "02.webp": "Savia Essence · Spa y bienestar",
       "ficha-02.webp": "Savia Essence",
       "03.webp": "Amari Force · Ropa deportiva",
@@ -549,7 +549,7 @@
     "mono": [
       {
         "archivo": "mono-01.webp",
-        "nombre": "Rogienny Herrera",
+        "nombre": "Rogienny",
         "ancho": 640,
         "alto": 497
       },

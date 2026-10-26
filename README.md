@@ -54,7 +54,7 @@ Esto crea `media/nombre-del-proyecto/` con `cover.webp`, `01.webp`, `02.webp`…
 | `portadaVideo` | Opcional. Un reel que se reproduce en loop en la tarjeta del proyecto. |
 | `galeria` | Lista de archivos de la carpeta del proyecto. Los `.mp4` se muestran en loop y sin sonido. |
 | `videos` | Opcional, para proyectos de video. Enlaza cada adelanto con su video completo en YouTube: `{"reel-01.mp4": "ID_DEL_VIDEO"}`. El adelanto mudo pasa a tener botón de play y abre el video con sonido. Sirve con Shorts "No listados". |
-| `pies` | Opcional. Texto bajo una imagen, por nombre de archivo: `{"01.webp": "Rogienny Herrera · Marca personal"}`. |
+| `pies` | Opcional. Texto bajo una imagen, por nombre de archivo: `{"01.webp": "Rogienny · Marca personal"}`. |
 | `laminas` | Opcional. Fichas de marca (imágenes altas) que se muestran al final de la página, en mosaico. |
 | `mono` | Opcional (logofolio). Logos a una tinta con fondo transparente: `[{"archivo": "mono-01.webp", "nombre": "Marca", "ancho": 640, "alto": 497}]`. Se usan en la lámina crema del inicio y en la cinta de marcas. |
 

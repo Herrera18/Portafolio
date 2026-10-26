@@ -7,11 +7,38 @@
   "headers": [
     {
       "source": "/media/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
     },
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/proyectos/rogienny-herrera/",
+      "destination": "/proyectos/rogienny/",
+      "permanent": true
+    },
+    {
+      "source": "/proyectos/rogienny-herrera-videos/",
+      "destination": "/proyectos/rogienny-videos/",
+      "permanent": true
+    },
+    {
+      "source": "/proyectos/rosangele-herrera-videos/",
+      "destination": "/proyectos/rosangele-videos/",
+      "permanent": true
     }
   ]
 }
