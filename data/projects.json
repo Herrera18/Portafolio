@@ -149,6 +149,34 @@
     ]
   },
   {
+    "slug": "rogienny-herrera-videos",
+    "titulo": "Rogienny Herrera — Videos",
+    "cliente": "Rogienny Herrera",
+    "rubro": "Marca personal",
+    "categoria": "video",
+    "anio": 2026,
+    "resumen": "Videos para redes de una marca personal: su asesoría de compras y recomendaciones de productos de cuidado del cabello.",
+    "contexto": "Rogienny Herrera enseña a comprar productos de marcas reconocidas a mejor precio y recomienda productos de belleza a su comunidad. Necesitaba videos verticales que presentaran su asesoría y respondieran dudas frecuentes con la misma elegancia de su marca.",
+    "queHice": [
+      "Edición de videos verticales para redes",
+      "Textos animados y subtítulos con la tipografía de la marca",
+      "Gráficos de productos y precios en pantalla",
+      "Corrección de color y sonido"
+    ],
+    "resultado": "Videos de 25 segundos a poco más de un minuto que presentan su asesoría y resuelven dudas de su comunidad.",
+    "portada": "cover.webp",
+    "galeria": [
+      "reel-01.mp4",
+      "reel-02.mp4",
+      "reel-03.mp4"
+    ],
+    "videos": {
+      "reel-01.mp4": "u-dtlfvB3W4",
+      "reel-02.mp4": "kXEq-bsJoPA",
+      "reel-03.mp4": "y1i0wkRfDg8"
+    }
+  },
+  {
     "slug": "venechi-videos",
     "titulo": "Venechi — Anuncios",
     "cliente": "Venechi",
