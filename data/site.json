@@ -38,7 +38,7 @@
     },
     {
       "categoria": "video",
-      "titulo": "Videos",
+      "titulo": "Edición de video",
       "detalle": "Reels · Spots · Edición",
       "cinta": true,
       "soloCinta": true,
@@ -67,7 +67,7 @@
       "categoria": "rrss"
     },
     {
-      "titulo": "Video",
+      "titulo": "Edición de video",
       "texto": "Tú grabas con el celular y yo le doy forma: gancho, cortes, subtítulos, color y sonido, hasta dejarlo listo para publicar.",
       "categoria": "video"
     },

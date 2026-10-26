@@ -9,7 +9,7 @@ const OUT = path.join(ROOT, 'dist');
 
 const CATEGORIAS = {
   rrss: 'Social media',
-  video: 'Video',
+  video: 'Edición de video',
   identidad: 'Identidad de marca',
   logos: 'Logofolio',
 };
