@@ -159,7 +159,64 @@
       "Agencias que necesitan apoyo en producción",
       "Equipos de comunicación internos"
     ],
-    "firma": "Studio Herre. Marcas hechas a fuego."
+    "firma": "Studio Herre. Marcas hechas a fuego.",
+    "perfil": {
+      "hola": "Hola, soy",
+      "nombre": "Roger Herrera",
+      "rol": "Diseñador gráfico y editor de video",
+      "intro": "Tomo ideas en bruto y las convierto en marcas que se reconocen al primer vistazo: identidad visual, contenido para redes y edición de video, con oficio de taller.",
+      "disponible": "Disponible para nuevos proyectos",
+      "idea": "Convierto ideas en bruto en marcas que se recuerdan.",
+      "destacados": [
+        "usa-tu-subsidio",
+        "rogienny-herrera-videos",
+        "micasaconsubsidio"
+      ],
+      "pasos": [
+        {
+          "icono": "buscar",
+          "titulo": "Entender",
+          "texto": "Escucho qué necesita tu marca, a quién le habla y qué quieres lograr."
+        },
+        {
+          "icono": "idea",
+          "titulo": "Idear",
+          "texto": "Busco referencias y defino la dirección visual antes de diseñar."
+        },
+        {
+          "icono": "pluma",
+          "titulo": "Dar forma",
+          "texto": "Diseño las piezas, el video o la identidad con esa dirección."
+        },
+        {
+          "icono": "pulir",
+          "titulo": "Pulir",
+          "texto": "Ajusto contigo los detalles hasta que todo calza."
+        },
+        {
+          "icono": "enviar",
+          "titulo": "Entregar",
+          "texto": "Te entrego los archivos listos para usar, en los formatos que necesitas."
+        }
+      ],
+      "cita": "Una marca no se diseña. Se forja.",
+      "firma": "Roger",
+      "contacto": "Si tienes una marca por forjar, cuéntamela. Te respondo con una propuesta clara: qué haría, en cuánto tiempo y cuánto cuesta.",
+      "cifras": [
+        {
+          "numero": 30,
+          "texto": "Proyectos realizados"
+        },
+        {
+          "numero": 20,
+          "texto": "Marcas acompañadas"
+        },
+        {
+          "numero": 50,
+          "texto": "Videos editados"
+        }
+      ]
+    }
   },
   "serviciosTitulo": "En qué te puedo ayudar"
 }

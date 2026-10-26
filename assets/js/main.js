@@ -184,7 +184,7 @@ if ('IntersectionObserver' in window) {
 
 // Secciones del inicio: la banda (número, título, flecha y barra) aparece al entrar en pantalla
 // (también servicios y "Así trabajo", cuyas tarjetas entran una por una)
-const categorias = document.querySelectorAll('.categoria, #servicios, #proceso');
+const categorias = document.querySelectorAll('.categoria, #servicios, #proceso, .perfil-grilla');
 if (categorias.length && 'IntersectionObserver' in window) {
   const alEntrar = new IntersectionObserver(
     (entradas) =>

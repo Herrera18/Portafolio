@@ -103,7 +103,7 @@ function waLink(site) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(site.whatsappMensaje || '')}`;
 }
 
-function layout(site, { title, description, urlPath, image, body, active, jsonld, type = 'website' }) {
+function layout(site, { title, description, urlPath, image, body, active, jsonld, type = 'website', extraHead = '' }) {
   const fullTitle = urlPath === '/' ? title : `${title} — ${site.nombre}`;
   const canonical = site.url + urlPath;
   const ogImage = site.url + (image || '/media/site/og.jpg');
@@ -143,6 +143,7 @@ function layout(site, { title, description, urlPath, image, body, active, jsonld
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@300,500,600,700&f[]=satoshi@400,500,700&display=swap">
+${extraHead}
 <link rel="stylesheet" href="/assets/css/styles.css?v=${VERSION}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>` : ''}
 </head>
@@ -1004,36 +1005,142 @@ function paginaProyecto(site, projects, p, i) {
   });
 }
 
-function paginaSobreMi(site) {
+// Íconos de trazo para los pasos de "Cómo trabajo" en Sobre mí
+const ICONOS_PASO = {
+  buscar: '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>',
+  idea: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/>',
+  pluma: '<path d="m14.5 4.5 5 5L9 20H4v-5z"/><path d="m12.5 6.5 5 5"/>',
+  pulir: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.4 2.4M15.3 15.3l2.4 2.4M6.3 17.7l2.4-2.4M15.3 8.7l2.4-2.4"/>',
+  enviar: '<path d="M21 3 10 14"/><path d="m21 3-6.5 18-4.5-7-7-4.5z"/>',
+};
+
+// Sobre mí: presentación con el apellido del estudio en grande detrás de la foto, cifras, proyectos destacados,
+// herramientas, cómo trabajo, una cita y el contacto. Los textos están en "sobreMi.perfil" (data/site.json).
+function paginaSobreMi(site, projects) {
   const s = site.sobreMi || {};
+  const pf = s.perfil || {};
+  const foto = site.fotoInicio && exists(site.fotoInicio) ? site.fotoInicio : s.foto;
+  // Cifras reales, calculadas de los proyectos: no hay que actualizarlas a mano
+  const lf = projects.find((p) => (p.mono || []).length);
+  // "Mi Casa con Subsidio" y "Micasaconsubsidio.cl" son la misma marca: se comparan sin espacios ni dominio
+  const clave = (n) => n.toLowerCase().replace(/\.cl$/, '').replace(/[^a-z0-9]/g, '');
+  const marcas = new Set([
+    ...projects.filter((p) => p !== lf).map((p) => clave((p.cliente || p.titulo).split(' —')[0])),
+    ...((lf && lf.mono) || []).map((m) => clave(m.nombre)),
+  ]);
+  const videos = projects
+    .filter((p) => p.categoria === 'video')
+    .reduce((n, p) => n + (p.galeria || []).filter((a) => /\.mp4$/i.test(a)).length, 0);
+  // "cifras" en data/site.json manda (incluye trabajos que no están en el portafolio); si no hay, se calculan
+  const cifras = (pf.cifras || []).length
+    ? pf.cifras.map((x) => [x.numero, ...x.texto.split(/ (.*)/s).slice(0, 2)])
+    : [
+        [projects.length, 'Proyectos', 'realizados'],
+        [marcas.size, 'Marcas', 'acompañadas'],
+        [videos, 'Videos', 'editados'],
+      ];
+  const destacados = (pf.destacados || []).map((slug) => projects.find((p) => p.slug === slug)).filter(Boolean);
+  const wa = waLink(site);
+  const icono = (trazo) =>
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${trazo}</svg>`;
+  const fila = (trazo, texto, href) =>
+    `<a class="perfil-contacto__fila" href="${esc(href)}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ''}><i aria-hidden="true">${icono(trazo)}</i><span>${esc(texto)}</span></a>`;
   const body = `
-<section class="cabecera"><p class="etiqueta">Perfil</p><h1>Sobre mí</h1></section>
-<section class="sobre">
-  ${
-    s.foto && exists(s.foto)
-      ? `<img class="sobre__foto" src="/${esc(s.foto)}?v=${VERSION}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(s.foto)} decoding="async">`
-      : ''
-  }
-  <div class="sobre__texto">
-    ${(s.bio || []).map((t) => `<p>${esc(t)}</p>`).join('')}
-    ${s.firma ? `<p class="sobre__firma">${esc(s.firma)}</p>` : ''}
-    ${(site.habilidades || []).length ? `<h2>Habilidades técnicas</h2>${habilidades(site)}` : ''}
-    <a class="boton" href="/contacto/">Forjemos tu marca</a>
+<section class="perfil">
+  <div class="perfil__barra">
+    <p>${esc((pf.rol || '').split(' y ')[0])}<br><span>${esc(site.nombre)}</span></p>
+    <p>${esc(pf.disponible || '')} <b aria-hidden="true">✦</b></p>
+  </div>
+  <div class="perfil__escena">
+    <p class="perfil__fondo" aria-hidden="true">${esc(site.nombre.split(' ').pop())}</p>
+    ${foto && exists(foto) ? `<img class="perfil__foto" src="/${esc(foto)}?v=${VERSION}" alt="Retrato de ${esc(pf.nombre || site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
+    <div class="perfil__texto">
+      <p class="perfil__hola">${esc(pf.hola || '')}</p>
+      <h1>${esc(pf.nombre || 'Sobre mí')}</h1>
+      <p class="perfil__rol">${esc(pf.rol || '')}</p>
+      <p class="perfil__intro">${esc(pf.intro || '')}</p>
+    </div>
+    <div class="perfil__lado">
+      <p class="perfil__idea"><b aria-hidden="true">✦</b><span>${esc(pf.idea || '')}</span></p>
+      <ul class="perfil__cifras">${cifras.map(([n, l1, l2]) => `<li><strong>${n}+</strong><span>${esc(l1)}<br>${esc(l2)}</span></li>`).join('')}</ul>
+    </div>
   </div>
 </section>
-<section class="sobre-extra">
-  <div>
-    <h2>Con quién trabajo</h2>
-    <ul class="lista">${(s.clientes || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+
+<section class="perfil-grilla">
+  <div class="perfil-col">
+    <h2>Herramientas y habilidades</h2>
+    <p class="perfil-col__sub">Lo que hago</p>
+    <ul class="perfil-etiquetas">${[
+      ...new Set([...(site.servicios || []).map((x) => x.titulo), ...(site.habilidades || []).map((h) => h.nombre)].map((t) => t.trim())),
+    ]
+      .map((t) => `<li>${esc(t)}</li>`)
+      .join('')}</ul>
+    <p class="perfil-col__sub">Con qué lo hago</p>
+    <ul class="perfil-herr">${(site.herramientas || [])
+      .map((h) => {
+        const nivel = Math.max(0, Math.min(100, Number(h.nivel) || 0));
+        // Con "icono" (silueta) se dibuja el logo; si no, la sigla en el color de la app
+        const logo = h.icono && exists(h.icono) ? `<i style="--icono:url('/${esc(h.icono)}')"></i>` : esc(h.sigla);
+        return `<li data-app="${esc((h.sigla || '').toLowerCase())}"><span class="perfil-herr__logo" aria-hidden="true">${logo}</span><span class="perfil-herr__nombre">${esc(h.nombre)}</span><span class="perfil-herr__pct">${nivel}%</span><span class="perfil-herr__barra" role="meter" aria-label="Dominio de ${esc(h.nombre)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${nivel}"><i style="--nivel:${nivel / 100}"></i></span></li>`;
+      })
+      .join('')}</ul>
   </div>
-  ${(site.herramientas || []).length ? `<div><h2>Herramientas</h2>${herramientas(site)}</div>` : ''}
+  <div class="perfil-col">
+    <h2>Cómo trabajo</h2>
+    <ol class="perfil-pasos">${(pf.pasos || [])
+      .map(
+        (x, i) =>
+          `<li><b>${String(i + 1).padStart(2, '0')}</b><i aria-hidden="true">${icono(ICONOS_PASO[x.icono] || '')}</i><span><strong>${esc(x.titulo)}</strong>${esc(x.texto)}</span></li>`
+      )
+      .join('')}</ol>
+  </div>
+  <figure class="perfil-cita">
+    <span class="perfil-cita__comillas" aria-hidden="true">“</span>
+    <blockquote>${esc(pf.cita || '')}</blockquote>
+    <figcaption>${esc(pf.firma || '')}</figcaption>
+    <a href="/contacto/">Forjemos tu marca <span aria-hidden="true">✦</span></a>
+  </figure>
+</section>
+
+<section class="perfil-bloque">
+  <div class="perfil-bloque__cab">
+    <h2>Proyectos destacados</h2>
+    <a href="/trabajos/">Ver todos los trabajos <span aria-hidden="true">⟶</span></a>
+  </div>
+  <div class="perfil-destacados">
+    ${destacados
+      .map(
+        (p, i) => `<a class="perfil-destacado" href="/proyectos/${p.slug}/">
+      <img src="/media/${p.slug}/${esc(p.portada)}" alt="${esc(p.titulo)}"${sizeAttrs(`media/${p.slug}/${p.portada}`)} loading="lazy" decoding="async">
+      <span class="perfil-destacado__pie"><b>${String(i + 1).padStart(2, '0')}</b><span><strong>${esc(p.cliente || p.titulo)}</strong><small>${esc(CATEGORIAS[p.categoria])}</small></span><i aria-hidden="true">⟶</i></span>
+    </a>`
+      )
+      .join('\n    ')}
+  </div>
+</section>
+
+<section class="perfil-contacto">
+  <div>
+    <h2>Trabajemos<br>juntos <span aria-hidden="true">✦</span></h2>
+    <p>${esc(pf.contacto || '')}</p>
+    <a class="perfil-contacto__disp" href="${esc(wa)}" target="_blank" rel="noopener"><i aria-hidden="true">⟶</i>${esc(pf.disponible || '')}</a>
+  </div>
+  <div class="perfil-contacto__lista">
+    ${fila('<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13.5l8.5-6"/>', site.email, `mailto:${site.email}`)}
+    ${fila('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>', `WhatsApp ${site.whatsappVisible || ''}`.trim(), wa)}
+    ${site.url ? fila('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>', site.url.replace(/^https?:\/\//, ''), site.url) : ''}
+  </div>
 </section>`;
   return layout(site, {
     title: 'Sobre mí',
-    description: (s.bio && s.bio[0]) || site.descripcion,
+    description: pf.intro || (s.bio && s.bio[0]) || site.descripcion,
     urlPath: '/sobre-mi/',
     active: 'sobre-mi',
     body,
+    // letra manuscrita para "Hola, soy" y la firma (solo en esta página)
+    extraHead:
+      '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap">',
   });
 }
 
@@ -1097,7 +1204,7 @@ function build() {
 
   write('index.html', paginaInicio(site, projects));
   write('trabajos/index.html', paginaTrabajos(site, projects));
-  write('sobre-mi/index.html', paginaSobreMi(site));
+  write('sobre-mi/index.html', paginaSobreMi(site, projects));
   write('contacto/index.html', paginaContacto(site));
   write('404.html', pagina404(site));
   projects.forEach((p, i) => write(`proyectos/${p.slug}/index.html`, paginaProyecto(site, projects, p, i)));
