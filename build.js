@@ -871,9 +871,9 @@ function paginaProyecto(site, projects, p, i) {
       return `<div class="muro__fila">${nums.map((n) => pagina(n, false)).join('')}${nums.map((n) => pagina(n, true)).join('')}</div>`;
     }).join('\n      ');
     muro = `<section class="muro" aria-label="Páginas del manual de marca">
-    <div class="muro__lienzo">
+    <div class="muro__mascara"><div class="muro__lienzo">
       ${filas}
-    </div>
+    </div></div>
     <button class="boton muro__boton" type="button" data-visor>Ver el manual página por página</button>
   </section>`;
   } else if (esPosts && imagenes >= 4) {
@@ -897,9 +897,9 @@ function paginaProyecto(site, projects, p, i) {
       return `<div class="muro__fila">${lista.map((x) => pieza(x, false)).join('')}${lista.map((x) => pieza(x, true)).join('')}</div>`;
     }).join('');
     muro = `<section class="muro muro--posts" aria-label="Publicaciones del proyecto">
-    <div class="muro__lienzo">
+    <div class="muro__mascara"><div class="muro__lienzo">
       ${filas}
-    </div>
+    </div></div>
     <button class="boton muro__boton" type="button" data-visor>Ver las piezas una por una</button>
   </section>`;
   }

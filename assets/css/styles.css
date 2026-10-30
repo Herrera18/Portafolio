@@ -2802,6 +2802,12 @@ main,
   height: clamp(19rem, 50vw, 42rem);
   margin-inline: calc(50% - 50vw);
   overflow: hidden;
+}
+
+/* El desvanecido hacia abajo va solo sobre las imágenes: el botón queda encima, nítido */
+.muro__mascara {
+  position: absolute;
+  inset: 0;
   -webkit-mask-image: linear-gradient(#000 74%, transparent);
   mask-image: linear-gradient(#000 74%, transparent);
 }
@@ -2861,6 +2867,7 @@ main,
 
 .muro__boton {
   position: absolute;
+  z-index: 1;
   bottom: clamp(1rem, 4vw, 2.5rem);
   left: 50%;
   translate: -50% 0;
