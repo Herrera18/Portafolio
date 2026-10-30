@@ -4095,7 +4095,8 @@ main,
   text-transform: uppercase;
   white-space: nowrap;
   color: transparent;
-  background: linear-gradient(180deg, #9e4e36 0%, color-mix(in srgb, #9e4e36 45%, transparent) 55%, transparent 92%);
+  /* crema suave que se desvanece hacia abajo (en tema claro toma el navy del texto) */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--texto) 16%, transparent) 0%, color-mix(in srgb, var(--texto) 7%, transparent) 55%, transparent 92%);
   -webkit-background-clip: text;
   background-clip: text;
   pointer-events: none;
