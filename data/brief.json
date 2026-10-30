@@ -1,0 +1,70 @@
+{
+  "titulo": "Brief estratégico",
+  "lema": "De la raíz a la identidad",
+  "intro": "Antes de diseñar, necesito conocer tu marca. Responde con calma: no hay respuestas incorrectas y, mientras más me cuentes, mejor va a quedar. Toma unos 15 minutos.",
+  "secciones": [
+    {
+      "titulo": "Sobre ti",
+      "objetivo": "Tus datos, para escribirte apenas revise tus respuestas.",
+      "preguntas": [
+        { "id": "nombre", "texto": "Tu nombre", "tipo": "corto", "obligatoria": true, "autocomplete": "name" },
+        { "id": "marca", "texto": "Nombre de la marca", "tipo": "corto", "obligatoria": true, "autocomplete": "organization" },
+        { "id": "whatsapp", "texto": "WhatsApp", "tipo": "tel", "obligatoria": true, "ayuda": "+58 412 000 0000…", "autocomplete": "tel" },
+        { "id": "correo", "texto": "Correo", "tipo": "email", "ayuda": "tu@correo.com…", "autocomplete": "email" },
+        { "id": "instagram", "texto": "Instagram de la marca", "tipo": "corto", "ayuda": "@tumarca…" },
+        { "id": "paquete", "texto": "¿Qué paquete te interesa?", "tipo": "opcion", "opciones": ["Básico", "Medio", "Premium", "Aún no lo sé"] }
+      ]
+    },
+    {
+      "titulo": "El núcleo del negocio",
+      "objetivo": "Definir el ADN y la razón de ser de tu marca.",
+      "preguntas": [
+        { "id": "dedica", "texto": "¿A qué se dedica exactamente tu marca?", "obligatoria": true },
+        { "id": "historia", "texto": "¿Cuál es la historia detrás de la marca?", "ayuda": "Su origen: el porqué empezó todo…" },
+        { "id": "diferencial", "texto": "¿Cuál es tu valor diferencial?", "ayuda": "Qué ofreces tú que no ofrece nadie más…" },
+        { "id": "superpoder", "texto": "¿Cuál es el superpoder de tu marca?", "ayuda": "Lo que tus clientes extrañarían si la marca desapareciera mañana…" },
+        { "id": "adjetivos", "texto": "Define tu marca con 3 a 5 adjetivos", "tipo": "corto", "ayuda": "Ej: profesional, enérgica, cercana…" }
+      ]
+    },
+    {
+      "titulo": "El factor humano",
+      "objetivo": "Entender para quién diseñamos.",
+      "preguntas": [
+        { "id": "cliente", "texto": "¿Quién es tu cliente ideal?", "ayuda": "Edad, estilo de vida, intereses y valores…" },
+        { "id": "problema", "texto": "¿Qué problema o necesidad le resuelves?" },
+        { "id": "noCliente", "texto": "¿A quién NO quieres como cliente?", "ayuda": "Me ayuda a descartar estéticas equivocadas…" },
+        { "id": "sentir", "texto": "¿Qué quieres que sienta la gente al ver tu marca por primera vez?", "ayuda": "Confianza, asombro, seguridad…" }
+      ]
+    },
+    {
+      "titulo": "El campo de batalla",
+      "objetivo": "Mirar tu mercado y tu competencia para destacar.",
+      "preguntas": [
+        { "id": "competidores", "texto": "¿Quiénes son tus competidores directos e indirectos?" },
+        { "id": "competencia", "texto": "¿Qué te gusta y qué no de lo que hace tu competencia?" },
+        { "id": "cliches", "texto": "¿Qué clichés visuales de tu sector odias?", "ayuda": "Ej: muelas en dentistas o pesas en gimnasios…" },
+        { "id": "referentes", "texto": "¿Qué marcas te gustan visualmente, aunque sean de otros sectores?", "ayuda": "Nombres o links: Instagram, Pinterest, sitios web…" }
+      ]
+    },
+    {
+      "titulo": "Personalidad y voz",
+      "objetivo": "Definir cómo se relaciona tu marca con el mundo.",
+      "preguntas": [
+        { "id": "persona", "texto": "Si tu marca fuera una persona, ¿cómo sería?", "ayuda": "Cómo se vestiría, qué edad tendría…" },
+        { "id": "tono", "texto": "¿Qué tono de voz debe usar?", "ayuda": "¿De tú o de usted? ¿Técnica o inspiradora?…" },
+        { "id": "promesa", "texto": "¿Cuál es la promesa principal que tu marca le hace a su comunidad?" }
+      ]
+    },
+    {
+      "titulo": "Lo visual",
+      "objetivo": "Llevar la estrategia al diseño.",
+      "preguntas": [
+        { "id": "evitar", "texto": "¿Hay algún color o símbolo que quieras evitar por completo?" },
+        { "id": "incluir", "texto": "¿Hay algún color o símbolo que quieras incluir?" },
+        { "id": "necesitas", "texto": "¿Qué necesitas además del logo?", "tipo": "varias", "opciones": ["Redes sociales", "Papelería", "Sitio web", "Empaques", "Letreros y señalética", "Uniformes"] },
+        { "id": "limitaciones", "texto": "¿Hay limitaciones técnicas?", "ayuda": "¿Bordados? ¿Etiquetas muy pequeñas? ¿Impresión en un solo color?…" },
+        { "id": "algoMas", "texto": "¿Algo más que quieras contarme?" }
+      ]
+    }
+  ]
+}

@@ -4886,3 +4886,268 @@ main,
 img[data-zoom]:focus-visible {
   outline-offset: -4px;
 }
+
+/* ---------- Brief estratégico (/brief/) ---------- */
+.brief {
+  max-width: 46rem;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.brief__form,
+.brief__gracias {
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--panel);
+  padding: clamp(1.4rem, 4vw, 2.75rem);
+}
+
+.brief__progreso {
+  margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.brief__barra {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.brief__barra span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--grad-fuego);
+  transition: width 0.4s ease;
+}
+
+.brief__progreso p {
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--texto-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.brief__seccion {
+  border: 0;
+  min-width: 0;
+  display: grid;
+  gap: 1.4rem;
+}
+
+/* sin JavaScript todas las secciones se ven seguidas */
+.brief__seccion + .brief__seccion {
+  margin-top: 3rem;
+}
+
+.brief__form--pasos .brief__seccion + .brief__seccion {
+  margin-top: 0;
+}
+
+.brief__seccion[hidden] {
+  display: none;
+}
+
+.brief__seccion > legend {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0;
+  font-family: var(--titulos);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.brief__seccion > legend b {
+  font-size: 0.5em;
+  font-weight: 700;
+  color: var(--acento-texto);
+}
+
+.brief__objetivo {
+  margin-top: -0.6rem;
+  color: var(--texto-2);
+}
+
+.campo {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+}
+
+.campo > label,
+.campo > legend {
+  padding: 0;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.campo i {
+  font-style: normal;
+  color: var(--acento-texto);
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--texto);
+  font: inherit;
+  font-size: 1rem; /* 16px: evita el zoom automático en iPhone */
+  padding: 0.8rem 1rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.campo textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: color-mix(in srgb, var(--texto-2) 70%, transparent);
+}
+
+.campo input:hover,
+.campo textarea:hover {
+  border-color: color-mix(in srgb, var(--acento-texto) 45%, var(--linea));
+}
+
+.campo input:focus-visible,
+.campo textarea:focus-visible {
+  outline: 2px solid var(--acento-texto);
+  outline-offset: 1px;
+  border-color: transparent;
+  background: var(--panel-2);
+}
+
+/* Opciones (paquete, qué necesitas): pastillas que se encienden al elegirlas */
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.15rem;
+}
+
+.opciones label {
+  position: relative;
+  cursor: pointer;
+}
+
+.opciones input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+.opciones span {
+  display: inline-block;
+  padding: 0.6rem 1.05rem;
+  border: 1px solid var(--linea);
+  border-radius: 99px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.opciones label:hover span {
+  border-color: color-mix(in srgb, var(--acento-texto) 45%, var(--linea));
+}
+
+.opciones input:checked + span {
+  border-color: transparent;
+  background: var(--grad-fuego);
+  color: var(--sobre-acento);
+  font-weight: 600;
+}
+
+.opciones input:focus-visible + span {
+  outline: 2px solid var(--acento-texto);
+  outline-offset: 3px;
+}
+
+.brief__error {
+  margin-top: 1.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #9e4e36 60%, transparent);
+  background: color-mix(in srgb, #9e4e36 18%, transparent);
+}
+
+.brief__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linea);
+}
+
+.brief__guardado {
+  flex: 1 1 12rem;
+  font-size: 0.8rem;
+  color: var(--texto-2);
+}
+
+.brief__nav .boton[hidden] {
+  display: none;
+}
+
+.brief__atras::after {
+  content: none;
+}
+
+.brief__atras::before {
+  content: '←';
+}
+
+.brief__siguiente::after {
+  content: '→';
+}
+
+.brief__enviar:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.brief__gracias {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.brief__gracias[hidden] {
+  display: none;
+}
+
+.brief__gracias h2 {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.brief__gracias > p:not(.etiqueta) {
+  color: var(--texto-2);
+  max-width: 32rem;
+}
+
+@media (max-width: 560px) {
+  .brief__guardado {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .brief__nav .boton {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1174,6 +1174,82 @@ function paginaContacto(site) {
   });
 }
 
+// Brief estratégico: cuestionario por pasos que se envía al correo del estudio (FormSubmit, sin servidor propio).
+// No aparece en el menú ni en Google: se comparte por enlace. Las preguntas están en data/brief.json.
+function paginaBrief(site) {
+  const b = readJson('data/brief.json');
+  const total = b.secciones.length;
+  const campo = (q) => {
+    const id = `b-${q.id}`;
+    const req = q.obligatoria ? ' required' : '';
+    const titulo = `${esc(q.texto)}${q.obligatoria ? ' <i aria-hidden="true">*</i>' : ''}`;
+    const ph = q.ayuda ? ` placeholder="${esc(q.ayuda)}"` : '';
+    if (q.tipo === 'opcion' || q.tipo === 'varias') {
+      const tipo = q.tipo === 'opcion' ? 'radio' : 'checkbox';
+      return `<fieldset class="campo campo--opciones"><legend>${titulo}</legend><div class="opciones">${q.opciones
+        .map((o) => `<label><input type="${tipo}" name="${q.id}" value="${esc(o)}"><span>${esc(o)}</span></label>`)
+        .join('')}</div></fieldset>`;
+    }
+    if (q.tipo === 'corto' || q.tipo === 'tel' || q.tipo === 'email') {
+      const tipo = q.tipo === 'corto' ? 'text' : q.tipo;
+      const extra = q.tipo === 'email' || q.id === 'instagram' ? ' spellcheck="false" autocapitalize="off"' : '';
+      return `<div class="campo"><label for="${id}">${titulo}</label><input id="${id}" name="${q.id}" type="${tipo}" autocomplete="${esc(q.autocomplete || 'off')}"${extra}${ph}${req}></div>`;
+    }
+    return `<div class="campo"><label for="${id}">${titulo}</label><textarea id="${id}" name="${q.id}" rows="3" autocomplete="off"${ph}${req}></textarea></div>`;
+  };
+  // Para el correo: cada respuesta llega con el texto de su pregunta
+  const etiquetas = Object.fromEntries(b.secciones.flatMap((s) => s.preguntas.map((q) => [q.id, q.texto])));
+  const body = `
+<section class="cabecera cabecera--brief">
+  <p class="etiqueta">${esc(b.titulo)}</p>
+  <h1>${esc(b.lema)}</h1>
+  <p class="cabecera__bajada">${esc(b.intro)}</p>
+</section>
+<section class="brief">
+  <form class="brief__form" action="https://formsubmit.co/${esc(site.email)}" method="POST" data-total="${total}">
+    <input type="hidden" name="_subject" value="Nuevo brief estratégico">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="text" name="_honey" class="solo-lectores" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="brief__progreso" hidden>
+      <div class="brief__barra"><span></span></div>
+      <p aria-live="polite"></p>
+    </div>
+    ${b.secciones
+      .map(
+        (s, i) => `<fieldset class="brief__seccion" data-paso="${i}">
+      <legend><b>${String(i + 1).padStart(2, '0')}</b>${esc(s.titulo)}</legend>
+      <p class="brief__objetivo">${esc(s.objetivo)}</p>
+      ${s.preguntas.map(campo).join('\n      ')}
+    </fieldset>`
+      )
+      .join('\n    ')}
+    <p class="brief__error" role="alert" hidden></p>
+    <div class="brief__nav">
+      <button class="boton boton--linea brief__atras" type="button" hidden>Atrás</button>
+      <p class="brief__guardado">Tus respuestas se guardan en este dispositivo: puedes seguir después.</p>
+      <button class="boton brief__siguiente" type="button" hidden>Siguiente</button>
+      <button class="boton brief__enviar" type="submit">Enviar brief</button>
+    </div>
+  </form>
+  <div class="brief__gracias" hidden tabindex="-1">
+    <p class="etiqueta">Brief recibido</p>
+    <h2>¡Gracias! Ya tengo tus respuestas.</h2>
+    <p>Las reviso y te escribo en las próximas 24 a 48 horas con los siguientes pasos. Si quieres adelantar algo, escríbeme.</p>
+    <a class="boton" href="${esc(waLink(site))}" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  </div>
+</section>
+<script>window.BRIEF_ETIQUETAS = ${JSON.stringify(etiquetas).replace(/</g, '\\u003c')};</script>
+<script src="/assets/js/brief.js?v=${VERSION}" defer></script>`;
+  return layout(site, {
+    title: b.titulo,
+    description: b.intro,
+    urlPath: '/brief/',
+    body,
+    extraHead: '<meta name="robots" content="noindex">',
+  });
+}
+
 function pagina404(site) {
   return layout(site, {
     title: 'Página no encontrada',
@@ -1206,6 +1282,7 @@ function build() {
   write('trabajos/index.html', paginaTrabajos(site, projects));
   write('sobre-mi/index.html', paginaSobreMi(site, projects));
   write('contacto/index.html', paginaContacto(site));
+  write('brief/index.html', paginaBrief(site));
   write('404.html', pagina404(site));
   projects.forEach((p, i) => write(`proyectos/${p.slug}/index.html`, paginaProyecto(site, projects, p, i)));
 
