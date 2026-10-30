@@ -48,7 +48,8 @@
 
   // --- Pasos ---
   const mostrar = (n, enfocar) => {
-    paso = n;
+    paso = Math.max(0, Math.min(n, total - 1));
+    n = paso;
     secciones.forEach((s, i) => (s.hidden = i !== n));
     const titulo = secciones[n].querySelector('legend').textContent.replace(/^\d+/, '');
     barra.style.width = `${((n + 1) / total) * 100}%`;
@@ -122,7 +123,11 @@
       gracias.scrollIntoView({ block: 'center' });
       gracias.focus({ preventScroll: true });
     } catch (err) {
-      error.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo otra vez; tus respuestas siguen guardadas.';
+      // FormSubmit pide activar el formulario la primera vez (correo al estudio): se avisa distinto
+      const motivo = String(err.message || '');
+      error.textContent = /activat/i.test(motivo)
+        ? 'El formulario aún no está activado. Revisa el correo del estudio, actívalo y vuelve a enviar: tus respuestas siguen guardadas.'
+        : `No se pudo enviar. Revisa tu conexión e inténtalo otra vez; tus respuestas siguen guardadas.${motivo ? ` (Detalle: ${motivo})` : ''}`;
       error.hidden = false;
       enviar.disabled = false;
       enviar.textContent = 'Enviar brief';
