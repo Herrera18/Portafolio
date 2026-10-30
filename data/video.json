@@ -1,0 +1,199 @@
+{
+  "titulo": "Edición de video",
+  "moneda": "USD",
+  "duracionBase": "hasta 60 segundos",
+  "planes": [
+    {
+      "id": "basica",
+      "nombre": "Básica",
+      "grupo": "Por video",
+      "precio": 15,
+      "unidad": "por video",
+      "frase": "Un video rápido y limpio",
+      "ideal": "Quien necesita un video suelto, sin complicaciones.",
+      "incluye": [
+        "Cortes y armado",
+        "Limpieza de errores",
+        "Música",
+        "Subtítulos simples",
+        "1 revisión"
+      ],
+      "mensaje": "Hola Roger, quiero editar un video con la edición Básica."
+    },
+    {
+      "id": "completa",
+      "nombre": "Completa",
+      "grupo": "Por video",
+      "precio": 30,
+      "unidad": "por video",
+      "frase": "Un video que destaca",
+      "ideal": "Quien quiere que su video se vea profesional y retenga a quien lo ve.",
+      "incluye": [
+        "Todo lo de la Básica",
+        "Textos animados",
+        "Corrección de color",
+        "Transiciones y efectos de sonido",
+        "Gráficos y videos de apoyo",
+        "2 revisiones"
+      ],
+      "mensaje": "Hola Roger, quiero editar un video con la edición Completa."
+    },
+    {
+      "id": "mensual-4",
+      "nombre": "Mensual 4",
+      "grupo": "Pack mensual",
+      "precio": 110,
+      "unidad": "al mes",
+      "porVideo": 27.5,
+      "recomendado": true,
+      "frase": "1 video por semana",
+      "ideal": "Marcas que quieren publicar con constancia en sus redes.",
+      "incluye": [
+        "4 videos con edición Completa",
+        "Portada para cada video",
+        "2 revisiones por video"
+      ],
+      "mensaje": "Hola Roger, me interesa el pack Mensual 4 de edición de video."
+    },
+    {
+      "id": "mensual-8",
+      "nombre": "Mensual 8",
+      "grupo": "Pack mensual",
+      "precio": 200,
+      "unidad": "al mes",
+      "porVideo": 25,
+      "frase": "2 videos por semana",
+      "ideal": "Marcas que quieren crecer rápido y estar presentes toda la semana.",
+      "incluye": [
+        "8 videos con edición Completa",
+        "Portada para cada video",
+        "Guion estratégico para cada video",
+        "2 revisiones por video"
+      ],
+      "mensaje": "Hola Roger, me interesa el pack Mensual 8 de edición de video."
+    }
+  ],
+  "extras": [
+    [
+      "Video de más de 60 segundos",
+      "+10 USD por cada minuto adicional"
+    ],
+    [
+      "Revisión extra",
+      "5 USD"
+    ],
+    [
+      "Portada",
+      "5 USD"
+    ],
+    [
+      "Guion estratégico",
+      "10 USD"
+    ],
+    [
+      "Formato adicional (ej. versión horizontal)",
+      "+5 USD"
+    ],
+    [
+      "Entrega urgente (24 horas)",
+      "+30%"
+    ]
+  ],
+  "condiciones": [
+    [
+      "Entrega",
+      "48 a 72 horas por video, desde que recibo el material."
+    ],
+    [
+      "Material",
+      "Tú me envías lo grabado (y tus ideas o referencias); yo lo edito."
+    ],
+    [
+      "Pagos",
+      "Anticipo del 50% para empezar y el resto al entregar. Acepto USDT por Binance o Zelle."
+    ],
+    [
+      "Packs mensuales",
+      "Los videos del mes se usan dentro del mes y no se acumulan."
+    ]
+  ],
+  "compara": [
+    [
+      "Videos",
+      "1",
+      "1",
+      "4 al mes",
+      "8 al mes"
+    ],
+    [
+      "Precio por video",
+      "15 USD",
+      "30 USD",
+      "27,50 USD",
+      "25 USD"
+    ],
+    [
+      "Cortes, limpieza y música",
+      true,
+      true,
+      true,
+      true
+    ],
+    [
+      "Subtítulos",
+      "Simples",
+      "Animados",
+      "Animados",
+      "Animados"
+    ],
+    [
+      "Textos animados",
+      false,
+      true,
+      true,
+      true
+    ],
+    [
+      "Corrección de color",
+      false,
+      true,
+      true,
+      true
+    ],
+    [
+      "Transiciones y efectos de sonido",
+      false,
+      true,
+      true,
+      true
+    ],
+    [
+      "Gráficos y videos de apoyo",
+      false,
+      true,
+      true,
+      true
+    ],
+    [
+      "Portada",
+      false,
+      false,
+      true,
+      true
+    ],
+    [
+      "Guion estratégico",
+      false,
+      false,
+      false,
+      true
+    ],
+    [
+      "Revisiones",
+      "1",
+      "2",
+      "2 por video",
+      "2 por video"
+    ]
+  ]
+}

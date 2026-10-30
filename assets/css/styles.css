@@ -5412,3 +5412,147 @@ img[data-zoom]:focus-visible {
   gap: 0.8rem;
   margin-top: 1.6rem;
 }
+
+/* Pestañas de servicios en /paquetes/ */
+.pestanas {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-top: 1.8rem;
+  padding: 0.3rem;
+  border: 1px solid var(--linea);
+  border-radius: 99px;
+  background: var(--panel);
+}
+
+.pestanas__btn {
+  padding: 0.65rem 1.2rem;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--texto-2);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.pestanas__btn:hover {
+  color: var(--texto);
+}
+
+.pestanas__btn[aria-selected='true'] {
+  background: var(--grad-fuego);
+  color: var(--sobre-acento);
+}
+
+.panel-servicio[hidden] {
+  display: none;
+}
+
+/* sin JavaScript las dos secciones van seguidas */
+.panel-servicio + .panel-servicio {
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+@media (min-width: 700px) and (max-width: 1099px) {
+  .planes--4 {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 1100px) {
+  .planes--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.planes--4 .plan {
+  padding: clamp(1.4rem, 2.4vw, 1.8rem);
+}
+
+.plan__grupo {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+  margin-bottom: -0.5rem;
+}
+
+.plan__porvideo {
+  margin-top: -0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--acento-texto);
+}
+
+.planes--4 .plan__boton {
+  margin-top: auto;
+}
+
+.planes__nota {
+  text-align: center;
+}
+
+.extras {
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.extras h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+
+.extras ul {
+  display: grid;
+  border-top: 1px solid var(--linea);
+}
+
+@media (min-width: 800px) {
+  .extras ul {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.5rem;
+  }
+}
+
+.extras li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+.extras li b {
+  color: var(--acento-texto);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* En video la unidad ("USD por video", "USD al mes") va bajo el número */
+.plan--video .plan__precio small {
+  display: block;
+  margin: 0.45rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.3em;
+  font-weight: 500;
+}
+
+.plan--video .plan__porvideo {
+  margin-top: -0.4rem;
+}
+
+.pestanas {
+  scroll-margin-top: 7rem; /* al llegar con #video quedan bajo el menú, no detrás */
+  max-width: 100%;
+}
+
+.pestanas__btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .pestanas__btn {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+  }
+}

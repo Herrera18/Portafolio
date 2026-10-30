@@ -1275,12 +1275,7 @@ function paginaPaquetes(site) {
     </article>`;
   };
   const rec = d.paquetes.findIndex((p) => p.recomendado);
-  const body = `
-<section class="cabecera cabecera--brief">
-  <p class="etiqueta">Identidad de marca</p>
-  <h1>Paquetes</h1>
-  <p class="cabecera__bajada">Tres formas de darle forma a tu marca. Elige la que necesita hoy; si no estás seguro, el brief me ayuda a recomendarte la correcta.</p>
-</section>
+  const identidad = `
 <section class="planes">
   ${d.paquetes.map(tarjeta).join('\n  ')}
 </section>
@@ -1309,9 +1304,56 @@ function paginaPaquetes(site) {
   <p>Responde el brief y te recomiendo el paquete que mejor le queda a tu marca. Toma unos 15 minutos.</p>
   <div><a class="boton" href="/brief/">Responder el brief</a><a class="boton boton--linea" href="${esc(waLink(site))}" target="_blank" rel="noopener">Preguntar por WhatsApp</a></div>
 </section>`;
+
+  // Edición de video (data/video.json): precio por video y packs mensuales; cada botón abre WhatsApp con el plan escrito
+  const v = readJson('data/video.json');
+  const wa = (msg) => `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`;
+  const num = (n) => (n % 1 ? n.toFixed(2).replace('.', ',') : String(n));
+  const planVideo = (p) => `<article class="plan plan--video${p.recomendado ? ' plan--rec' : ''}">
+      ${p.recomendado ? '<p class="plan__chip">Recomendado</p>' : ''}
+      <p class="plan__grupo">${esc(p.grupo)}</p>
+      <h2>${esc(p.nombre)}</h2>
+      <p class="plan__frase">${esc(p.frase)}</p>
+      <p class="plan__precio">${p.precio}<small>${esc(v.moneda)} ${esc(p.unidad)}</small></p>
+      ${p.porVideo ? `<p class="plan__porvideo">${num(p.porVideo)} ${esc(v.moneda)} por video</p>` : ''}
+      <p class="plan__ideal"><b>Ideal para:</b> ${esc(p.ideal)}</p>
+      <ul class="plan__lista">${p.incluye.map((x) => `<li>${check}<span>${esc(x)}</span></li>`).join('')}</ul>
+      <a class="boton${p.recomendado ? '' : ' boton--linea'} plan__boton" href="${esc(wa(p.mensaje))}" target="_blank" rel="noopener">${p.grupo === 'Por video' ? 'Pedir un video' : `Quiero el ${esc(p.nombre)}`}</a>
+    </article>`;
+  const video = `
+<section class="planes planes--4">
+  ${v.planes.map(planVideo).join('\n  ')}
+</section>
+<p class="compara-web__nota planes__nota">Precios en ${esc(v.moneda)}, para videos de ${esc(v.duracionBase)}.</p>
+<section class="extras">
+  <h2>Extras</h2>
+  <ul>${v.extras.map(([t, pr]) => `<li><span>${esc(t)}</span><b>${esc(pr)}</b></li>`).join('')}</ul>
+</section>
+<section class="condiciones">
+  ${v.condiciones.map(([t, x]) => `<div><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join('\n  ')}
+</section>
+<section class="paquetes-cta">
+  <h2>¿Tienes un video en mente?</h2>
+  <p>Cuéntame qué grabaste y para qué red es; te digo qué edición le queda mejor.</p>
+  <div><a class="boton" href="${esc(wa('Hola Roger, quiero editar un video.'))}" target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="boton boton--linea" href="/trabajos/#video">Ver videos editados</a></div>
+</section>`;
+
+  const body = `
+<section class="cabecera cabecera--brief">
+  <p class="etiqueta">Precios</p>
+  <h1>Paquetes</h1>
+  <p class="cabecera__bajada">Elige el servicio y el paquete que necesita tu marca hoy. Si no estás seguro, escríbeme y te recomiendo el correcto.</p>
+  <div class="pestanas" role="tablist" aria-label="Servicios">
+    <a class="pestanas__btn" role="tab" href="#identidad" id="tab-identidad" aria-controls="identidad" aria-selected="true">Identidad de marca</a>
+    <a class="pestanas__btn" role="tab" href="#video" id="tab-video" aria-controls="video" aria-selected="false">Edición de video</a>
+  </div>
+</section>
+<div class="panel-servicio" id="identidad" role="tabpanel" aria-labelledby="tab-identidad">${identidad}</div>
+<div class="panel-servicio" id="video" role="tabpanel" aria-labelledby="tab-video">${video}</div>
+<script src="/assets/js/paquetes.js?v=${VERSION}" defer></script>`;
   return layout(site, {
-    title: 'Paquetes de identidad de marca',
-    description: `Paquetes de creación de marca e identidad visual de ${site.nombre}: ${d.paquetes.map((p) => `${p.nombre} ${p.precio} ${d.moneda}`).join(', ')}.`,
+    title: 'Paquetes y precios',
+    description: `Paquetes de identidad de marca (${d.paquetes.map((p) => `${p.nombre} ${p.precio} ${d.moneda}`).join(', ')}) y edición de video (desde ${Math.min(...v.planes.map((p) => p.precio))} ${v.moneda} por video) de ${site.nombre}.`,
     urlPath: '/paquetes/',
     body,
   });
