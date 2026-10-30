@@ -251,29 +251,6 @@ function herramientas(site, titulo) {
   </div>`;
 }
 
-// Íconos disponibles para "habilidades" en site.json (campo "icono").
-const ICONOS = {
-  pluma:
-    '<path fill-rule="evenodd" d="M2 3h3v1.2h4.6V3h4.8v1.2H19V3h3v3.6h-3V5.6h-4.6v1h-4.8v-1H5v1H2zM12 8.4l5.6 6.2L15 22H9l-2.6-7.4zm-.6 2.2v3.2a1.9 1.9 0 1 0 1.2 0v-3.2z"/>',
-  motion: '<path d="M5.5 2.5h13c0 5.6-4 6.6-4 9.5s4 3.9 4 9.5h-13c0-5.6 4-6.6 4-9.5s-4-3.9-4-9.5z"/>',
-  video:
-    '<path fill-rule="evenodd" d="M2 4.5h20v15H2zM4 6.5v2h2v-2zm0 4.5v2h2v-2zm0 4.5v2h2v-2zM18 6.5v2h2v-2zm0 4.5v2h2v-2zm0 4.5v2h2v-2zM10 8.8v6.4l5.2-3.2z"/>',
-  redes:
-    '<path fill-rule="evenodd" d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5zm5 5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.2a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6zM17 5.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/>',
-  marca: '<path d="M12 2l2.900 6.3 6.900.8-5.100 4.700 1.4 6.8L12 17.2l-6.100 3.4 1.4-6.8L2.2 9.100l6.900-.8z"/>',
-};
-
-function habilidades(site) {
-  const lista = site.habilidades || [];
-  if (!lista.length) return '';
-  return `<ul class="habilidades">${lista
-    .map(
-      (h) =>
-        `<li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ICONOS[h.icono] || ICONOS.marca}</svg>${esc(h.nombre)}</li>`
-    )
-    .join('')}</ul>`;
-}
-
 // Animaciones de la sección "Así trabajo" (campo "grafico" de cada paso). Son solo HTML + CSS.
 const GRAFICOS = {
   celular: `<div class="grafico" aria-hidden="true">

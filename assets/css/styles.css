@@ -1077,40 +1077,6 @@ main,
   }
 }
 
-/* ---------- Habilidades técnicas ---------- */
-.habilidades {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  max-width: 38rem;
-  padding: clamp(1rem, 2.5vw, 1.5rem) 0;
-  border-radius: var(--radio);
-  background: linear-gradient(135deg, var(--acento), var(--acento-2));
-  color: var(--sobre-acento);
-  box-shadow: 0 24px 60px -34px var(--acento-2);
-}
-
-.habilidades li {
-  display: grid;
-  justify-items: center;
-  align-content: start;
-  gap: 0.6rem;
-  padding-inline: 0.6rem;
-  font-size: clamp(0.78rem, 2.2vw, 0.95rem);
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-}
-
-.habilidades li + li {
-  border-left: 1.5px solid color-mix(in srgb, var(--sobre-acento) 55%, transparent);
-}
-
-.habilidades svg {
-  width: clamp(2.2rem, 7vw, 3rem);
-  height: auto;
-}
-
 /* ---------- Secciones ---------- */
 /* Resplandores suaves que acompañan al bajar: alternan de lado en cada sección y cierran en el pie */
 .seccion,
@@ -3741,98 +3707,6 @@ main,
   color: var(--acento-texto);
 }
 
-/* ---------- Sobre mí ---------- */
-.sobre {
-  display: grid;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  padding-bottom: clamp(2rem, 5vw, 3.5rem);
-}
-
-@media (min-width: 800px) {
-  .sobre {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-    align-items: start;
-  }
-}
-
-.sobre__foto {
-  width: 100%;
-  border: 1px solid var(--linea);
-  border-radius: calc(var(--radio) + 6px);
-  background: var(--panel-2);
-  box-shadow: 0 40px 90px -50px var(--acento-2);
-}
-
-.sobre__texto p {
-  max-width: 38rem;
-  margin-bottom: 1rem;
-  font-size: 1.05rem;
-}
-
-.sobre__texto h2 {
-  margin: 2.5rem 0 0.9rem;
-  font-size: 1.4rem;
-}
-
-.sobre__texto .boton {
-  margin-top: 2rem;
-}
-
-/* Segunda franja de Sobre mí, a todo el ancho (bajo la foto y la bio): clientes a la izquierda en dos
-   columnas y herramientas a la derecha. Así no queda un hueco bajo la foto. */
-.sobre-extra {
-  display: grid;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 6rem);
-  border-top: 1px solid var(--linea);
-}
-
-@media (min-width: 900px) {
-  .sobre-extra {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  }
-}
-
-.sobre-extra h2 {
-  margin-bottom: 1.1rem;
-  font-size: 1.4rem;
-}
-
-.sobre-extra .herramientas {
-  margin-top: 0;
-}
-
-.lista {
-  display: grid;
-  gap: 0.6rem;
-}
-
-@media (min-width: 560px) {
-  .lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.lista li {
-  padding: 0.8rem 1.1rem;
-  border: 1px solid var(--linea);
-  border-radius: 12px;
-  background: var(--panel);
-  font-size: 0.95rem;
-  color: var(--texto-2);
-}
-
-.lista li::before {
-  content: '';
-  display: inline-block;
-  width: 0.45rem;
-  height: 0.45rem;
-  margin-right: 0.75rem;
-  border-radius: 50%;
-  background: var(--acento);
-  vertical-align: middle;
-}
-
 /* ---------- Contacto ---------- */
 .contacto {
   display: grid;
@@ -3998,14 +3872,6 @@ main,
    para que esa palabra quepa en el ancho de la pantalla. "--letras" es el largo de la palabra más larga. */
 .proyecto__titular h1 {
   font-size: min(clamp(2.6rem, 8vw, 5.5rem), calc((100vw - 2 * var(--margen)) / (var(--letras, 8) * 0.6)));
-}
-
-/* Firma al final del manifiesto de Sobre mí */
-.sobre__texto .sobre__firma {
-  font-family: var(--titulos);
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
-  font-weight: 600;
-  color: var(--acento-texto);
 }
 
 /* "En qué te puedo ayudar": al llegar a la sección, las tarjetas entran una por una, de izquierda a derecha.

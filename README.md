@@ -97,7 +97,9 @@ Vercel publica solo en un minuto aprox.
 
 - Textos, contacto y redes: `data/site.json`. Las redes con `"url": ""` no se muestran.
 - Sección "Así trabajo" del inicio: bloque `proceso` en `data/site.json` (pasos, plazo, texto del botón y mensaje de WhatsApp). Si lo borras, la sección desaparece. Cada paso puede llevar una animación con `"grafico"`: `celular`, `timeline` o `dias`.
-- Habilidades técnicas (bloque naranja en Sobre mí): lista `habilidades` en `data/site.json`. Íconos disponibles: `pluma`, `motion`, `video`, `redes`, `marca`.
+- Sobre mí: textos en `sobreMi.perfil` de `data/site.json` (saludo, rol, cifras, proyectos destacados, pasos, cita). Las etiquetas de "Lo que hago" juntan los `servicios` y la lista `habilidades` (solo `nombre`).
+- Brief estratégico (`/brief/`, solo por enlace): preguntas en `data/brief.json`. Las respuestas llegan al correo por Web3Forms (clave `web3formsKey` en `data/site.json`). Con `/brief/?paquete=Medio` llega con ese paquete marcado.
+- Paquetes y precios (`/paquetes/` y `/paquetes/#video`, solo por enlace, fuera de Google): identidad en `data/paquetes.json` y edición de video en `data/video.json`. Los mismos archivos alimentan los PDF de paquetes.
 - Secciones del inicio (01 Social media, 02 Videos, 03 Identidad de marca, 04 Logofolio): lista `secciones` en `data/site.json`. Ahí se cambian el nombre, el texto de la barra y el orden. Cada una elige cómo se muestra: `"collage": true` (escenario de marcas), `"cinta": true` (tira en movimiento; con `"curva": true` va en anillo curvo en escritorio y `"ritmo"` son los segundos por pieza), `"soloCinta": true` (sin nada más debajo) o `"rejilla": true` (lámina de logos). Sin ninguna, la sección muestra un carrusel de tarjetas.
 - Textos de la voz del sitio: `intro`, `servicios` y `sobreMi.bio` en `data/site.json`. Todo va en primera persona ("yo"); evita mezclar con "hacemos".
 - Tarjetas "En qué te puedo ayudar": lista `servicios` en `data/site.json`; el título se cambia en `serviciosTitulo`. Con `categoria`, la tarjeta enlaza a esa sección del inicio.

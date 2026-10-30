@@ -104,15 +104,12 @@
   },
   "habilidades": [
     {
-      "icono": "pluma",
       "nombre": "Diseño gráfico"
     },
     {
-      "icono": "motion",
       "nombre": "Motion graphics"
     },
     {
-      "icono": "video",
       "nombre": "Edición de video"
     }
   ],
@@ -154,13 +151,6 @@
       "Cada video, cada post y cada identidad pasa por el mismo fuego: entender, dar forma, terminar con cuidado. Sin atajos, sin plantillas, sin prisa por lo que merece tiempo.",
       "Porque una marca no se diseña. Se forja."
     ],
-    "clientes": [
-      "Emprendimientos y marcas personales",
-      "Pymes de comercio, gastronomía y servicios",
-      "Agencias que necesitan apoyo en producción",
-      "Equipos de comunicación internos"
-    ],
-    "firma": "Studio Herre. Marcas hechas a fuego.",
     "perfil": {
       "hola": "Hola, soy",
       "nombre": "Roger Herrera",
