@@ -285,6 +285,9 @@ if (ampliables.length) {
   const visor = document.createElement('div');
   visor.className = 'visor';
   visor.hidden = true;
+  visor.setAttribute('role', 'dialog');
+  visor.setAttribute('aria-modal', 'true');
+  visor.setAttribute('aria-label', 'Imagen ampliada');
   visor.innerHTML =
     '<button class="flecha visor__cerrar" type="button" aria-label="Cerrar">✕</button><img alt="">' +
     '<div class="visor__barra"><button class="flecha" type="button" data-paso="-1" aria-label="Imagen anterior">←</button>' +
@@ -293,6 +296,7 @@ if (ampliables.length) {
   const grande = visor.querySelector('img');
   const contador = visor.querySelector('span');
   let actual = 0;
+  let origen = null; // lo que tenía el foco antes de abrir, para devolvérselo al cerrar
   const mostrar = (i) => {
     actual = (i + ampliables.length) % ampliables.length;
     grande.src = fuente(ampliables[actual]);
@@ -302,15 +306,29 @@ if (ampliables.length) {
   const cerrar = () => {
     visor.hidden = true;
     document.documentElement.style.overflow = '';
+    if (origen) origen.focus({ preventScroll: true });
   };
   const abrir = (i) => {
+    origen = document.activeElement;
     mostrar(i);
     visor.hidden = false;
     document.documentElement.style.overflow = 'hidden';
+    visor.querySelector('.visor__cerrar').focus();
   };
-  conZoom.forEach((img) =>
-    img.addEventListener('click', () => abrir(ampliables.findIndex((unica) => fuente(unica) === fuente(img))))
-  );
+  conZoom.forEach((img) => {
+    const ir = () => abrir(ampliables.findIndex((unica) => fuente(unica) === fuente(img)));
+    img.addEventListener('click', ir);
+    // Con teclado también se abren (Enter o espacio). Las del mosaico del manual no: ya tienen su botón.
+    if (img.getAttribute('aria-hidden') === 'true' || img.closest('.muro')) return;
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', `Ampliar: ${img.alt}`);
+    img.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      ir();
+    });
+  });
   document.querySelectorAll('[data-visor]').forEach((b) => b.addEventListener('click', () => abrir(0)));
   visor.addEventListener('click', (e) => {
     const paso = e.target.closest('[data-paso]');
@@ -320,6 +338,14 @@ if (ampliables.length) {
   document.addEventListener('keydown', (e) => {
     if (visor.hidden) return;
     if (e.key === 'Escape') cerrar();
+    // el foco no sale del visor mientras está abierto
+    if (e.key === 'Tab') {
+      const botones = [...visor.querySelectorAll('button')];
+      const i = botones.indexOf(document.activeElement);
+      const sig = e.shiftKey ? (i <= 0 ? botones.length - 1 : i - 1) : (i + 1) % botones.length;
+      e.preventDefault();
+      botones[sig].focus();
+    }
     if (e.key === 'ArrowRight') mostrar(actual + 1);
     if (e.key === 'ArrowLeft') mostrar(actual - 1);
   });

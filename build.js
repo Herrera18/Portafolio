@@ -638,7 +638,7 @@ function paginaInicio(site, projects) {
     ${herramientas(site, 'Herramientas con las que trabajo')}
   </div>
   <div class="hero__visual">
-    ${foto && exists(foto) ? `<img src="/${esc(foto)}?v=${VERSION}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(foto)}${estiloFoto} decoding="async">` : ''}
+    ${foto && exists(foto) ? `<img src="/${esc(foto)}?v=${VERSION}" alt="Retrato del diseñador de ${esc(site.nombre)}"${sizeAttrs(foto)}${estiloFoto} decoding="async" fetchpriority="high">` : ''}
     ${Object.values(CATEGORIAS).map((c) => `<span class="hero__chip">${c}</span>`).join('')}
   </div>
 </section>
@@ -814,13 +814,13 @@ function paginaProyecto(site, projects, p, i) {
   const principal = p.youtube
     ? `<div class="yt" data-yt="${esc(p.youtube)}">
     <button type="button" aria-label="Reproducir video: ${esc(p.titulo)}">
-      <img src="${base}${esc(p.portada)}" alt=""${sizeAttrs(`media/${p.slug}/${p.portada}`)} decoding="async">
+      <img src="${base}${esc(p.portada)}" alt=""${sizeAttrs(`media/${p.slug}/${p.portada}`)} decoding="async" fetchpriority="high">
       <span class="yt__play" aria-hidden="true"></span>
     </button>
   </div>`
     : `<img class="proyecto__portada" src="${base}${esc(p.portada)}" alt="${esc(p.titulo)}"${sizeAttrs(
         `media/${p.slug}/${p.portada}`
-      )} decoding="async" data-zoom>`;
+      )} decoding="async" fetchpriority="high" data-zoom>`;
 
   const bloque = (clase, titulo, contenido) => (contenido ? `<div class="info--${clase}"><h2>${titulo}</h2>${contenido}</div>` : '');
   const queHice = Array.isArray(p.queHice)
@@ -1053,7 +1053,7 @@ function paginaSobreMi(site, projects) {
   </div>
   <div class="perfil__escena">
     <p class="perfil__fondo" aria-hidden="true">${esc(site.nombre.split(' ').pop())}</p>
-    ${foto && exists(foto) ? `<img class="perfil__foto" src="/${esc(foto)}?v=${VERSION}" alt="Retrato de ${esc(pf.nombre || site.nombre)}"${sizeAttrs(foto)} decoding="async">` : ''}
+    ${foto && exists(foto) ? `<img class="perfil__foto" src="/${esc(foto)}?v=${VERSION}" alt="Retrato de ${esc(pf.nombre || site.nombre)}"${sizeAttrs(foto)} decoding="async" fetchpriority="high">` : ''}
     <div class="perfil__texto">
       <p class="perfil__hola">${esc(pf.hola || '')}</p>
       <h1>${esc(pf.nombre || 'Sobre mí')}</h1>

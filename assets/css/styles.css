@@ -122,6 +122,13 @@ a {
   text-decoration: none;
 }
 
+/* sin la espera del doble toque en teléfonos */
+a,
+button,
+[role='button'] {
+  touch-action: manipulation;
+}
+
 h1,
 h2,
 h3,
@@ -141,6 +148,7 @@ ul {
 h1,
 h2,
 h3 {
+  text-wrap: balance;
   font-family: var(--titulos);
   font-weight: 600;
   letter-spacing: 0;
@@ -2817,6 +2825,19 @@ main,
   animation: muro-desliza 90s linear infinite;
 }
 
+/* Las cintas y el mosaico se detienen al pasar el mouse o al recorrerlos con el teclado */
+.cinta:focus-within *,
+.muro:focus-within * {
+  animation-play-state: paused;
+}
+
+@media (hover: hover) {
+  .cinta:hover *,
+  .muro:hover * {
+    animation-play-state: paused;
+  }
+}
+
 .muro__fila:nth-child(even) {
   animation-direction: reverse;
 }
@@ -3630,6 +3651,7 @@ main,
   background: color-mix(in srgb, var(--fondo) 88%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  overscroll-behavior: contain;
 }
 
 .visor[hidden] {
@@ -4166,6 +4188,7 @@ main,
 }
 
 .perfil__cifras strong {
+  font-variant-numeric: tabular-nums;
   min-width: 4.2rem;
   font-family: var(--titulos);
   font-size: clamp(1.9rem, 3.2cqw, 2.6rem);
@@ -4863,4 +4886,13 @@ main,
     transition: none !important;
     animation: none !important;
   }
+}
+
+.visor__barra span {
+  font-variant-numeric: tabular-nums;
+}
+
+/* el marco de las imágenes recorta lo que sobresale: el contorno de foco va por dentro */
+img[data-zoom]:focus-visible {
+  outline-offset: -4px;
 }
