@@ -1163,7 +1163,6 @@ function paginaContacto(site) {
     site.whatsappVisible || site.whatsapp
   )}</strong></a>
   <a class="contacto__item" href="mailto:${esc(site.email)}"><span>Correo</span><strong>${esc(site.email)}</strong></a>
-  <a class="contacto__item" href="/paquetes/"><span>Identidad de marca</span><strong>Ver paquetes y precios</strong></a>
   ${redes}
 </section>`;
   return layout(site, {
@@ -1252,6 +1251,7 @@ function paginaBrief(site) {
   });
 }
 
+// Paquetes y precios (identidad y video): página que no está enlazada en el sitio; se comparte por enlace.
 // Paquetes de identidad de marca: tarjetas con precio, comparación y condiciones. Cada paquete lleva al brief
 // con ese paquete ya elegido. Los datos (data/paquetes.json) son los mismos del PDF de paquetes.
 function paginaPaquetes(site) {
@@ -1356,6 +1356,8 @@ function paginaPaquetes(site) {
     description: `Paquetes de identidad de marca (${d.paquetes.map((p) => `${p.nombre} ${p.precio} ${d.moneda}`).join(', ')}) y edición de video (desde ${Math.min(...v.planes.map((p) => p.precio))} ${v.moneda} por video) de ${site.nombre}.`,
     urlPath: '/paquetes/',
     body,
+    // No aparece en el menú ni en Google: Roger comparte el enlace cuando un cliente pregunta precios
+    extraHead: '<meta name="robots" content="noindex">',
   });
 }
 
@@ -1396,7 +1398,7 @@ function build() {
   write('404.html', pagina404(site));
   projects.forEach((p, i) => write(`proyectos/${p.slug}/index.html`, paginaProyecto(site, projects, p, i)));
 
-  const rutas = ['/', '/trabajos/', '/sobre-mi/', '/paquetes/', '/contacto/', ...projects.map((p) => `/proyectos/${p.slug}/`)];
+  const rutas = ['/', '/trabajos/', '/sobre-mi/', '/contacto/', ...projects.map((p) => `/proyectos/${p.slug}/`)];
   write('robots.txt', `User-agent: *\nAllow: /\n${site.url ? `Sitemap: ${site.url}/sitemap.xml\n` : ''}`);
   if (site.url) {
     write(
