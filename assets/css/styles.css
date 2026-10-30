@@ -5309,6 +5309,7 @@ img[data-zoom]:focus-visible {
 }
 
 .compara-web__caja {
+  position: relative; /* el texto oculto de las celdas (✓ "Incluido") queda dentro de la caja y no ensancha la página */
   overflow-x: auto;
   overscroll-behavior-x: contain;
   border: 1px solid var(--linea);
