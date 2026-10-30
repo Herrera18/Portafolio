@@ -2872,15 +2872,7 @@ main,
   left: 50%;
   translate: -50% 0;
   white-space: nowrap;
-  transition: scale 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* Al pasar el mouse crece un poco (el resto de los botones sube; este va centrado con translate) */
-@media (hover: hover) and (pointer: fine) {
-  .muro__boton:hover {
-    transform: none;
-    scale: 1.06;
-  }
+  /* al pasar el mouse sube como los demás botones (.boton:hover): el centrado va en "translate", no choca */
 }
 
 /* Texto del proyecto. A la izquierda el contexto (párrafo grande) y, debajo, el resultado en una tarjeta
