@@ -4888,8 +4888,18 @@ img[data-zoom]:focus-visible {
 }
 
 /* ---------- Brief estratégico (/brief/) ---------- */
+/* Encabezado y formulario centrados en la página */
+.cabecera--brief {
+  text-align: center;
+}
+
+.cabecera--brief .cabecera__bajada {
+  margin-inline: auto;
+}
+
 .brief {
   max-width: 46rem;
+  margin-inline: auto;
   padding-bottom: clamp(3rem, 7vw, 6rem);
 }
 
@@ -4930,6 +4940,8 @@ img[data-zoom]:focus-visible {
 
 .brief__seccion {
   border: 0;
+  margin: 0;
+  padding: 0;
   min-width: 0;
   display: grid;
   gap: 1.4rem;
