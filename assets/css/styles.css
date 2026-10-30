@@ -5163,3 +5163,252 @@ img[data-zoom]:focus-visible {
     justify-content: center;
   }
 }
+
+/* ---------- Paquetes (/paquetes/) ---------- */
+.planes {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .planes {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+  }
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--panel);
+}
+
+/* El recomendado: borde de fuego y un poco más de luz */
+.plan--rec {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--fondo), var(--fondo)) padding-box,
+    var(--grad-fuego) border-box;
+  border: 1.5px solid transparent;
+  box-shadow: 0 24px 60px -30px var(--acento-2);
+}
+
+.plan--rec::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--panel-2);
+  pointer-events: none;
+}
+
+.plan > * {
+  position: relative;
+}
+
+.plan__chip {
+  position: absolute;
+  top: -0.8rem;
+  left: clamp(1.5rem, 3vw, 2.1rem);
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+  background: var(--grad-fuego);
+  color: var(--sobre-acento);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.plan h2 {
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  line-height: 1;
+}
+
+.plan__frase {
+  margin-top: -0.4rem;
+  color: var(--acento-texto);
+  font-family: var(--titulos);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.plan__precio {
+  font-family: var(--titulos);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 5vw, 3.2rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan__precio small {
+  margin-left: 0.35rem;
+  font-size: 0.4em;
+  color: var(--texto-2);
+}
+
+.plan__ideal {
+  font-size: 0.92rem;
+  color: var(--texto-2);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.plan__ideal b {
+  color: var(--texto);
+}
+
+.plan__lista {
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+}
+
+.plan__lista li {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr;
+  gap: 0.6rem;
+  align-items: start;
+}
+
+.plan__lista svg,
+.compara-web .si svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  color: var(--acento-texto);
+}
+
+.plan__cond {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--texto-2);
+}
+
+.plan__boton {
+  justify-content: center;
+}
+
+/* Comparación: la tabla se desliza de lado en teléfonos */
+.compara-web {
+  margin-top: clamp(3.5rem, 8vw, 6rem);
+}
+
+.compara-web h2,
+.paquetes-cta h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  margin-bottom: 1.4rem;
+}
+
+.compara-web__caja {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.compara-web table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.compara-web th,
+.compara-web td {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--linea);
+  vertical-align: top;
+}
+
+.compara-web tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.compara-web thead th {
+  font-family: var(--titulos);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.compara-web thead small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--acento-texto);
+}
+
+.compara-web tbody th {
+  font-weight: 600;
+  width: 28%;
+}
+
+.compara-web .dest {
+  background: var(--panel-2);
+}
+
+.compara-web .no {
+  color: var(--texto-2);
+  opacity: 0.6;
+}
+
+.compara-web__nota {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--texto-2);
+}
+
+.condiciones {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 700px) {
+  .condiciones {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.condiciones > div {
+  padding-top: 1rem;
+  border-top: 1.5px solid var(--acento-texto);
+}
+
+.condiciones h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.condiciones p {
+  font-size: 0.9rem;
+  color: var(--texto-2);
+}
+
+.paquetes-cta {
+  margin: clamp(3.5rem, 8vw, 6rem) auto clamp(3rem, 7vw, 6rem);
+  max-width: 40rem;
+  text-align: center;
+}
+
+.paquetes-cta p {
+  color: var(--texto-2);
+}
+
+.paquetes-cta div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}

@@ -1,0 +1,202 @@
+{
+  "titulo": "Paquetes de identidad de marca",
+  "moneda": "USD",
+  "cambioExtra": 10,
+  "paquetes": [
+    {
+      "id": "basico",
+      "nombre": "Básico",
+      "precio": 100,
+      "frase": "Las bases de tu identidad visual",
+      "ideal": "Emprendimientos que están empezando y necesitan verse profesionales desde el primer día.",
+      "resumen": "Te da las bases sólidas de tu identidad visual: una imagen coherente y profesional desde el primer día.",
+      "grupos": [
+        {
+          "titulo": "Identidad visual",
+          "items": [
+            [
+              "Logo",
+              "Diseño de tu logo en 2 versiones: color y blanco y negro."
+            ],
+            [
+              "Paleta de colores",
+              "Una paleta básica de colores para tu marca."
+            ],
+            [
+              "Tipografía",
+              "1 tipografía que complementa tu logo."
+            ],
+            [
+              "Archivos",
+              "Tu logo en PNG y JPG, en alta resolución."
+            ]
+          ]
+        }
+      ],
+      "cambios": 2,
+      "anticipo": 30,
+      "archivos": "PNG y JPG al completar el pago"
+    },
+    {
+      "id": "medio",
+      "nombre": "Medio",
+      "precio": 160,
+      "recomendado": true,
+      "frase": "Tu identidad, con su manual",
+      "ideal": "Marcas que ya venden y quieren verse igual en redes, local, empaques y papelería.",
+      "resumen": "Todo lo que necesitas para lucir bien en cualquier lugar, más un manual básico para que tu identidad se use siempre de la forma correcta.",
+      "grupos": [
+        {
+          "titulo": "Identidad visual",
+          "items": [
+            [
+              "Logo y variaciones",
+              "Logo principal, versión horizontal y vertical, isotipo, y versiones en color y blanco y negro."
+            ],
+            [
+              "Paleta y tipografías",
+              "Colores primarios y secundarios, y tipografías principales y de acento."
+            ],
+            [
+              "Manual de marca básico",
+              "Una guía que explica cómo usar bien tu logo, tus colores y tus fuentes."
+            ],
+            [
+              "Mockups",
+              "Tu logo aplicado en distintos materiales, para que veas cómo se verá en la vida real."
+            ],
+            [
+              "Archivos",
+              "Tu logo en PNG, JPG y AI (editable), en alta resolución."
+            ]
+          ]
+        }
+      ],
+      "cambios": 3,
+      "anticipo": 40,
+      "archivos": "Editables al completar el pago"
+    },
+    {
+      "id": "premium",
+      "nombre": "Premium",
+      "precio": 310,
+      "frase": "Tu marca completa, de la estrategia a cada aplicación",
+      "ideal": "Negocios que quieren construir una marca sólida desde la estrategia, lista para crecer.",
+      "resumen": "La guía completa para construir una marca sólida y coherente: con todo lo necesario para que destaque en su mercado.",
+      "estrategia": {
+        "titulo": "Estrategia de marca",
+        "texto": "Quién es tu marca: su historia, misión y visión, personalidad, valores, tono y voz, arquetipo y público objetivo."
+      },
+      "grupos": [
+        {
+          "titulo": "Identidad visual",
+          "items": [
+            [
+              "Logo",
+              "Logo principal y sus variantes, con sus reglas de uso."
+            ],
+            [
+              "Paleta de colores",
+              "Primarios y secundarios, con sus códigos RGB, CMYK y HEX."
+            ],
+            [
+              "Tipografía",
+              "Las fuentes que acompañan el estilo de tu marca."
+            ],
+            [
+              "Recursos gráficos",
+              "Patrones e ilustraciones, si tu marca las necesita."
+            ],
+            [
+              "Guía de uso",
+              "Cómo usar cada elemento visual en distintas aplicaciones."
+            ],
+            [
+              "Papelería",
+              "Tarjetas de presentación, sobres, hojas membretadas y más."
+            ],
+            [
+              "Diseño digital",
+              "Tu identidad adaptada a redes sociales, sitio web y otros medios digitales."
+            ],
+            [
+              "Manual de marca",
+              "Un documento completo con toda tu identidad visual y verbal."
+            ]
+          ]
+        }
+      ],
+      "cambios": 5,
+      "anticipo": 50,
+      "archivos": "Editables al completar el pago"
+    }
+  ],
+  "compara": [
+    [
+      "Logo en color y blanco y negro",
+      true,
+      true,
+      true
+    ],
+    [
+      "Variaciones e isotipo",
+      false,
+      true,
+      true
+    ],
+    [
+      "Paleta de colores",
+      "Básica",
+      "Primarios y secundarios",
+      "Con códigos RGB, CMYK y HEX"
+    ],
+    [
+      "Tipografías",
+      "1 sugerida",
+      "Principales y de acento",
+      "Elegidas y con guía"
+    ],
+    [
+      "Mockups y aplicaciones",
+      false,
+      "Mockups",
+      "Papelería y digital"
+    ],
+    [
+      "Manual de marca",
+      false,
+      "Básico",
+      "Completo"
+    ],
+    [
+      "Estrategia de marca",
+      false,
+      false,
+      true
+    ],
+    [
+      "Patrones e ilustraciones",
+      false,
+      false,
+      true
+    ],
+    [
+      "Archivos",
+      "PNG y JPG",
+      "PNG, JPG y AI",
+      "Todos los editables"
+    ],
+    [
+      "Cambios incluidos",
+      "2",
+      "3",
+      "5"
+    ],
+    [
+      "Anticipo para empezar",
+      "30%",
+      "40%",
+      "50%"
+    ]
+  ]
+}

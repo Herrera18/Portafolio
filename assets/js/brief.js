@@ -44,6 +44,12 @@
       paso = Math.min(Number(previo.paso) || 0, total - 1);
     }
   } catch (e) {}
+  // Si llega desde la página de paquetes (/brief/?paquete=Medio), ese paquete queda elegido
+  const elegido = new URLSearchParams(location.search).get('paquete');
+  if (elegido && !form.querySelector('[name="paquete"]:checked')) {
+    const op = [...form.querySelectorAll('[name="paquete"]')].find((r) => r.value === elegido);
+    if (op) op.checked = true;
+  }
   form.addEventListener('input', guardar);
   form.addEventListener('change', guardar);
 

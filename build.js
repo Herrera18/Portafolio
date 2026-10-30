@@ -1163,6 +1163,7 @@ function paginaContacto(site) {
     site.whatsappVisible || site.whatsapp
   )}</strong></a>
   <a class="contacto__item" href="mailto:${esc(site.email)}"><span>Correo</span><strong>${esc(site.email)}</strong></a>
+  <a class="contacto__item" href="/paquetes/"><span>Identidad de marca</span><strong>Ver paquetes y precios</strong></a>
   ${redes}
 </section>`;
   return layout(site, {
@@ -1251,6 +1252,71 @@ function paginaBrief(site) {
   });
 }
 
+// Paquetes de identidad de marca: tarjetas con precio, comparación y condiciones. Cada paquete lleva al brief
+// con ese paquete ya elegido. Los datos (data/paquetes.json) son los mismos del PDF de paquetes.
+function paginaPaquetes(site) {
+  const d = readJson('data/paquetes.json');
+  const check =
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const precio = (n) => `${n}<small>${esc(d.moneda)}</small>`;
+  const celda = (v) =>
+    v === true ? `<span class="si">${check}<span class="solo-lectores">Incluido</span></span>` : v === false ? '<span class="no" aria-label="No incluido">—</span>' : esc(v);
+  const tarjeta = (p) => {
+    const items = [...(p.estrategia ? [p.estrategia.titulo] : []), ...p.grupos.flatMap((g) => g.items.map(([t]) => t))];
+    return `<article class="plan${p.recomendado ? ' plan--rec' : ''}">
+      ${p.recomendado ? '<p class="plan__chip">Recomendado</p>' : ''}
+      <h2>${esc(p.nombre)}</h2>
+      <p class="plan__frase">${esc(p.frase)}</p>
+      <p class="plan__precio">${precio(p.precio)}</p>
+      <p class="plan__ideal"><b>Ideal para:</b> ${esc(p.ideal)}</p>
+      <ul class="plan__lista">${items.map((t) => `<li>${check}<span>${esc(t)}</span></li>`).join('')}</ul>
+      <p class="plan__cond">${p.cambios} cambios incluidos · ${p.anticipo}% de anticipo</p>
+      <a class="boton${p.recomendado ? '' : ' boton--linea'} plan__boton" href="/brief/?paquete=${encodeURIComponent(p.nombre)}">Empezar con ${esc(p.nombre)}</a>
+    </article>`;
+  };
+  const rec = d.paquetes.findIndex((p) => p.recomendado);
+  const body = `
+<section class="cabecera cabecera--brief">
+  <p class="etiqueta">Identidad de marca</p>
+  <h1>Paquetes</h1>
+  <p class="cabecera__bajada">Tres formas de darle forma a tu marca. Elige la que necesita hoy; si no estás seguro, el brief me ayuda a recomendarte la correcta.</p>
+</section>
+<section class="planes">
+  ${d.paquetes.map(tarjeta).join('\n  ')}
+</section>
+<section class="compara-web">
+  <h2>Compara en detalle</h2>
+  <div class="compara-web__caja" tabindex="0" role="region" aria-label="Comparación de paquetes">
+    <table>
+      <thead><tr><th scope="col"><span class="solo-lectores">Concepto</span></th>${d.paquetes
+        .map((p, i) => `<th scope="col"${i === rec ? ' class="dest"' : ''}>${esc(p.nombre)}<small>${p.precio} ${esc(d.moneda)}</small></th>`)
+        .join('')}</tr></thead>
+      <tbody>${d.compara
+        .map((f) => `<tr><th scope="row">${esc(f[0])}</th>${f.slice(1).map((v, i) => `<td${i === rec ? ' class="dest"' : ''}>${celda(v)}</td>`).join('')}</tr>`)
+        .join('')}</tbody>
+    </table>
+  </div>
+  <p class="compara-web__nota">Precios en ${esc(d.moneda)}. Cada cambio adicional: ${d.cambioExtra} ${esc(d.moneda)}. Un cambio de concepto (empezar de cero) se cotiza aparte.</p>
+</section>
+<section class="condiciones">
+  <div><h3>Pagos</h3><p>El anticipo para empezar y el resto al entregar. Acepto USDT por Binance o Zelle.</p></div>
+  <div><h3>Cambios adicionales</h3><p>${d.cambioExtra} ${esc(d.moneda)} cada uno. Un cambio de concepto se cotiza aparte.</p></div>
+  <div><h3>Archivos finales</h3><p>Se entregan al completar el pago.</p></div>
+  <div><h3>Tiempo de entrega</h3><p>Lo acordamos al inicio, según el paquete y tus tiempos.</p></div>
+</section>
+<section class="paquetes-cta">
+  <h2>¿No sabes cuál elegir?</h2>
+  <p>Responde el brief y te recomiendo el paquete que mejor le queda a tu marca. Toma unos 15 minutos.</p>
+  <div><a class="boton" href="/brief/">Responder el brief</a><a class="boton boton--linea" href="${esc(waLink(site))}" target="_blank" rel="noopener">Preguntar por WhatsApp</a></div>
+</section>`;
+  return layout(site, {
+    title: 'Paquetes de identidad de marca',
+    description: `Paquetes de creación de marca e identidad visual de ${site.nombre}: ${d.paquetes.map((p) => `${p.nombre} ${p.precio} ${d.moneda}`).join(', ')}.`,
+    urlPath: '/paquetes/',
+    body,
+  });
+}
+
 function pagina404(site) {
   return layout(site, {
     title: 'Página no encontrada',
@@ -1283,11 +1349,12 @@ function build() {
   write('trabajos/index.html', paginaTrabajos(site, projects));
   write('sobre-mi/index.html', paginaSobreMi(site, projects));
   write('contacto/index.html', paginaContacto(site));
+  write('paquetes/index.html', paginaPaquetes(site));
   write('brief/index.html', paginaBrief(site));
   write('404.html', pagina404(site));
   projects.forEach((p, i) => write(`proyectos/${p.slug}/index.html`, paginaProyecto(site, projects, p, i)));
 
-  const rutas = ['/', '/trabajos/', '/sobre-mi/', '/contacto/', ...projects.map((p) => `/proyectos/${p.slug}/`)];
+  const rutas = ['/', '/trabajos/', '/sobre-mi/', '/paquetes/', '/contacto/', ...projects.map((p) => `/proyectos/${p.slug}/`)];
   write('robots.txt', `User-agent: *\nAllow: /\n${site.url ? `Sitemap: ${site.url}/sitemap.xml\n` : ''}`);
   if (site.url) {
     write(
