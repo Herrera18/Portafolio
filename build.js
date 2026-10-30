@@ -208,7 +208,7 @@ function galeriaItem(p, archivo, i) {
     const tienePoster = exists(`media/${p.slug}/${poster}`);
     const s = (tienePoster && webpSize(`media/${p.slug}/${poster}`)) || { w: 9, h: 16 };
     const video = `<video muted loop playsinline preload="none" data-autoplay style="aspect-ratio:${s.w}/${s.h}"${
-      tienePoster ? ` poster="${base}${esc(poster)}"` : ''
+      tienePoster ? ` data-poster="${base}${esc(poster)}"` : ''
     } aria-label="${esc(p.titulo)}, reel ${i + 1}"><source src="${base}${esc(archivo)}" type="video/mp4"></video>`;
     // "videos" (opcional): ID de YouTube por archivo. El adelanto mudo pasa a ser un botón que abre el video completo.
     const yt = p.videos && p.videos[archivo];
@@ -395,7 +395,7 @@ function paginaInicio(site, projects) {
           const dim = webpSize(`media/${p.slug}/${src}`) || { w: 9, h: 16 };
           // Los reels se reproducen mudos y en loop solo mientras pasan por la pantalla (lo maneja main.js)
           const medio = video
-            ? `<video muted loop playsinline preload="none" data-autoplay poster="/media/${p.slug}/${esc(src)}" style="aspect-ratio:${dim.w}/${dim.h}" aria-label="${
+            ? `<video muted loop playsinline preload="none" data-autoplay data-poster="/media/${p.slug}/${esc(src)}" style="aspect-ratio:${dim.w}/${dim.h}" aria-label="${
                 copia ? '' : `Video para ${esc(p.cliente || p.titulo)}`
               }"><source src="/media/${p.slug}/${esc(video)}" type="video/mp4"></video>`
             : `<img src="/media/${p.slug}/${esc(src)}" alt="${copia ? '' : `Diseño para ${esc(p.cliente || p.titulo)}`}"${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async">`;
@@ -698,7 +698,7 @@ function paginaTrabajos(site, projects) {
       return `<a class="lamina__celda" href="/proyectos/${p.slug}/"${k ? ' tabindex="-1"' : ''} aria-label="Ver los videos de ${esc(
         p.cliente || p.titulo
       )}"><video muted loop playsinline preload="none" data-autoplay${
-        exists(`media/${p.slug}/${poster}`) ? ` poster="/media/${p.slug}/${esc(poster)}"` : ''
+        exists(`media/${p.slug}/${poster}`) ? ` data-poster="/media/${p.slug}/${esc(poster)}"` : ''
       }><source src="/media/${p.slug}/${esc(archivo)}" type="video/mp4"></video>${
         // la última pieza lleva siempre un aviso visible; las demás lo muestran al pasar el cursor
         k === piezas.length - 1
@@ -862,7 +862,7 @@ function paginaProyecto(site, projects, p, i) {
     const porFila = Math.max(7, Math.ceil(p.manual / FILAS));
     const pagina = (n, copia) => {
       const nn = String(n).padStart(2, '0');
-      return `<img src="${base}manual/m${nn}.webp" data-full="${base}manual/${nn}.webp" data-zoom width="640" height="360" decoding="async" alt="${
+      return `<img src="${base}manual/m${nn}.webp" data-full="${base}manual/${nn}.webp" data-zoom width="640" height="360" loading="lazy" decoding="async" alt="${
         copia ? '' : `${esc(p.titulo)}, página ${n} del manual`
       }"${copia ? ' aria-hidden="true"' : ''}>`;
     };
@@ -888,7 +888,7 @@ function paginaProyecto(site, projects, p, i) {
     const pieza = (archivo, copia) => {
       const mini = archivo.replace(/([^/]+)$/, 'm$1');
       const src = exists(`media/${p.slug}/${mini}`) ? mini : archivo;
-      return `<img src="${base}${esc(src)}" data-full="${base}${esc(archivo)}" data-zoom${sizeAttrs(`media/${p.slug}/${src}`)} decoding="async" alt="${
+      return `<img src="${base}${esc(src)}" data-full="${base}${esc(archivo)}" data-zoom${sizeAttrs(`media/${p.slug}/${src}`)} loading="lazy" decoding="async" alt="${
         copia ? '' : `${esc(p.titulo)}, pieza ${posts.indexOf(archivo) + 1}`
       }"${copia ? ' aria-hidden="true"' : ''}>`;
     };

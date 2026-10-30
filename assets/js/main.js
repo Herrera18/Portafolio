@@ -101,6 +101,28 @@ document.querySelectorAll('.servicios__mas').forEach((boton) => {
   revisar();
 });
 
+// Portadas de los videos: se descargan recién cuando el video se acerca a la pantalla (en el inicio hay
+// decenas de videos y bajarlas todas de una vuelve lento el teléfono). Sin script se ponen todas de inmediato.
+{
+  const conPortada = document.querySelectorAll('video[data-poster]');
+  const poner = (v) => {
+    v.poster = v.dataset.poster;
+    v.removeAttribute('data-poster');
+  };
+  if ('IntersectionObserver' in window) {
+    const cerca = new IntersectionObserver(
+      (entradas, o) =>
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          poner(e.target);
+          o.unobserve(e.target);
+        }),
+      { rootMargin: '600px 300px' }
+    );
+    conPortada.forEach((v) => cerca.observe(v));
+  } else conPortada.forEach(poner);
+}
+
 // Reels: se reproducen en loop y sin sonido solo mientras están en pantalla
 const videos = document.querySelectorAll('video[data-autoplay]');
 const ahorro = navigator.connection && navigator.connection.saveData;

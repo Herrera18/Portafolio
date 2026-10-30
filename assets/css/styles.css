@@ -4752,9 +4752,24 @@ main,
     -webkit-backdrop-filter: none;
   }
 
+  /* barra superior: desenfoque más liviano y el grano sin su propio filtro (se redibujan en cada cuadro al deslizar) */
   .header {
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .header::before {
+    filter: none;
+  }
+
+  :root[data-theme='light'] .header::before {
+    filter: invert(1);
+  }
+
+  /* las secciones del inicio que están lejos de la pantalla no se dibujan hasta acercarse */
+  .categoria {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
   }
 
   /* Cinta de social media: plana en lugar de curva. La curva casi no se nota en esta pantalla y mover
