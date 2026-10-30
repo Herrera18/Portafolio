@@ -317,9 +317,11 @@ if (ampliables.length) {
   };
   conZoom.forEach((img) => {
     const ir = () => abrir(ampliables.findIndex((unica) => fuente(unica) === fuente(img)));
+    // Las del mosaico solo decoran: el visor se abre con su botón "Ver página por página"
+    if (img.closest('.muro')) return;
     img.addEventListener('click', ir);
-    // Con teclado también se abren (Enter o espacio). Las del mosaico del manual no: ya tienen su botón.
-    if (img.getAttribute('aria-hidden') === 'true' || img.closest('.muro')) return;
+    // Con teclado también se abren (Enter o espacio)
+    if (img.getAttribute('aria-hidden') === 'true') return;
     img.tabIndex = 0;
     img.setAttribute('role', 'button');
     img.setAttribute('aria-label', `Ampliar: ${img.alt}`);

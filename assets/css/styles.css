@@ -2825,15 +2825,13 @@ main,
   animation: muro-desliza 90s linear infinite;
 }
 
-/* Las cintas y el mosaico se detienen al pasar el mouse o al recorrerlos con el teclado */
-.cinta:focus-within *,
-.muro:focus-within * {
+/* Las cintas se detienen al pasar el mouse o al recorrerlas con el teclado (el mosaico del manual no: sigue siempre) */
+.cinta:focus-within * {
   animation-play-state: paused;
 }
 
 @media (hover: hover) {
-  .cinta:hover *,
-  .muro:hover * {
+  .cinta:hover * {
     animation-play-state: paused;
   }
 }
@@ -2853,14 +2851,6 @@ main,
   border-radius: 6px;
   background: var(--panel-2);
   box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.75);
-  cursor: zoom-in;
-  transition: scale 0.3s;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .muro__fila img:hover {
-    scale: 1.03;
-  }
 }
 
 /* Variante para publicaciones: piezas verticales o cuadradas, todas del mismo alto dentro de la fila */
