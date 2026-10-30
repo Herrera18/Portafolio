@@ -1174,7 +1174,8 @@ function paginaContacto(site) {
   });
 }
 
-// Brief estratégico: cuestionario por pasos que se envía al correo del estudio (FormSubmit, sin servidor propio).
+// Brief estratégico: cuestionario por pasos que se envía al correo del estudio (Web3Forms, sin servidor propio;
+// la clave "web3formsKey" de site.json solo permite enviar correos al estudio, por eso puede ir en la página).
 // No aparece en el menú ni en Google: se comparte por enlace. Las preguntas están en data/brief.json.
 function paginaBrief(site) {
   const b = readJson('data/brief.json');
@@ -1206,11 +1207,11 @@ function paginaBrief(site) {
   <p class="cabecera__bajada">${esc(b.intro)}</p>
 </section>
 <section class="brief">
-  <form class="brief__form" action="https://formsubmit.co/${esc(site.email)}" method="POST" data-total="${total}">
-    <input type="hidden" name="_subject" value="Nuevo brief estratégico">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="text" name="_honey" class="solo-lectores" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <form class="brief__form" action="https://api.web3forms.com/submit" method="POST" data-total="${total}">
+    <input type="hidden" name="access_key" value="${esc(site.web3formsKey || '')}">
+    <input type="hidden" name="subject" value="Nuevo brief estratégico">
+    <input type="hidden" name="from_name" value="Brief ${esc(site.nombre)}">
+    <input type="checkbox" name="botcheck" class="solo-lectores" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="brief__progreso" hidden>
       <div class="brief__barra"><span></span></div>
       <p aria-live="polite"></p>

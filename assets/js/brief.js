@@ -1,5 +1,5 @@
 // Brief estratégico: muestra una sección a la vez, guarda lo escrito en el navegador y envía las respuestas al correo.
-// Sin JavaScript el formulario se ve completo y se envía igual (FormSubmit recibe el POST normal).
+// Sin JavaScript el formulario se ve completo y se envía igual (Web3Forms recibe el POST normal).
 (() => {
   const form = document.querySelector('.brief__form');
   if (!form) return;
@@ -14,13 +14,14 @@
   const error = form.querySelector('.brief__error');
   const gracias = document.querySelector('.brief__gracias');
   const CLAVE = 'brief-herre';
+  const INTERNOS = ['access_key', 'subject', 'from_name', 'botcheck']; // campos del servicio, no respuestas
   let paso = 0;
 
   // --- Guardar y recuperar lo escrito (solo en este dispositivo) ---
   const leer = () => {
     const datos = {};
     new FormData(form).forEach((v, k) => {
-      if (k.startsWith('_')) return;
+      if (INTERNOS.includes(k)) return;
       datos[k] = k in datos ? [].concat(datos[k], v) : v;
     });
     return datos;
@@ -95,12 +96,12 @@
     const etiquetas = window.BRIEF_ETIQUETAS || {};
     const datos = leer();
     const cuerpo = {
-      _subject: `Brief estratégico — ${datos.marca || 'Nueva marca'}`,
-      _template: 'table',
-      _captcha: 'false',
-      _honey: form.elements._honey.value,
+      access_key: form.elements.access_key.value,
+      subject: `Brief estratégico — ${datos.marca || 'Nueva marca'}`,
+      from_name: `${datos.nombre || 'Cliente'} · ${datos.marca || 'Brief'}`,
+      botcheck: form.elements.botcheck.checked,
     };
-    if (datos.correo) cuerpo._replyto = datos.correo;
+    if (datos.correo) cuerpo.replyto = datos.correo;
     Object.entries(datos).forEach(([k, v]) => {
       cuerpo[etiquetas[k] || k] = [].concat(v).join(', ').trim() || '—';
     });
@@ -108,7 +109,7 @@
     enviar.textContent = 'Enviando…';
     error.hidden = true;
     try {
-      const r = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+      const r = await fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(cuerpo),
@@ -123,11 +124,8 @@
       gracias.scrollIntoView({ block: 'center' });
       gracias.focus({ preventScroll: true });
     } catch (err) {
-      // FormSubmit pide activar el formulario la primera vez (correo al estudio): se avisa distinto
       const motivo = String(err.message || '');
-      error.textContent = /activat/i.test(motivo)
-        ? 'El formulario aún no está activado. Revisa el correo del estudio, actívalo y vuelve a enviar: tus respuestas siguen guardadas.'
-        : `No se pudo enviar. Revisa tu conexión e inténtalo otra vez; tus respuestas siguen guardadas.${motivo ? ` (Detalle: ${motivo})` : ''}`;
+      error.textContent = `No se pudo enviar. Revisa tu conexión e inténtalo otra vez; tus respuestas siguen guardadas.${motivo ? ` (Detalle: ${motivo})` : ''}`;
       error.hidden = false;
       enviar.disabled = false;
       enviar.textContent = 'Enviar brief';
