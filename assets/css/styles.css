@@ -3904,6 +3904,16 @@ main,
 #proceso.visible .proceso > li:nth-child(3) { animation-delay: 0.5s; }
 #proceso.visible .proceso > li:nth-child(4) { animation-delay: 0.75s; }
 
+/* En pantallas angostas los pasos van en una fila que se desliza de lado: ahí entran solo con un fundido,
+   sin subir. Al subir, la fila los recortaba arriba y el navegador recalculaba el ajuste de la fila en
+   cada cuadro, lo que frenaba el scroll de la página. */
+@media (max-width: 959px) {
+  #proceso.visible .proceso > li {
+    animation-name: aparecer;
+    animation-duration: 0.6s;
+  }
+}
+
 /* ---------- Sobre mí ----------
    Presentación con el apellido del estudio enorme detrás de la foto; a los lados, el nombre y las cifras.
    Debajo: proyectos destacados, herramientas, cómo trabajo, una cita y el contacto. */
