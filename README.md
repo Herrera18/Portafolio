@@ -118,3 +118,7 @@ Vercel publica solo en un minuto aprox.
 4. Listo. Desde ahí, cada `git push` a `main` actualiza el sitio.
 
 Dominio propio: en Vercel, **Settings → Domains**. Si lo agregas, escribe la dirección en `"url"` de `data/site.json` (ej: `"https://nacho.cl"`) para que los links compartidos usen ese dominio.
+
+## Imagen para compartir
+
+`media/site/og.jpg` (1200×630) es la que muestran WhatsApp y las redes al pegar el enlace. Sale de `tools/og-portada.html`, que reutiliza la portada del inicio con los estilos del sitio. Para rehacerla: `node build.js`, copiar la sección `portada` de `dist/index.html` a ese archivo si cambió, capturarla con Edge headless (`msedge --headless=new --window-size=1200,630 --force-device-scale-factor=1 --virtual-time-budget=6000 --screenshot=og.png file:///.../tools/og-portada.html`), guardarla como `og.jpg` y subir el `?v=N` de `og.jpg` en `build.js` para que las redes la vuelvan a leer.

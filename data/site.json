@@ -63,14 +63,14 @@
   ],
   "servicios": [
     {
-      "titulo": "Social media",
-      "texto": "Hago piezas para redes que hacen detenerse a mirar, no pasar de largo. Carruseles, historias y campañas con una sola línea gráfica.",
-      "categoria": "rrss"
-    },
-    {
       "titulo": "Edición de video",
       "texto": "Tú grabas con el celular y yo le doy forma: gancho, cortes, subtítulos, color y sonido, hasta dejarlo listo para publicar.",
       "categoria": "video"
+    },
+    {
+      "titulo": "Social media",
+      "texto": "Hago piezas para redes que hacen detenerse a mirar, no pasar de largo. Carruseles, historias y campañas con una sola línea gráfica.",
+      "categoria": "rrss"
     },
     {
       "titulo": "Identidad de marca",
@@ -149,7 +149,7 @@
     {
       "sigla": "Fl",
       "nombre": "Google Flow",
-      "icono": "media/site/herramientas/flow.webp",
+      "icono": "media/site/herramientas/google-flow.webp",
       "nivel": 80
     }
   ],

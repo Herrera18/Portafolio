@@ -106,7 +106,7 @@ function waLink(site) {
 function layout(site, { title, description, urlPath, image, body, active, jsonld, type = 'website', extraHead = '' }) {
   const fullTitle = urlPath === '/' ? title : `${title} — ${site.nombre}`;
   const canonical = site.url + urlPath;
-  const ogImage = site.url + (image || '/media/site/og.jpg');
+  const ogImage = site.url + (image || '/media/site/og.jpg?v=2');
   const nav = [
     ['/', 'Inicio', 'inicio'],
     ['/trabajos/', 'Trabajos', 'trabajos'],

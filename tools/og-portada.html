@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Imagen para compartir (media/site/og.jpg, 1200x630). Reutiliza la portada del inicio.
+     Se regenera con Edge headless; ver README, sección "Imagen para compartir". -->
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@300,500,600,700&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<style>
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body::before, body::after { position: absolute; }
+  /* sin animaciones: todo en su estado final, con la huella encendida */
+  *, *::before, *::after { animation-delay: -20s !important; animation-iteration-count: 1 !important; }
+  .portada__huella::before { animation: none !important; opacity: 1; }
+  .portada .hero__guia { display: none; }
+  .og { box-sizing: border-box; width: 1200px; height: 630px; padding: 54px 64px 0; display: flex; flex-direction: column; }
+  .og__marca { display: flex; align-items: center; gap: 12px; font-family: var(--titulos); font-weight: 600; font-size: 26px; letter-spacing: -0.01em; color: var(--texto); }
+  .og__marca i { width: 12px; height: 12px; border-radius: 50%; background: var(--acento); box-shadow: 0 0 14px var(--acento); }
+  .og__marca span { margin-left: auto; font-family: var(--sans); font-weight: 500; font-size: 18px; color: var(--texto-2); letter-spacing: 0.02em; }
+  .og .portada { padding-top: 80px; }
+  .og .portada__rol { font-size: 24px; }
+  .og .portada__burbuja span { font-size: 15px; }
+  .og .portada .hero__pastilla { font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="og">
+  <p class="og__marca"><i></i>Studio Herre<span>studio-herre.vercel.app</span></p>
+  <section class="portada" aria-label="Portafolio 2026">
+  <div class="hero__marco">
+    <p class="portada__rol"><b>Marcas</b> <em>hechas a fuego.</em></p>
+    <div class="portada__caja" aria-hidden="true">
+      <p class="portada__titulo">Portaf<span class="portada__huella"><svg viewBox="2 1 20 21" fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><path pathLength="100" stroke-dasharray="100" d="M10.50 20.71V11a1.5 1.5 0 0 1 3.0 0V19.81"/><path pathLength="100" stroke-dasharray="46 5 49" d="M9.00 20.33V11a3.0 3.0 0 0 1 6.0 0V20.33"/><path pathLength="100" stroke-dasharray="18 4 50 5 23" d="M7.50 19.67V11a4.5 4.5 0 0 1 9.0 0V18.77"/><path pathLength="100" stroke-dasharray="62 4 34" d="M6.00 18.64V11a6.0 6.0 0 0 1 12.0 0V18.64"/><path pathLength="100" stroke-dasharray="30 5 40 4 21" d="M4.50 17.00V11a7.5 7.5 0 0 1 15.0 0V16.10"/><path pathLength="100" stroke-dasharray="12 6 30 5 47" d="M3.00 13.31V11a9.0 9.0 0 0 1 18.0 0V13.31"/><path d="M12 11.4V20.83"/></svg></span>lio</p>
+      <span class="portada__burbuja"><span>Edición de video · Social media · Identidad de marca</span></span>
+    </div>
+    <p class="hero__pastilla"><span aria-hidden="true">↙</span><em>2026</em></p>
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <span class="hero__guia"><svg class="hero__pluma" viewBox="18 13 28 47" aria-hidden="true">
+      <defs><linearGradient id="pluma" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--acento)"/><stop offset="1" stop-color="var(--acento-2)"/></linearGradient></defs>
+      <path fill="url(#pluma)" fill-rule="evenodd" d="M32 15l12 20-4.5 15h-15L20 35zm-1 5v11.2a3.6 3.6 0 1 0 2 0V20zM24.5 53h15v5h-15z"/>
+    </svg></span>
+  </div>
+</section>
+</div>
+</body>
+</html>
