@@ -1056,14 +1056,13 @@ main,
   mask: var(--icono) center / contain no-repeat;
 }
 
-/* En teléfonos todas las herramientas van en una sola fila: se reparten el ancho por igual
-   y el anillo se achica lo necesario para caber, sea cual sea el tamaño de la pantalla. */
+/* En teléfonos van en una grilla de 4 por fila (con 7 herramientas, una sola fila no cabía y los anillos
+   se montaban): se reparten el ancho por igual y el anillo se achica si la pantalla es muy angosta. */
 @media (max-width: 600px) {
   .herramientas ul {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem 0.5rem;
   }
 
   .herramientas li {
@@ -4632,11 +4631,8 @@ main,
     filter: invert(1);
   }
 
-  /* las secciones del inicio que están lejos de la pantalla no se dibujan hasta acercarse */
-  .categoria {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 900px;
-  }
+  /* Las secciones del inicio no llevan content-visibility: esa contención recorta el resplandor de
+     cada sección (::before) en sus bordes y en celular se veían franjas verticales a los lados. */
 
   /* Cinta de social media: plana en lugar de curva. La curva casi no se nota en esta pantalla y mover
      veinte piezas en 3D cuesta mucho más que deslizar una sola tira. */
