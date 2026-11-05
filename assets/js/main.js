@@ -57,6 +57,17 @@ if (filtros.length) {
   desdeHash();
 }
 
+// En Android la barra de direcciones aparece y desaparece al deslizar y eso dispara "resize" a cada rato.
+// Lo que se mide aquí solo depende del ancho: se recalcula únicamente cuando cambia el ancho.
+const alCambiarAncho = (fn) => {
+  let ancho = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === ancho) return;
+    ancho = window.innerWidth;
+    fn();
+  });
+};
+
 // Pie de página: el nombre grande se ajusta para ir exactamente de un margen al otro del contenido.
 // Se mide el dibujo real de las letras (no su caja) y se corrige el tamaño y el pequeño aire lateral de la fuente.
 const marca = document.querySelector('.footer__marca');
@@ -80,7 +91,7 @@ if (marca) {
   };
   ajustar();
   if (document.fonts) document.fonts.ready.then(ajustar);
-  window.addEventListener('resize', ajustar);
+  alCambiarAncho(ajustar);
 }
 
 // Servicios en móvil: el texto va recortado a dos líneas y "Ver más" lo despliega hacia abajo
@@ -96,7 +107,7 @@ document.querySelectorAll('.servicios__mas').forEach((boton) => {
     boton.setAttribute('aria-expanded', String(abierto));
     boton.textContent = abierto ? 'Ver menos' : 'Ver más';
   });
-  window.addEventListener('resize', revisar);
+  alCambiarAncho(revisar);
   if (document.fonts) document.fonts.ready.then(revisar);
   revisar();
 });
@@ -186,7 +197,7 @@ document.querySelectorAll('[data-carrusel-caja]').forEach((caja) => {
     f.addEventListener('click', () => carrusel.scrollBy({ left: paso() * f.dataset.carrusel, behavior: 'smooth' }))
   );
   carrusel.addEventListener('scroll', actualizar, { passive: true });
-  window.addEventListener('resize', () => {
+  alCambiarAncho(() => {
     crearPuntos();
     actualizar();
   });

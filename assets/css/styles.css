@@ -4631,8 +4631,22 @@ main,
     filter: invert(1);
   }
 
-  /* Las secciones del inicio no llevan content-visibility: esa contención recorta el resplandor de
-     cada sección (::before) en sus bordes y en celular se veían franjas verticales a los lados. */
+  /* Lo pesado de cada sección (cintas y pasos de "Así trabajo") no se dibuja hasta acercarse a la pantalla.
+     Va en esas piezas y no en la sección entera: en la sección recortaba su resplandor (::before) y se
+     veían franjas a los lados. Estas piezas ya recortan sus bordes, así que no cambia nada a la vista. */
+  .categoria .cinta,
+  .categoria .proceso {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 270px;
+  }
+
+  .categoria .cinta--ancha {
+    contain-intrinsic-size: auto 190px;
+  }
+
+  .categoria .proceso {
+    contain-intrinsic-size: auto 370px;
+  }
 
   /* Cinta de social media: plana en lugar de curva. La curva casi no se nota en esta pantalla y mover
      veinte piezas en 3D cuesta mucho más que deslizar una sola tira. */
