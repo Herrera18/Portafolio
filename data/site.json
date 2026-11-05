@@ -139,6 +139,17 @@
       "nombre": "CapCut",
       "icono": "media/site/herramientas/capcut.webp",
       "nivel": 96
+    },
+    {
+      "sigla": "Cl",
+      "nombre": "Claude",
+      "icono": "media/site/herramientas/claude.svg",
+      "nivel": 90
+    },
+    {
+      "sigla": "Fl",
+      "nombre": "Google Flow",
+      "nivel": 80
     }
   ],
   "sobreMi": {
