@@ -67,7 +67,6 @@
       "incluye": [
         "8 videos con edición Completa",
         "Portada para cada video",
-        "Guion estratégico para cada video",
         "2 revisiones por video"
       ],
       "mensaje": "Hola Roger, me interesa el pack Mensual 8 de edición de video."
@@ -85,10 +84,6 @@
     [
       "Portada",
       "5 USD"
-    ],
-    [
-      "Guion estratégico",
-      "10 USD"
     ],
     [
       "Formato adicional (ej. versión horizontal)",
@@ -179,13 +174,6 @@
       false,
       false,
       true,
-      true
-    ],
-    [
-      "Guion estratégico",
-      false,
-      false,
-      false,
       true
     ],
     [
