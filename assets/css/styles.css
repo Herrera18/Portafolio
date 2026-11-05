@@ -1434,6 +1434,7 @@ main,
   --fundido: clamp(2.5rem, 9%, 7rem);
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
   overflow-x: auto;
+  overflow-y: hidden; /* solo de lado: un deslizamiento vertical siempre mueve la página */
   scrollbar-width: none;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fundido), #000 calc(100% - var(--fundido)), transparent);
   mask-image: linear-gradient(90deg, transparent, #000 var(--fundido), #000 calc(100% - var(--fundido)), transparent);
@@ -1801,6 +1802,7 @@ main,
   margin-block: -0.5rem -2rem;
   padding-block: 0.5rem 2rem;
   overflow-x: auto;
+  overflow-y: hidden; /* solo de lado: un deslizamiento vertical siempre mueve la página */
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
@@ -2191,6 +2193,7 @@ main,
     display: flex;
     gap: 0.9rem;
     overflow-x: auto;
+    overflow-y: hidden; /* solo de lado: un deslizamiento vertical siempre mueve la página */
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -3194,6 +3197,7 @@ main,
   gap: var(--hueco);
   padding-block: 0.3rem 0;
   overflow-x: auto;
+  overflow-y: hidden; /* solo de lado: un deslizamiento vertical siempre mueve la página */
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
