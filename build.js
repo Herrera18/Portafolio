@@ -8,8 +8,8 @@ const ROOT = __dirname;
 const OUT = path.join(ROOT, 'dist');
 
 const CATEGORIAS = {
-  rrss: 'Social media',
   video: 'Edición de video',
+  rrss: 'Social media',
   identidad: 'Identidad de marca',
   logos: 'Logofolio',
 };
@@ -757,7 +757,7 @@ function paginaTrabajos(site, projects) {
     })
     .filter((x) => x.piezas.length);
   // La primera vista sale visible desde el HTML (las demás las muestra el filtro)
-  const laminas = (vistaLaminas('rrss', conPosts, '', cierres.rrss) + vistaLaminas('video', conVideos, 'video', cierres.video) + vistaLaminas('identidad', conManual, 'ancha', cierres.identidad)).replace(' hidden>', '>');
+  const laminas = (vistaLaminas('video', conVideos, 'video', cierres.video) + vistaLaminas('rrss', conPosts, '', cierres.rrss) + vistaLaminas('identidad', conManual, 'ancha', cierres.identidad)).replace(' hidden>', '>');
   const body = `
 <section class="cabecera cabecera--trabajos">
   <div class="cabecera__fila">

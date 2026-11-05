@@ -32,18 +32,18 @@
   ],
   "secciones": [
     {
-      "categoria": "rrss",
-      "titulo": "Social media",
-      "detalle": "Instagram · Facebook · TikTok",
-      "collage": true
-    },
-    {
       "categoria": "video",
       "titulo": "Edición de video",
       "detalle": "Reels · Spots · Edición",
       "cinta": true,
       "soloCinta": true,
       "ritmo": 5.5
+    },
+    {
+      "categoria": "rrss",
+      "titulo": "Social media",
+      "detalle": "Instagram · Facebook · TikTok",
+      "collage": true
     },
     {
       "categoria": "identidad",
