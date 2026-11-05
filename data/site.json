@@ -149,6 +149,7 @@
     {
       "sigla": "Fl",
       "nombre": "Google Flow",
+      "icono": "media/site/herramientas/flow.webp",
       "nivel": 80
     }
   ],
